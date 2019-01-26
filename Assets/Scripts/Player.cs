@@ -97,7 +97,7 @@ public class Player : MonoBehaviour {
         if (pCol.gameObject.tag == LevelManager.CENTRAL_FIRE_TAG)
         {
             if (_numberLumbs > 0) UpdateFire();
-            else _hasFire = true;
+            else TakeFire();
         }
 
         if (pCol.gameObject.tag == LevelManager.TORCHE_TAG)
@@ -108,8 +108,13 @@ public class Player : MonoBehaviour {
 
     void CutTree(Tree pTree)
     {
-        
         pTree.Cut();
+    }
+
+    void TakeFire()
+    {
+        _hasFire = true;
+        CentralFire.instance.UpdateFire(0, false);
     }
 
     void UpdateTorche(Torche pTorche)

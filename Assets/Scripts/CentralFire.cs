@@ -38,10 +38,13 @@ public class CentralFire : MonoBehaviour
     {
         StartCoroutine(DecreaseCoroutine());
         print(GameManager.manager.isPlaying);
+        AkSoundEngine.PostEvent("Play_Fire", gameObject);
     }
 
     public void UpdateFire(int pLumb, bool pIsUpgrade = true)
     {
+        AkSoundEngine.SetRTPCValue("FireValue", _levelFire);
+
         if (pIsUpgrade)
         {
             UpdateState(pLumb);
@@ -53,7 +56,7 @@ public class CentralFire : MonoBehaviour
     void UpdateState(int pLumb)
     {
         _levelFire += pLumb;
-
+        
         if (IsNextState())
         {
             print("NEW STATE");

@@ -2,13 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CentralFire : MonoBehaviour {
+public class CentralFire : MonoBehaviour
+{
 
     int _levelFire = 0;
+
+    public int levelFire {
+        get { return _levelFire; }
+    }
+
     float _updateSize = 0.2f;
+    int _currentState = 0;
 
     //Sates of the fire
     [SerializeField] int[] _statesArray;
+    [SerializeField] int _delayBetweenDecrease = 5;
 
     #region Singleton
     private static CentralFire _instance;
@@ -26,6 +34,12 @@ public class CentralFire : MonoBehaviour {
     }
     #endregion
 
+    private void Start()
+    {
+        StartCoroutine(DecreaseCoroutine());
+        print(GameManager.manager.isPlaying);
+    }
+
     public void UpdateFire(int pLumb, bool pIsUpgrade = true)
     {
         if (pIsUpgrade)
@@ -33,24 +47,52 @@ public class CentralFire : MonoBehaviour {
             UpdateState(pLumb);
         }
 
-        if (!pIsUpgrade) _levelFire--;
+        if (!pIsUpgrade) DecreaseFire();
     }
 
     void UpdateState(int pLumb)
     {
         _levelFire += pLumb;
 
-        
-        float lUpdate = _updateSize * pLumb;
+        if (IsNextState())
+        {
+            print("NEW STATE");
+            if (_currentState == _statesArray[_statesArray.Length - 1]) print("WIN");
+        }
 
-        transform.localScale += new Vector3(lUpdate, lUpdate, 0);
+        else
+        {
+            float lUpdate = _updateSize * pLumb;
+            transform.localScale += new Vector3(lUpdate, lUpdate, 0);
+        }
     }
 
-    /*bool IsNextState()
+    void DecreaseFire()
+    {
+        _levelFire--;
+        if (_levelFire < 0) print("DEFEAT");
+    }
+
+    bool IsNextState()
     {
         for (int i = 0; i < _statesArray.Length; i++)
         {
-            if (_levelFire)
+            if (_levelFire >= _statesArray[i] && _statesArray[i] > _currentState)
+            {
+                _currentState = _statesArray[i];
+                return true;
+            }
         }
-    }*/
+
+        return false;
+    }
+
+    IEnumerator DecreaseCoroutine()
+    {
+        while (GameManager.manager.isPlaying)
+        {
+            yield return new WaitForSecondsRealtime(_delayBetweenDecrease);
+            DecreaseFire();
+        }
+    }
 }

@@ -7,7 +7,7 @@ public class Player : MonoBehaviour {
     [SerializeField] Camera cam;
     [SerializeField] int _speed = 10;
 
-    GameObject[] _lumbsArray;
+    int _numberLumbs = 0;
 
     Vector3 _targetPosition;
     bool _isMoving;
@@ -44,7 +44,6 @@ public class Player : MonoBehaviour {
     void SetTargetPosition()
     {
         Plane lPlane = new Plane(Vector3.forward, transform.position);
-        print(cam);
         Ray lRay = cam.ScreenPointToRay(Input.mousePosition);
         float lPoint = 0f;
 
@@ -64,6 +63,10 @@ public class Player : MonoBehaviour {
 
     private void OnTriggerEnter(Collider pCol)
     {
-        
+        if(pCol.gameObject.tag == LevelManager.LUMB_TAG)
+        {
+            _numberLumbs++;
+            Destroy(pCol.gameObject);
+        }
     }
 }

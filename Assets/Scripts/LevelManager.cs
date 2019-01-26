@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour {
 
-    public static string LUMB_TAG = "lumb";
+    public static string LUMB_TAG = "Lumb";
     public static string WOOD_TAG = "wood";
 
     private static LevelManager _manager;

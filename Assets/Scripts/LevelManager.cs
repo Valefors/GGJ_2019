@@ -6,7 +6,7 @@ public class LevelManager : MonoBehaviour {
 
     public static string LUMB_TAG = "Lumb";
     public static string CENTRAL_FIRE_TAG = "CentralFire";
-    public static string WOOD_TAG = "wood";
+    public static string TREE_TAG = "Tree";
     public static string TORCHE_TAG = "Torche";
 
     private static LevelManager _manager;

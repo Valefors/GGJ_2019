@@ -173,7 +173,7 @@ public class PNJ : MonoBehaviour {
         }
         else
         {
-            _moveTarget = 
+            _moveTarget = null;
         }
     }
 

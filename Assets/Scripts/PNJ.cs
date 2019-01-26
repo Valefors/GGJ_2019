@@ -17,11 +17,12 @@ public class PNJ : MonoBehaviour {
 
     [SerializeField] protected float _speed = 2;
     [SerializeField] float _minSpeed = 1;
-    [SerializeField] float INITIAL_SPEED = 10;
+    [SerializeField] float INITIAL_SPEED = 4;
     [SerializeField] float SLOW_SPEED = 1;
     [SerializeField] int lumbCapacity = 3;
 
     [SerializeField] Torche torch;
+    [SerializeField] Transform tentPosition;
 
     static int frozen = 0;
     static int cold = 1;
@@ -42,6 +43,7 @@ public class PNJ : MonoBehaviour {
     // Use this for initialization
     void Start () {
         agent = GetComponent<NavMeshAgent>();
+        _speed = INITIAL_SPEED;
         HeatCheck();
 	}
 	
@@ -73,6 +75,16 @@ public class PNJ : MonoBehaviour {
         {
             if (_numberLumbs > 0) UpdateFire();
         }
+
+        if (pCol.gameObject.tag == LevelManager.TREE_TAG)
+        {
+            if (_numberLumbs <= 0) CutTree(pCol.GetComponent<Tree>());
+        }
+    }
+
+    void CutTree(Tree pTree)
+    {
+        pTree.Cut();
     }
 
     void UpdateFire()
@@ -113,7 +125,7 @@ public class PNJ : MonoBehaviour {
         {
             if (state == help)
             {
-                _moveTarget = torch.gameObject;
+                _moveTarget = tentPosition.gameObject;
                 _isMoving = true;
             }
             Warm();
@@ -192,7 +204,22 @@ public class PNJ : MonoBehaviour {
             }
             else
             {
-                // TIMBER
+                GameObject[] trees = GameObject.FindGameObjectsWithTag("Tree");
+                if (trees != null && trees.Length > 0)
+                {
+                    float distanceMin = GetDistance(trees[0]);
+                    int id = 0;
+                    for (int i = 0; i < trees.Length; i++)
+                    {
+                        if (GetDistance(trees[i]) < distanceMin)
+                        {
+                            distanceMin = GetDistance(trees[i]);
+                            id = i;
+                        }
+                    }
+                    _moveTarget = trees[id];
+                    _isMoving = true;
+                }
             }
         }
         else

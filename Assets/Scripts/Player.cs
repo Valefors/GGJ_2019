@@ -14,6 +14,7 @@ public class Player : MonoBehaviour {
 
     Vector3 _targetPosition;
     bool _isMoving;
+    bool _hasFire = false;
 
     const int LEFT_MOUSE_BUTTON = 0;
 
@@ -84,13 +85,24 @@ public class Player : MonoBehaviour {
     {
         if(pCol.gameObject.tag == LevelManager.LUMB_TAG)
         {
-            if(_numberLumbs < 3) TakeLumb(pCol.gameObject);
+            if(_numberLumbs < 3 && !_hasFire) TakeLumb(pCol.gameObject);
         }
 
         if (pCol.gameObject.tag == LevelManager.CENTRAL_FIRE_TAG)
         {
             if (_numberLumbs > 0) UpdateFire();
+            else _hasFire = true;
         }
+
+        if (pCol.gameObject.tag == LevelManager.TORCHE_TAG)
+        {
+            if (_hasFire) UpdateTorche(pCol.gameObject.GetComponent<Torche>());
+        }
+    }
+
+    void UpdateTorche(Torche pTorche)
+    {
+        pTorche.UpdateTorche();
     }
 
     void TakeLumb(GameObject pLumb)

@@ -115,6 +115,7 @@ public class Player : MonoBehaviour {
     void UpdateTorche(Torche pTorche)
     {
         pTorche.UpdateTorche();
+        _hasFire = false;
     }
 
     void TakeLumb(GameObject pLumb)

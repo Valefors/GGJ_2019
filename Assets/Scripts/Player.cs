@@ -7,6 +7,9 @@ public class Player : MonoBehaviour {
     [SerializeField] Camera cam;
     [SerializeField] int _speed = 10;
 
+    [SerializeField] int INITIAL_SPEED = 10;
+    [SerializeField] int SLOW_SPEED = 2;
+
     int _numberLumbs = 0;
 
     Vector3 _targetPosition;
@@ -17,8 +20,24 @@ public class Player : MonoBehaviour {
     delegate void DelAction();
     DelAction playerAction;
 
-	// Use this for initialization
-	void Start () {
+    #region Singleton
+    private static Player _instance;
+    public static Player instance {
+        get {
+            return _instance;
+        }
+    }
+
+    private void Awake()
+    {
+        if (_instance == null) _instance = this;
+
+        else if (_instance != this) Destroy(gameObject);
+    }
+    #endregion
+
+    // Use this for initialization
+    void Start () {
         _targetPosition = transform.position;
         _isMoving = false;
 
@@ -65,8 +84,28 @@ public class Player : MonoBehaviour {
     {
         if(pCol.gameObject.tag == LevelManager.LUMB_TAG)
         {
-            _numberLumbs++;
-            Destroy(pCol.gameObject);
+            if(_numberLumbs < 3) TakeLumb(pCol.gameObject);
         }
+
+        if (pCol.gameObject.tag == LevelManager.CENTRAL_FIRE_TAG)
+        {
+            if (_numberLumbs > 0) UpdateFire();
+        }
+    }
+
+    void TakeLumb(GameObject pLumb)
+    {
+        _numberLumbs++;
+        _speed -= SLOW_SPEED;
+
+        Destroy(pLumb);
+    }
+
+    void UpdateFire()
+    {
+        if(_numberLumbs > 0) CentralFire.instance.UpdateFire(_numberLumbs);
+        _numberLumbs = 0;
+        _speed = INITIAL_SPEED;
+
     }
 }

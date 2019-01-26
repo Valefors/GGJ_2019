@@ -46,5 +46,11 @@ public class CentralFire : MonoBehaviour {
         transform.localScale += new Vector3(lUpdate, lUpdate, 0);
     }
 
-    //bool 
+    /*bool IsNextState()
+    {
+        for (int i = 0; i < _statesArray.Length; i++)
+        {
+            if (_levelFire)
+        }
+    }*/
 }

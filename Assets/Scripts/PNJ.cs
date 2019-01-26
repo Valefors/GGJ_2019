@@ -14,9 +14,10 @@ public class PNJ : MonoBehaviour {
     [SerializeField] protected int _heatWarm = 20;
     #endregion
 
-    [SerializeField] protected int _speed = 2;
-    [SerializeField] int INITIAL_SPEED = 10;
-    [SerializeField] int SLOW_SPEED = 2;
+    [SerializeField] protected float _speed = 2;
+    [SerializeField] float _minSpeed = 1;
+    [SerializeField] float INITIAL_SPEED = 10;
+    [SerializeField] float SLOW_SPEED = 1;
     [SerializeField] int lumbCapacity = 3;
 
     static int frozen = 0;
@@ -31,7 +32,7 @@ public class PNJ : MonoBehaviour {
     protected bool _hasReachedTarget=false;
     protected GameObject _moveTarget;
 
-    int _numberLumbs = 0;
+    protected int _numberLumbs = 0;
 
 
     // Use this for initialization
@@ -47,16 +48,18 @@ public class PNJ : MonoBehaviour {
         {
             MoveTo(_moveTarget);
         }
+
+        if (state == help) Work();
 	}
 
     private void OnTriggerEnter(Collider pCol)
     {
+        Debug.Log("entre collision");
         if (pCol.gameObject.tag == LevelManager.LUMB_TAG)
         {
             if (_numberLumbs <= lumbCapacity)
             {
                 TakeLumb(pCol.gameObject);
-                Work();
             }
 
         }
@@ -78,8 +81,11 @@ public class PNJ : MonoBehaviour {
     {
         _numberLumbs++;
         _speed -= SLOW_SPEED;
+        if (_speed < _minSpeed) _speed = _minSpeed;
 
         Destroy(pLumb);
+        
+        Work();
     }
 
     void HeatCount()
@@ -100,6 +106,7 @@ public class PNJ : MonoBehaviour {
         }
         else if (_heat >= _heatWarm)
         {
+            //if (state == help) MoveTo(BRASERO);
             Warm();
         }
         else if (_heat <0)
@@ -154,8 +161,7 @@ public class PNJ : MonoBehaviour {
         if(_numberLumbs<lumbCapacity)
         {
             GameObject[] lumbs = GameObject.FindGameObjectsWithTag("Lumb");
-            Debug.Log("lumbs ?:" + lumbs.Length);
-            if (lumbs != null)
+            if (lumbs != null && lumbs.Length >0)
             {
                 float distanceMin = GetDistance(lumbs[0]);
                 int id = 0;
@@ -170,10 +176,18 @@ public class PNJ : MonoBehaviour {
                 _moveTarget = lumbs[id];
                 _isMoving = true;
             }
+            else if(_numberLumbs>0)
+            {
+                MoveTo(CentralFire.instance.gameObject);
+            }
+            else
+            {
+                // TIMBER
+            }
         }
         else
         {
-            _moveTarget = null;
+            MoveTo(CentralFire.instance.gameObject);
         }
     }
 

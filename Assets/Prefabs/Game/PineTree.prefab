@@ -21,9 +21,11 @@ GameObject:
   - component: {fileID: 4157437479503106}
   - component: {fileID: 212252380088704670}
   - component: {fileID: 95882064330539854}
+  - component: {fileID: 65963991837771888}
+  - component: {fileID: 114604953404521982}
   m_Layer: 0
   m_Name: PineTree
-  m_TagString: Untagged
+  m_TagString: Tree
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34,13 +36,25 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1209886610995378}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 7.75, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &65963991837771888
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1209886610995378}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.9, y: 3, z: 1}
+  m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!95 &95882064330539854
 Animator:
   serializedVersion: 3
@@ -59,6 +73,32 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114604953404521982
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1209886610995378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e05aa6baf13e8d3418092543b5f22bce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lumb: {fileID: 1127079618086288, guid: 0ac15345b82cb3849a479d985027e8f9, type: 2}
+  _sr: {fileID: 212252380088704670}
+  _strumpSprite:
+  - {fileID: 21300000, guid: e68f7c8932b2c40eb9f89435ed7fe0b5, type: 3}
+  - {fileID: 21300000, guid: c27c541577173402e8e32ed022ad23b6, type: 3}
+  - {fileID: 21300000, guid: e2748fcc9f1d94ac5830dbf480a47599, type: 3}
+  - {fileID: 21300000, guid: 0c6aba6dc470b45f2a84c435456dc3a7, type: 3}
+  - {fileID: 21300000, guid: 1cbcce1e154b14cacad28eb233925297, type: 3}
+  _treeSprite:
+  - {fileID: 21300000, guid: deb262e26e0ff4e0e8eef8a7efcab072, type: 3}
+  - {fileID: 21300000, guid: bffef392430574c448b701de4755c81a, type: 3}
+  - {fileID: 21300000, guid: ace61d2d3c4ed4f7f945f46143ba4c7f, type: 3}
+  - {fileID: 21300000, guid: da3615159fb654eb295aa588d38a2b81, type: 3}
+  _delayRepop: 2
+  _animator: {fileID: 95882064330539854}
 --- !u!212 &212252380088704670
 SpriteRenderer:
   m_ObjectHideFlags: 1

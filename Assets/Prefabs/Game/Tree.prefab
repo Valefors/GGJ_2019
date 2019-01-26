@@ -79,7 +79,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1612195573244238}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -5.43, y: 4.85, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -124,6 +124,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lumb: {fileID: 1127079618086288, guid: 0ac15345b82cb3849a479d985027e8f9, type: 2}
+  _sr: {fileID: 212377564277095822}
+  _strumpSprite: {fileID: 0}
+  _treeSprite: {fileID: 0}
+  _delayRepop: 2
 --- !u!212 &212377564277095822
 SpriteRenderer:
   m_ObjectHideFlags: 1

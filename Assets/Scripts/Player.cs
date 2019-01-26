@@ -119,7 +119,7 @@ public class Player : MonoBehaviour {
 
     void UpdateTorche(Torche pTorche)
     {
-        pTorche.UpdateTorche();
+        pTorche.AddHeat(LevelManager.manager.heatingModifier);
         _hasFire = false;
     }
 

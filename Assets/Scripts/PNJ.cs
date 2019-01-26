@@ -5,8 +5,8 @@ using UnityEngine.AI;
 
 public class PNJ : MonoBehaviour {
 
+    public int _heat = 30;
     #region Warmth
-    [SerializeField] protected int _heat =30;
     [SerializeField] protected int _heatMax=100;
     [SerializeField] protected int _heatMin = -20;
     [SerializeField] protected float _timeFreeze = 10;
@@ -169,6 +169,7 @@ public class PNJ : MonoBehaviour {
     {
         _heat += heatModifier;
         if (_heat > _heatMax) _heat = _heatMax;
+        HeatCheck();
         _timeSpent = 0;
     }
 

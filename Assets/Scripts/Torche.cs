@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class Torche : MonoBehaviour {
 
-    [SerializeField] GameObject PNJ;
-    [SerializeField] int LEVEL_STATE = 1;
-    int _levelTorche = 0;
+    [SerializeField] PNJ PNJ;
 
-	public void UpdateTorche()
+    static int frozen = 0;
+    static int cold = 1;
+    static int warm = 2;
+    static int help = 3;
+
+    public void AddHeat(int value)
     {
-        _levelTorche++;
-        if(_levelTorche >= LEVEL_STATE)
-        {
-            transform.localScale += new Vector3(0.2f, 0.2f, 0);
-            //AXEL ACTIVE PNJ
-        }
+        PNJ.AddHeat(value);
+    }
+
+	private void Update()
+    {
+        float newSize = (PNJ._heat/50f);
+        transform.localScale = new Vector3(newSize,newSize,0);
     }
 }

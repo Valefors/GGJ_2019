@@ -14,14 +14,25 @@ public class PNJ : MonoBehaviour {
     [SerializeField] protected int _heatWarm = 20;
     #endregion
 
+    [SerializeField] protected int _speed = 2;
+    [SerializeField] int INITIAL_SPEED = 10;
+    [SerializeField] int SLOW_SPEED = 2;
+    [SerializeField] int lumbCapacity = 3;
+
     static int frozen = 0;
     static int cold = 1;
     static int warm = 2;
     static int help = 3;
 
-    protected int state = warm;
+    public int state = warm;
 
     protected float _timeSpent=0;
+    protected bool _isMoving = false;
+    protected bool _hasReachedTarget=false;
+    protected GameObject _moveTarget;
+
+    int _numberLumbs = 0;
+
 
     // Use this for initialization
     void Start () {
@@ -32,7 +43,44 @@ public class PNJ : MonoBehaviour {
 	void Update () {
         _timeSpent += Time.deltaTime;
         HeatCount();
+        if (_isMoving && _moveTarget != null)
+        {
+            MoveTo(_moveTarget);
+        }
 	}
+
+    private void OnTriggerEnter(Collider pCol)
+    {
+        if (pCol.gameObject.tag == LevelManager.LUMB_TAG)
+        {
+            if (_numberLumbs <= lumbCapacity)
+            {
+                TakeLumb(pCol.gameObject);
+                Work();
+            }
+
+        }
+
+        if (pCol.gameObject.tag == LevelManager.CENTRAL_FIRE_TAG)
+        {
+            if (_numberLumbs > 0) UpdateFire();
+        }
+    }
+
+    void UpdateFire()
+    {
+        if (_numberLumbs > 0) CentralFire.instance.UpdateFire(_numberLumbs);
+        _numberLumbs = 0;
+        _speed = INITIAL_SPEED;
+    }
+
+    void TakeLumb(GameObject pLumb)
+    {
+        _numberLumbs++;
+        _speed -= SLOW_SPEED;
+
+        Destroy(pLumb);
+    }
 
     void HeatCount()
     {
@@ -73,6 +121,7 @@ public class PNJ : MonoBehaviour {
     public void Help()
     {
         state = help;
+        // GERER CHANGEMENTS VISUELS
         Work();
     }
 
@@ -95,8 +144,47 @@ public class PNJ : MonoBehaviour {
         _timeSpent = 0;
     }
 
+    float GetDistance(GameObject obj)
+    {
+        return Vector3.Distance(transform.position, obj.transform.position);
+    }
+
     void Work()
     {
+        if(_numberLumbs<lumbCapacity)
+        {
+            GameObject[] lumbs = GameObject.FindGameObjectsWithTag("Lumb");
+            Debug.Log("lumbs ?:" + lumbs.Length);
+            if (lumbs != null)
+            {
+                float distanceMin = GetDistance(lumbs[0]);
+                int id = 0;
+                for (int i = 0; i < lumbs.Length; i++)
+                {
+                    if (GetDistance(lumbs[i]) < distanceMin)
+                    {
+                        distanceMin = GetDistance(lumbs[i]);
+                        id = i;
+                    }
+                }
+                _moveTarget = lumbs[id];
+                _isMoving = true;
+            }
+        }
+        else
+        {
+            _moveTarget = 
+        }
+    }
 
+    void MoveTo(GameObject obj)
+    {
+        transform.position = Vector3.MoveTowards(transform.position, obj.transform.position, _speed*Time.deltaTime);
+        if (transform.position == obj.transform.position)
+        {
+            _hasReachedTarget = true;
+            _isMoving = false;
+            _moveTarget = null;
+        }
     }
 }

@@ -15,7 +15,7 @@ public class CentralFire : MonoBehaviour
     int _currentState = 0;
 
     //Sates of the fire
-    [SerializeField] int[] _statesArray;
+    public int[] statesArray;
     [SerializeField] int _delayBetweenDecrease = 3;
     [SerializeField] int VALUE_PER_LUMB = 5;
     [SerializeField] int START_FIRE = 40;
@@ -95,11 +95,11 @@ public class CentralFire : MonoBehaviour
 
     bool IsNextState()
     {
-        for (int i = 0; i < _statesArray.Length; i++)
+        for (int i = 0; i < statesArray.Length; i++)
         {
-            if (_levelFire > _statesArray[i] && _statesArray[i] > _currentState)
+            if (_levelFire > statesArray[i] && statesArray[i] > _currentState)
             {
-                _currentState = _statesArray[i];
+                _currentState = statesArray[i];
                 return true;
             }
         }
@@ -109,11 +109,11 @@ public class CentralFire : MonoBehaviour
 
     bool IsBeforeState()
     {
-        for (int i = 0; i < _statesArray.Length; i--)
+        for (int i = 0; i < statesArray.Length; i++)
         {
-            if (_levelFire <= _statesArray[i] && _statesArray[i] <= _currentState)
+            if (_levelFire <= statesArray[i] && statesArray[i] <= _currentState)
             {
-                _currentState = _statesArray[i];
+                _currentState = statesArray[i];
                 return true;
             }
         }

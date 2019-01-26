@@ -88,6 +88,12 @@ public class Player : MonoBehaviour {
             if(_numberLumbs < 3 && !_hasFire) TakeLumb(pCol.gameObject);
         }
 
+        if (pCol.gameObject.tag == LevelManager.TREE_TAG)
+        {
+            _isMoving = false;
+            if (_numberLumbs <= 0 && !_hasFire) CutTree(pCol.GetComponent<Tree>());
+        }
+
         if (pCol.gameObject.tag == LevelManager.CENTRAL_FIRE_TAG)
         {
             if (_numberLumbs > 0) UpdateFire();
@@ -98,6 +104,12 @@ public class Player : MonoBehaviour {
         {
             if (_hasFire) UpdateTorche(pCol.gameObject.GetComponent<Torche>());
         }
+    }
+
+    void CutTree(Tree pTree)
+    {
+        
+        pTree.Cut();
     }
 
     void UpdateTorche(Torche pTorche)

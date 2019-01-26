@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour {
 
-    public static string LUMB_TAG = "lumb";
+    public static string LUMB_TAG = "Lumb";
+    public static string CENTRAL_FIRE_TAG = "CentralFire";
     public static string WOOD_TAG = "wood";
 
     private static LevelManager _manager;
@@ -20,14 +21,4 @@ public class LevelManager : MonoBehaviour {
 
         else if (_manager != this) Destroy(gameObject);
     }
-
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

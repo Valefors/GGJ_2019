@@ -40,7 +40,7 @@ public class CentralFire : MonoBehaviour
         print(GameManager.manager.isPlaying);
     }
 
-    public void UpdateFire(int pLumb = 0, bool pIsUpgrade = true)
+    public void UpdateFire(int pLumb, bool pIsUpgrade = true)
     {
         if (pIsUpgrade)
         {

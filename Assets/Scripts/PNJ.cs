@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PNJ : MonoBehaviour {
 
@@ -20,6 +21,8 @@ public class PNJ : MonoBehaviour {
     [SerializeField] float SLOW_SPEED = 1;
     [SerializeField] int lumbCapacity = 3;
 
+    [SerializeField] Torche torch;
+
     static int frozen = 0;
     static int cold = 1;
     static int warm = 2;
@@ -33,10 +36,12 @@ public class PNJ : MonoBehaviour {
     protected GameObject _moveTarget;
 
     protected int _numberLumbs = 0;
+    NavMeshAgent agent;
 
 
     // Use this for initialization
     void Start () {
+        agent = GetComponent<NavMeshAgent>();
         HeatCheck();
 	}
 	
@@ -106,7 +111,11 @@ public class PNJ : MonoBehaviour {
         }
         else if (_heat >= _heatWarm)
         {
-            //if (state == help) MoveTo(BRASERO);
+            if (state == help)
+            {
+                _moveTarget = torch.gameObject;
+                _isMoving = true;
+            }
             Warm();
         }
         else if (_heat <0)
@@ -178,7 +187,8 @@ public class PNJ : MonoBehaviour {
             }
             else if(_numberLumbs>0)
             {
-                MoveTo(CentralFire.instance.gameObject);
+                _moveTarget = CentralFire.instance.gameObject;
+                _isMoving = true;
             }
             else
             {
@@ -187,12 +197,18 @@ public class PNJ : MonoBehaviour {
         }
         else
         {
-            MoveTo(CentralFire.instance.gameObject);
+            _moveTarget = CentralFire.instance.gameObject;
+            _isMoving = true;
         }
     }
 
     void MoveTo(GameObject obj)
     {
+        //agent.Warp(transform.position);
+        //agent.SetDestination(obj.transform.position);
+
+        //agent.Warp(obj.transform.position);
+
         transform.position = Vector3.MoveTowards(transform.position, obj.transform.position, _speed*Time.deltaTime);
         if (transform.position == obj.transform.position)
         {

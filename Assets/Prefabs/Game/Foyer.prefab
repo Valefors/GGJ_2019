@@ -20,9 +20,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4798735604650774}
   - component: {fileID: 212437166108187000}
+  - component: {fileID: 114604914386340624}
+  - component: {fileID: 65907258476521620}
   m_Layer: 0
   m_Name: Foyer
-  m_TagString: Untagged
+  m_TagString: CentralFire
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -37,6 +39,7 @@ GameObject:
   - component: {fileID: 4064577042161082}
   - component: {fileID: 212234694663843290}
   - component: {fileID: 95229274420157660}
+  - component: {fileID: 65700154268389996}
   m_Layer: 0
   m_Name: Fire
   m_TagString: Untagged
@@ -63,14 +66,38 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1856215619445140}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.58, y: -1.93, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4064577042161082}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &65700154268389996
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1955052913690760}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.6, y: 3, z: 0.2}
+  m_Center: {x: 0, y: -4, z: 0}
+--- !u!65 &65907258476521620
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1856215619445140}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.84, y: 2.84, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!95 &95229274420157660
 Animator:
   serializedVersion: 3
@@ -89,6 +116,23 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114604914386340624
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1856215619445140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b4572b978df1c944aba18390137a5da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _statesArray: 1e0000004600000063000000
+  _delayBetweenDecrease: 5
+  VALUE_PER_LUMB: 5
+  START_FIRE: 40
+  _decreasePerSecond: 20
+  _animator: {fileID: 95229274420157660}
 --- !u!212 &212234694663843290
 SpriteRenderer:
   m_ObjectHideFlags: 1

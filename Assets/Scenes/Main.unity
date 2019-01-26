@@ -396,6 +396,23 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 114532832105484168, guid: ffee496e28d45214386808cc978f1d71,
+        type: 2}
+      propertyPath: _strumpSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 3483e7ddaba2a4749a25e50756602055,
+        type: 3}
+    - target: {fileID: 114532832105484168, guid: ffee496e28d45214386808cc978f1d71,
+        type: 2}
+      propertyPath: _sr
+      value: 
+      objectReference: {fileID: 981648919}
+    - target: {fileID: 114532832105484168, guid: ffee496e28d45214386808cc978f1d71,
+        type: 2}
+      propertyPath: _treeSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c65eb74a6ea21574d911d2daee664551,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ffee496e28d45214386808cc978f1d71, type: 2}
   m_IsPrefabAsset: 0
@@ -880,6 +897,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 224181118339218758, guid: 6f3c12ed94f4fb342848c76b084bcee2,
     type: 2}
   m_PrefabInternal: {fileID: 938358816}
+--- !u!212 &981648919 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 212377564277095822, guid: ffee496e28d45214386808cc978f1d71,
+    type: 2}
+  m_PrefabInternal: {fileID: 312205558}
 --- !u!1001 &988769545
 Prefab:
   m_ObjectHideFlags: 0

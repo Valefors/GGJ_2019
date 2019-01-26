@@ -52,6 +52,8 @@ public class CentralFire : MonoBehaviour
         _animator.SetInteger("FireState", _animFireState);
         print(GameManager.manager.isPlaying);
         AkSoundEngine.PostEvent("Play_Fire", gameObject);
+        AkSoundEngine.PostEvent("Play_Amb", gameObject);
+        AkSoundEngine.PostEvent("Play_Music", gameObject);
     }
 
     public void UpdateFire(int pLumb, bool pIsUpgrade = true)
@@ -125,6 +127,24 @@ public class CentralFire : MonoBehaviour
         return false;
     }
 
+    public void Update()
+    {
+        if (GameManager.manager.isPlaying)
+        {
+            if (_animFireState == 0)
+            {
+                AkSoundEngine.SetState("FireState", "High");
+            }
+            if (_animFireState == 1)
+            {
+                AkSoundEngine.SetState("FireState", "Mid");
+            }
+            if (_animFireState == 2)
+            {
+                AkSoundEngine.SetState("FireState", "Low");
+            }
+        }
+    }
     IEnumerator DecreaseCoroutine()
     {
         while (GameManager.manager.isPlaying)

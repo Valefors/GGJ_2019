@@ -18,8 +18,13 @@ namespace AK
         static const AkUniqueID PLAY_FIRE = 3015324718U;
         static const AkUniqueID PLAY_FOOTSTEP = 1602358412U;
         static const AkUniqueID PLAY_ICE = 2658815887U;
+        static const AkUniqueID PLAY_MUSIC = 2932040671U;
         static const AkUniqueID PLAY_PICKTORCH = 1970873953U;
         static const AkUniqueID PLAY_PICKWOOD = 764264338U;
+        static const AkUniqueID PLAY_PNJ_FOOTSTEP = 1359336119U;
+        static const AkUniqueID PLAY_PNJ_PICKWOOD = 4261964841U;
+        static const AkUniqueID PLAY_PNJ_REFILLFIRE = 191496653U;
+        static const AkUniqueID PLAY_PNJ_WOOD = 1262388170U;
         static const AkUniqueID PLAY_REFILLBRASIER = 737814230U;
         static const AkUniqueID PLAY_REFILLFIRE = 1620508282U;
         static const AkUniqueID PLAY_WOOD = 1574178725U;
@@ -60,6 +65,7 @@ namespace AK
         static const AkUniqueID MASTER_AUDIO_BUS = 3803692087U;
         static const AkUniqueID MUSIC = 3991942870U;
         static const AkUniqueID SFX = 393239870U;
+        static const AkUniqueID SFXPNJ = 3952583674U;
     } // namespace BUSSES
 
     namespace AUDIO_DEVICES

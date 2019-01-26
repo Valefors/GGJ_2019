@@ -108,11 +108,13 @@ public class Player : MonoBehaviour {
 
     void CutTree(Tree pTree)
     {
+        AkSoundEngine.PostEvent("Play_Wood", gameObject);
         pTree.Cut();
     }
 
     void TakeFire()
     {
+        AkSoundEngine.PostEvent("Play_PickTorch", gameObject);
         _hasFire = true;
         CentralFire.instance.UpdateFire(0, false);
     }
@@ -125,6 +127,7 @@ public class Player : MonoBehaviour {
 
     void TakeLumb(GameObject pLumb)
     {
+        AkSoundEngine.PostEvent("Play_PickWood", gameObject);
         _numberLumbs++;
         _speed -= SLOW_SPEED;
 
@@ -133,7 +136,8 @@ public class Player : MonoBehaviour {
 
     void UpdateFire()
     {
-        if(_numberLumbs > 0) CentralFire.instance.UpdateFire(_numberLumbs);
+        AkSoundEngine.PostEvent("Play_RefillFire", gameObject);
+        if (_numberLumbs > 0) CentralFire.instance.UpdateFire(_numberLumbs);
         _numberLumbs = 0;
         _speed = INITIAL_SPEED;
 

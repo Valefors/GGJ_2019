@@ -84,11 +84,13 @@ public class PNJ : MonoBehaviour {
 
     void CutTree(Tree pTree)
     {
+        AkSoundEngine.PostEvent("Play_PNJ_Wood", gameObject);
         pTree.Cut();
     }
 
     void UpdateFire()
     {
+        AkSoundEngine.PostEvent("Play_PNJ_RefillFire", gameObject);
         if (_numberLumbs > 0) CentralFire.instance.UpdateFire(_numberLumbs);
         _numberLumbs = 0;
         _speed = INITIAL_SPEED;
@@ -96,6 +98,7 @@ public class PNJ : MonoBehaviour {
 
     void TakeLumb(GameObject pLumb)
     {
+        AkSoundEngine.PostEvent("Play_PNJ_PickWood", gameObject);
         _numberLumbs++;
         _speed -= SLOW_SPEED;
         if (_speed < _minSpeed) _speed = _minSpeed;
@@ -132,6 +135,7 @@ public class PNJ : MonoBehaviour {
         }
         else if (_heat <0)
         {
+            AkSoundEngine.PostEvent("Play_BrasierOut", gameObject);
             Freeze();
         }
         else if (_heat<_heatWarm)
@@ -156,6 +160,7 @@ public class PNJ : MonoBehaviour {
     public void Freeze()
     {
         state = frozen;
+        //AkSoundEngine.PostEvent("Play_Ice", gameObject);
         // GERER CHANGEMEMENTS VISUELS
     }
 
@@ -167,6 +172,7 @@ public class PNJ : MonoBehaviour {
 
     public void AddHeat(int heatModifier)
     {
+        AkSoundEngine.PostEvent("Play_RefillBrasier", gameObject);
         _heat += heatModifier;
         if (_heat > _heatMax) _heat = _heatMax;
         HeatCheck();

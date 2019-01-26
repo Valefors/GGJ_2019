@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Lumb
   - CentralFire
+  - Torche
+  - Tree
   layers:
   - Default
   - TransparentFX

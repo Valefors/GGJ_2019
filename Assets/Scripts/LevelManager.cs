@@ -9,6 +9,8 @@ public class LevelManager : MonoBehaviour {
     public static string TREE_TAG = "Tree";
     public static string TORCHE_TAG = "Torche";
 
+    public int heatingModifier = 15;
+
     private static LevelManager _manager;
     public static LevelManager manager {
         get {

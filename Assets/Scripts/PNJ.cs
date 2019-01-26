@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PNJ : MonoBehaviour {
 
+    public int _heat = 30;
     #region Warmth
-    [SerializeField] protected int _heat =30;
     [SerializeField] protected int _heatMax=100;
     [SerializeField] protected int _heatMin = -20;
     [SerializeField] protected float _timeFreeze = 10;
@@ -14,10 +15,14 @@ public class PNJ : MonoBehaviour {
     [SerializeField] protected int _heatWarm = 20;
     #endregion
 
-    [SerializeField] protected int _speed = 2;
-    [SerializeField] int INITIAL_SPEED = 10;
-    [SerializeField] int SLOW_SPEED = 2;
+    [SerializeField] protected float _speed = 2;
+    [SerializeField] float _minSpeed = 1;
+    [SerializeField] float INITIAL_SPEED = 4;
+    [SerializeField] float SLOW_SPEED = 1;
     [SerializeField] int lumbCapacity = 3;
+
+    [SerializeField] Torche torch;
+    [SerializeField] Transform tentPosition;
 
     static int frozen = 0;
     static int cold = 1;
@@ -31,11 +36,14 @@ public class PNJ : MonoBehaviour {
     protected bool _hasReachedTarget=false;
     protected GameObject _moveTarget;
 
-    int _numberLumbs = 0;
+    protected int _numberLumbs = 0;
+    NavMeshAgent agent;
 
 
     // Use this for initialization
     void Start () {
+        agent = GetComponent<NavMeshAgent>();
+        _speed = INITIAL_SPEED;
         HeatCheck();
 	}
 	
@@ -47,16 +55,18 @@ public class PNJ : MonoBehaviour {
         {
             MoveTo(_moveTarget);
         }
+
+        if (state == help) Work();
 	}
 
     private void OnTriggerEnter(Collider pCol)
     {
+        Debug.Log("entre collision");
         if (pCol.gameObject.tag == LevelManager.LUMB_TAG)
         {
             if (_numberLumbs <= lumbCapacity)
             {
                 TakeLumb(pCol.gameObject);
-                Work();
             }
 
         }
@@ -65,6 +75,16 @@ public class PNJ : MonoBehaviour {
         {
             if (_numberLumbs > 0) UpdateFire();
         }
+
+        if (pCol.gameObject.tag == LevelManager.TREE_TAG)
+        {
+            if (_numberLumbs <= 0) CutTree(pCol.GetComponent<Tree>());
+        }
+    }
+
+    void CutTree(Tree pTree)
+    {
+        pTree.Cut();
     }
 
     void UpdateFire()
@@ -78,8 +98,11 @@ public class PNJ : MonoBehaviour {
     {
         _numberLumbs++;
         _speed -= SLOW_SPEED;
+        if (_speed < _minSpeed) _speed = _minSpeed;
 
         Destroy(pLumb);
+        
+        Work();
     }
 
     void HeatCount()
@@ -100,6 +123,11 @@ public class PNJ : MonoBehaviour {
         }
         else if (_heat >= _heatWarm)
         {
+            if (state == help)
+            {
+                _moveTarget = tentPosition.gameObject;
+                _isMoving = true;
+            }
             Warm();
         }
         else if (_heat <0)
@@ -141,6 +169,7 @@ public class PNJ : MonoBehaviour {
     {
         _heat += heatModifier;
         if (_heat > _heatMax) _heat = _heatMax;
+        HeatCheck();
         _timeSpent = 0;
     }
 
@@ -154,8 +183,7 @@ public class PNJ : MonoBehaviour {
         if(_numberLumbs<lumbCapacity)
         {
             GameObject[] lumbs = GameObject.FindGameObjectsWithTag("Lumb");
-            Debug.Log("lumbs ?:" + lumbs.Length);
-            if (lumbs != null)
+            if (lumbs != null && lumbs.Length >0)
             {
                 float distanceMin = GetDistance(lumbs[0]);
                 int id = 0;
@@ -170,15 +198,45 @@ public class PNJ : MonoBehaviour {
                 _moveTarget = lumbs[id];
                 _isMoving = true;
             }
+            else if(_numberLumbs>0)
+            {
+                _moveTarget = CentralFire.instance.gameObject;
+                _isMoving = true;
+            }
+            else
+            {
+                GameObject[] trees = GameObject.FindGameObjectsWithTag("Tree");
+                if (trees != null && trees.Length > 0)
+                {
+                    float distanceMin = GetDistance(trees[0]);
+                    int id = 0;
+                    for (int i = 0; i < trees.Length; i++)
+                    {
+                        if (GetDistance(trees[i]) < distanceMin)
+                        {
+                            distanceMin = GetDistance(trees[i]);
+                            id = i;
+                        }
+                    }
+                    _moveTarget = trees[id];
+                    _isMoving = true;
+                }
+            }
         }
         else
         {
-            _moveTarget = 
+            _moveTarget = CentralFire.instance.gameObject;
+            _isMoving = true;
         }
     }
 
     void MoveTo(GameObject obj)
     {
+        //agent.Warp(transform.position);
+        //agent.SetDestination(obj.transform.position);
+
+        //agent.Warp(obj.transform.position);
+
         transform.position = Vector3.MoveTowards(transform.position, obj.transform.position, _speed*Time.deltaTime);
         if (transform.position == obj.transform.position)
         {

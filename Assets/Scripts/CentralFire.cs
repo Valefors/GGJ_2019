@@ -6,13 +6,12 @@ using UnityEngine.UI;
 public class CentralFire : MonoBehaviour
 {
 
-    int _levelFire = 0;
+    public int _levelFire = 0;
 
     public int levelFire {
         get { return _levelFire; }
     }
 
-    float _updateSize = 0.2f;
     int _currentState = 0;
 
     //Sates of the fire
@@ -54,6 +53,7 @@ public class CentralFire : MonoBehaviour
         _animFireState = 1;
 
         _animator.SetInteger("FireState", _animFireState);
+        //print(GameManager.manager.isPlaying);
         AkSoundEngine.PostEvent("Play_Fire", gameObject);
         AkSoundEngine.PostEvent("Play_Amb", gameObject);
         AkSoundEngine.PostEvent("Play_Music", gameObject);
@@ -99,9 +99,10 @@ public class CentralFire : MonoBehaviour
 
     void UpdateState(int pLumb)
     {
+        
         _levelFire += pLumb * VALUE_PER_LUMB;
-
-        if (_levelFire > LevelManager.manager.maxFire) LevelManager.manager.WonFire();
+        //Debug.Log("maxFire:" + LevelManager.manager.maxFire);
+        if (_levelFire >= LevelManager.manager.maxFire) LevelManager.manager.WonFire();
 
         if (IsNextState())
         {

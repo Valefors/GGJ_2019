@@ -14,7 +14,26 @@ public class Tree : MonoBehaviour {
 
     [SerializeField] float OFFSET_X = 3f;
 
+    #region Blink
+    float spriteBlinkingTimer = 0.0f;
+    float spriteBlinkingMiniDuration = 0.1f;
+    float spriteBlinkingTotalTimer = 0.0f;
+    float spriteBlinkingTotalDuration = 1.0f;
+    bool startBlinking = false;
+    #endregion
+
     public void Cut()
+    {
+        print("cut");
+        startBlinking = true;
+    }
+
+    IEnumerator CutTree()
+    {
+        yield return new WaitForSeconds(_delayRepop);
+    }
+
+    void SetModeLumb()
     {
         Vector3 lPos = new Vector3(transform.position.x + OFFSET_X, transform.position.y, transform.position.z);
 
@@ -25,6 +44,35 @@ public class Tree : MonoBehaviour {
         tag = "Untagged";
 
         StartCoroutine(RepopCoroutine());
+    }
+
+    private void SpriteBlinkingEffect()
+    {
+        spriteBlinkingTotalTimer += Time.deltaTime;
+        if (spriteBlinkingTotalTimer >= spriteBlinkingTotalDuration)
+        {
+            startBlinking = false;
+            spriteBlinkingTotalTimer = 0.0f;
+            this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
+
+            SetModeLumb();
+
+            return;
+        }
+
+        spriteBlinkingTimer += Time.deltaTime;
+        if (spriteBlinkingTimer >= spriteBlinkingMiniDuration)
+        {
+            spriteBlinkingTimer = 0.0f;
+            if (this.gameObject.GetComponent<SpriteRenderer>().enabled == true)
+            {
+                this.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            }
+            else
+            {
+                this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
+            }
+        }
     }
 
     IEnumerator RepopCoroutine()
@@ -39,5 +87,13 @@ public class Tree : MonoBehaviour {
         _sr.sprite = _treeSprite[lRandom];
         _animator.SetTrigger("PopPineTree_Trigger");
         tag = LevelManager.TREE_TAG;
+    }
+
+    void Update()
+    {
+        if (startBlinking == true)
+        {
+            SpriteBlinkingEffect();
+        }
     }
 }

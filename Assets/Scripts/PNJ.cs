@@ -33,7 +33,7 @@ public class PNJ : MonoBehaviour {
 
     protected bool _isMoving = false;
     protected bool _hasReachedTarget=false;
-    protected GameObject _moveTarget;
+    public GameObject _moveTarget;
 
     protected int _numberLumbs = 0;
     NavMeshAgent agent;
@@ -66,6 +66,12 @@ public class PNJ : MonoBehaviour {
         if (_isMoving && _moveTarget != null)
         {
             MoveTo(_moveTarget);
+        }
+
+        if (_heat < _heatHelp && _heat > 0)
+        {
+            _moveTarget = tentPosition.gameObject;
+            _isMoving = true;
         }
 
         if (state == help) Work();
@@ -149,8 +155,6 @@ public class PNJ : MonoBehaviour {
         {
             if (state!=warm)
             {
-                _moveTarget = tentPosition.gameObject;
-                _isMoving = true;
                 Warm();
             }
         }

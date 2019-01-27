@@ -18,6 +18,7 @@ public class UIManager : MonoBehaviour {
     [SerializeField] RectTransform _gameOverScreen;
     [SerializeField] RectTransform _ingameScreen;
     [SerializeField] RectTransform _creditsScreen;
+    [SerializeField] RectTransform _tutoScreen;
 
     RectTransform _currentScreen;
 
@@ -48,6 +49,7 @@ public class UIManager : MonoBehaviour {
 	
     void Play()
     {
+        _currentScreen = _tutoScreen;
         _currentScreen.gameObject.SetActive(false);
 
         _currentScreen = _ingameScreen;

@@ -24,7 +24,7 @@ public class Tree : MonoBehaviour {
 
     public void Cut()
     {
-        print("cut");
+        //print("cut");
         startBlinking = true;
     }
 

@@ -18,7 +18,7 @@ public class Tree : MonoBehaviour {
     float spriteBlinkingTimer = 0.0f;
     float spriteBlinkingMiniDuration = 0.1f;
     float spriteBlinkingTotalTimer = 0.0f;
-    float spriteBlinkingTotalDuration = 1.0f;
+    [SerializeField] float spriteBlinkingTotalDuration = 1.0f;
     bool startBlinking = false;
     #endregion
 

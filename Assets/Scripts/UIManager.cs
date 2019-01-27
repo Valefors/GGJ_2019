@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour {
 
@@ -19,6 +20,11 @@ public class UIManager : MonoBehaviour {
     [SerializeField] RectTransform _creditsScreen;
 
     RectTransform _currentScreen;
+
+    [SerializeField] Sprite _victoryScreen1;
+    [SerializeField] Sprite _victoryScreen2;
+    [SerializeField] Sprite _defeatScreen1;
+    [SerializeField] Sprite _defeatScreen2;
 
     private void Awake()
     {
@@ -54,6 +60,8 @@ public class UIManager : MonoBehaviour {
         _currentScreen.gameObject.SetActive(false);
 
         _currentScreen = _victoryScreen;
+        if (GameManager.manager.type == 1) _currentScreen.gameObject.GetComponent<Image>().sprite = _victoryScreen1;
+        if (GameManager.manager.type == 2) _currentScreen.gameObject.GetComponent<Image>().sprite = _victoryScreen2;
 
         _currentScreen.gameObject.SetActive(true);
     }
@@ -63,6 +71,8 @@ public class UIManager : MonoBehaviour {
         _currentScreen.gameObject.SetActive(false);
 
         _currentScreen = _gameOverScreen;
+        if (GameManager.manager.type == 1) _currentScreen.gameObject.GetComponent<Image>().sprite = _defeatScreen1;
+        if (GameManager.manager.type == 2) _currentScreen.gameObject.GetComponent<Image>().sprite = _defeatScreen2;
 
         _currentScreen.gameObject.SetActive(true);
     }

@@ -31,7 +31,6 @@ public class PNJ : MonoBehaviour {
 
     public int state = warm;
 
-    protected float _timeSpent=0;
     protected bool _isMoving = false;
     protected bool _hasReachedTarget=false;
     protected GameObject _moveTarget;
@@ -39,18 +38,27 @@ public class PNJ : MonoBehaviour {
     protected int _numberLumbs = 0;
     NavMeshAgent agent;
 
+    Vector3 _previousPosition;
 
     // Use this for initialization
     void Start () {
+        LevelManager.manager.nbVillagersAlive++;
         agent = GetComponent<NavMeshAgent>();
         _speed = INITIAL_SPEED;
         HeatCheck();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        _timeSpent += Time.deltaTime;
-        HeatCount();
+
+        EventManager.StartListening(EventManager.PLAY_EVENT, Play);
+    }
+
+    void Play()
+    {
+        StartCoroutine(DecreaseCoroutine());
+    }
+
+    // Update is called once per frame
+    void Update () {
+        if (!GameManager.manager.isPlaying) return;
+
         if (_isMoving && _moveTarget != null)
         {
             MoveTo(_moveTarget);
@@ -61,7 +69,8 @@ public class PNJ : MonoBehaviour {
 
     private void OnTriggerEnter(Collider pCol)
     {
-        Debug.Log("entre collision");
+        if (!GameManager.manager.isPlaying) return;
+
         if (pCol.gameObject.tag == LevelManager.LUMB_TAG)
         {
             if (_numberLumbs <= lumbCapacity)
@@ -108,14 +117,19 @@ public class PNJ : MonoBehaviour {
         Work();
     }
 
-    void HeatCount()
+    IEnumerator DecreaseCoroutine()
     {
-        if (_timeSpent >= _timeFreeze)
+        while (GameManager.manager.isPlaying)
         {
-            if(_heat>_heatMin) _heat--;
-            _timeSpent = 0;
-            HeatCheck();
+            yield return new WaitForSecondsRealtime(_timeFreeze);
+            DecreaseHeat();
         }
+    }
+
+    void DecreaseHeat()
+    {
+        _heat--;
+        HeatCheck();
     }
 
     void HeatCheck()
@@ -135,11 +149,16 @@ public class PNJ : MonoBehaviour {
         }
         else if (_heat <0)
         {
-            AkSoundEngine.PostEvent("Play_BrasierOut", gameObject);
-            Freeze();
+            if(state!=frozen)
+            {
+                LevelManager.manager.nbVillagersAlive--;
+                AkSoundEngine.PostEvent("Play_BrasierOut", gameObject);
+                Freeze();
+            }
         }
         else if (_heat<_heatWarm)
         {
+            if(state == frozen) LevelManager.manager.nbVillagersAlive++;
             Cold();
         }
     }
@@ -160,7 +179,7 @@ public class PNJ : MonoBehaviour {
     public void Freeze()
     {
         state = frozen;
-        //AkSoundEngine.PostEvent("Play_Ice", gameObject);
+        AkSoundEngine.PostEvent("Play_Ice", gameObject);
         // GERER CHANGEMEMENTS VISUELS
     }
 
@@ -176,7 +195,6 @@ public class PNJ : MonoBehaviour {
         _heat += heatModifier;
         if (_heat > _heatMax) _heat = _heatMax;
         HeatCheck();
-        _timeSpent = 0;
     }
 
     float GetDistance(GameObject obj)
@@ -238,17 +256,29 @@ public class PNJ : MonoBehaviour {
 
     void MoveTo(GameObject obj)
     {
-        //agent.Warp(transform.position);
-        //agent.SetDestination(obj.transform.position);
-
-        //agent.Warp(obj.transform.position);
+        _previousPosition = transform.position;
 
         transform.position = Vector3.MoveTowards(transform.position, obj.transform.position, _speed*Time.deltaTime);
+        UpdateSprite();
+
         if (transform.position == obj.transform.position)
         {
             _hasReachedTarget = true;
             _isMoving = false;
             _moveTarget = null;
         }
+    }
+
+    void UpdateSprite()
+    {
+        if (transform.position.y > _previousPosition.y && (Mathf.Abs(transform.position.y - _previousPosition.y) > Mathf.Abs(transform.position.x - _previousPosition.x))) print("dos");
+        if (transform.position.y < _previousPosition.y && (Mathf.Abs(transform.position.y - _previousPosition.y) > Mathf.Abs(transform.position.x - _previousPosition.x))) print("face");
+        if (transform.position.x > _previousPosition.x && (Mathf.Abs(transform.position.y - _previousPosition.y) < Mathf.Abs(transform.position.x - _previousPosition.x))) print("droite");
+        if (transform.position.x < _previousPosition.x && (Mathf.Abs(transform.position.y - _previousPosition.y) < Mathf.Abs(transform.position.x - _previousPosition.x))) print("gauche");
+    }
+
+    private void OnDisable()
+    {
+        EventManager.StopListening(EventManager.PLAY_EVENT, Play);
     }
 }

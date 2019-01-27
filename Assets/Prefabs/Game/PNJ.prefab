@@ -132,8 +132,8 @@ MonoBehaviour:
   _heatHelp: 60
   _heatWarm: 20
   _speed: 0
-  _minSpeed: 1
-  INITIAL_SPEED: 3
+  _minSpeed: 0.5
+  INITIAL_SPEED: 1
   SLOW_SPEED: 0.5
   lumbCapacity: 3
   torch: {fileID: 0}

@@ -16,6 +16,8 @@ public class Player : MonoBehaviour {
     bool _isMoving;
     bool _hasFire = false;
 
+    Vector3 _previousPosition;
+
     const int LEFT_MOUSE_BUTTON = 0;
 
     delegate void DelAction();
@@ -47,6 +49,8 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (!GameManager.manager.isPlaying) return;
+
         if (playerAction != null) playerAction();  
 	}
 
@@ -74,16 +78,28 @@ public class Player : MonoBehaviour {
 
     void MovePlayer()
     {
-        //transform.LookAt(_targetPosition);
+        _previousPosition = transform.position;
         transform.position = Vector3.MoveTowards(transform.position, _targetPosition, _speed * Time.deltaTime);
+
+        UpdateSprite();
 
         if (transform.position == _targetPosition) _isMoving = false;
         Debug.DrawLine(transform.position, _targetPosition, Color.red);
     }
 
+    void UpdateSprite()
+    {
+        if (transform.position.y > _previousPosition.y && (Mathf.Abs(transform.position.y - _previousPosition.y) > Mathf.Abs(transform.position.x - _previousPosition.x))) print("dos");
+        if (transform.position.y < _previousPosition.y && (Mathf.Abs(transform.position.y - _previousPosition.y) > Mathf.Abs(transform.position.x - _previousPosition.x))) print("face");
+        if (transform.position.x > _previousPosition.x && (Mathf.Abs(transform.position.y - _previousPosition.y) < Mathf.Abs(transform.position.x - _previousPosition.x))) print("droite");
+        if (transform.position.x < _previousPosition.x && (Mathf.Abs(transform.position.y - _previousPosition.y) < Mathf.Abs(transform.position.x - _previousPosition.x))) print("gauche");
+    }
+
     private void OnTriggerEnter(Collider pCol)
     {
-        if(pCol.gameObject.tag == LevelManager.LUMB_TAG)
+        if (!GameManager.manager.isPlaying) return;
+
+        if (pCol.gameObject.tag == LevelManager.LUMB_TAG)
         {
             if(_numberLumbs < 3 && !_hasFire) TakeLumb(pCol.gameObject);
         }

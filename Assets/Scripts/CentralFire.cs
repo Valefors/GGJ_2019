@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CentralFire : MonoBehaviour
 {
@@ -24,6 +25,8 @@ public class CentralFire : MonoBehaviour
     int _animFireState = 0;
 
     [SerializeField] Animator _animator;
+    [SerializeField] Slider _slider;
+    [SerializeField] float _offset_y = 5;
 
     #region Singleton
     private static CentralFire _instance;
@@ -43,17 +46,41 @@ public class CentralFire : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(DecreaseCoroutine());
+        EventManager.StartListening(EventManager.PLAY_EVENT, Play);
+
         _currentState = START_FIRE;
         _levelFire = START_FIRE;
 
         _animFireState = 1;
 
         _animator.SetInteger("FireState", _animFireState);
-        print(GameManager.manager.isPlaying);
         AkSoundEngine.PostEvent("Play_Fire", gameObject);
         AkSoundEngine.PostEvent("Play_Amb", gameObject);
         AkSoundEngine.PostEvent("Play_Music", gameObject);
+
+        Vector3 lSliderPos = new Vector3(transform.position.x, transform.position.y + _offset_y, transform.position.z);
+        Vector3 lPos = Camera.main.WorldToScreenPoint(lSliderPos);
+
+        _slider.transform.position = lPos;
+        _slider.gameObject.SetActive(false);
+        _slider.value = _levelFire;
+    }
+
+    void Play()
+    {
+        StartCoroutine(DecreaseCoroutine());
+    }
+
+    void OnMouseOver()
+    {
+        if (!GameManager.manager.isPlaying) return;
+        _slider.gameObject.SetActive(true);
+    }
+
+    void OnMouseExit()
+    {
+        if (!GameManager.manager.isPlaying) return;
+        _slider.gameObject.SetActive(false);
     }
 
     public void UpdateFire(int pLumb, bool pIsUpgrade = true)
@@ -66,13 +93,15 @@ public class CentralFire : MonoBehaviour
         }
 
         if (!pIsUpgrade) DecreaseFire();
+
+        _slider.value = _levelFire;
     }
 
     void UpdateState(int pLumb)
     {
         _levelFire += pLumb * VALUE_PER_LUMB;
 
-        if (_levelFire > 99) print("WIN");
+        if (_levelFire > LevelManager.manager.maxFire) LevelManager.manager.WonFire();
 
         if (IsNextState())
         {
@@ -90,7 +119,7 @@ public class CentralFire : MonoBehaviour
     void DecreaseFire()
     {
         _levelFire -= _decreasePerSecond;
-        if (_levelFire <= 0) print("DEFEAT");
+        if (_levelFire <= 0) LevelManager.manager.LostFire();
 
         if (IsBeforeState())
         {
@@ -152,5 +181,9 @@ public class CentralFire : MonoBehaviour
             yield return new WaitForSecondsRealtime(_delayBetweenDecrease);
             DecreaseFire();
         }
+    }
+    private void OnDisable()
+    {
+        EventManager.StopListening(EventManager.PLAY_EVENT, Play);
     }
 }

@@ -18,6 +18,9 @@ public class LevelManager : MonoBehaviour {
     public int maxFire = 100;
     public int totalVillagers;
 
+    public Texture2D hooverCursor;
+    public Texture2D normalCursor;
+
     private static LevelManager _manager;
     public static LevelManager manager {
         get {

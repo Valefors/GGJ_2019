@@ -33,6 +33,18 @@ public class Tree : MonoBehaviour {
         yield return new WaitForSeconds(_delayRepop);
     }
 
+    void OnMouseOver()
+    {
+        if (!GameManager.manager.isPlaying) return;
+        Cursor.SetCursor(LevelManager.manager.hooverCursor, Vector2.zero, CursorMode.Auto);
+    }
+
+    void OnMouseExit()
+    {
+        if (!GameManager.manager.isPlaying) return;
+        Cursor.SetCursor(LevelManager.manager.normalCursor, Vector2.zero, CursorMode.Auto);
+    }
+
     void SetModeLumb()
     {
         Vector3 lPos = new Vector3(transform.position.x + OFFSET_X, transform.position.y, transform.position.z);

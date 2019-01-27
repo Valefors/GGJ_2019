@@ -63,8 +63,11 @@ public class Player : MonoBehaviour {
 
     void DoActionMove()
     {
-        if (Input.GetMouseButton(LEFT_MOUSE_BUTTON)) SetTargetPosition();
-        if (_isMoving) MovePlayer();
+        if(GameManager.manager.isPlaying)
+        {
+            if (Input.GetMouseButton(LEFT_MOUSE_BUTTON)) SetTargetPosition();
+            if (_isMoving) MovePlayer();
+        }
     }
 
     void SetTargetPosition()
@@ -124,6 +127,24 @@ public class Player : MonoBehaviour {
         if (pCol.gameObject.tag == LevelManager.TORCHE_TAG)
         {
             if (_hasFire) UpdateTorche(pCol.gameObject.GetComponent<Torche>());
+        }
+    }
+
+    private void OnTriggerStay(Collider pCol)
+    {
+        if (pCol.gameObject.tag == LevelManager.DOGGO_TAG)
+        {
+            animator.SetTrigger("Patpat_Trigger");
+            animator.SetBool("Patpat_Bool", true);
+        }
+    }
+
+    private void OnTriggerExit(Collider pCol)
+    {
+        //if (pCol.gameObject.tag == LevelManager.DOGGO_TAG)
+        {
+            animator.SetTrigger("PatpatEnd_Trigger");
+            animator.SetBool("Patpat_Bool",false);
         }
     }
 

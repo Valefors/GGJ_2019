@@ -8,6 +8,7 @@ public class LevelManager : MonoBehaviour {
     public static string CENTRAL_FIRE_TAG = "CentralFire";
     public static string TREE_TAG = "Tree";
     public static string TORCHE_TAG = "Torche";
+    public static string DOGGO_TAG = "Doggo";
 
     public int heatingModifier = 15;
     public int nightMinDuration = 10; // en minutes

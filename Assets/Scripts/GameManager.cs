@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        isPlaying = true;
+        isPlaying = false;
         Cursor.SetCursor(LevelManager.manager.normalCursor, Vector2.zero, CursorMode.Auto);
     }
 	

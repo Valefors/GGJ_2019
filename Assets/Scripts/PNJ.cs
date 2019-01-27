@@ -143,33 +143,33 @@ public class PNJ : MonoBehaviour {
     {
         if (_heat >= _heatHelp)
         {
-            Help();
+            if(state !=help)  Help();
         }
         else if (_heat >= _heatWarm)
         {
-            if (state == help)
+            if (state!=warm)
             {
                 _moveTarget = tentPosition.gameObject;
                 _isMoving = true;
+                Warm();
             }
-            Warm();
         }
         else if (_heat <0)
         {
             if(state!=frozen)
             {
                 LevelManager.manager.nbVillagersAlive--;
-                animator.SetInteger("PNJWalkState", -1);
-                AkSoundEngine.PostEvent("Play_BrasierOut", gameObject);
+                animator.SetInteger("PNJWalkState", -2);
+                AkSoundEngine.PostEvent("Play_Ice", gameObject);
                 Freeze();
             }
         }
         else if (_heat<_heatWarm)
         {
-            if (state == frozen)
+            if (state!=cold)
             {
+                animator.SetInteger("PNJWalkState", -1);
                 LevelManager.manager.nbVillagersAlive++;
-                animator.SetInteger("PNJWalkState", 0);
                 Cold();
             }
         }

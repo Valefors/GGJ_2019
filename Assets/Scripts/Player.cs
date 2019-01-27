@@ -44,7 +44,7 @@ public class Player : MonoBehaviour {
     // Use this for initialization
     void Start () {
         _targetPosition = transform.position;
-        _isMoving = false;
+        StopMoving();
 
         SetActionMove();
 	}
@@ -85,7 +85,7 @@ public class Player : MonoBehaviour {
 
         UpdateSprite();
 
-        if (transform.position == _targetPosition) _isMoving = false;
+        if (transform.position == _targetPosition) StopMoving();
         Debug.DrawLine(transform.position, _targetPosition, Color.red);
     }
 
@@ -125,6 +125,12 @@ public class Player : MonoBehaviour {
         {
             if (_hasFire) UpdateTorche(pCol.gameObject.GetComponent<Torche>());
         }
+    }
+
+    void StopMoving()
+    {
+        _isMoving = false;
+        if (!animator.GetBool("isHoldingFire")) animator.SetInteger("PNJWalkState", 0);
     }
 
     void CutTree(Tree pTree)

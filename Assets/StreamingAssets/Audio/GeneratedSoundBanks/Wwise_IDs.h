@@ -30,6 +30,7 @@ namespace AK
         static const AkUniqueID PLAY_WOOD = 1574178725U;
         static const AkUniqueID STOP_AMB = 435770000U;
         static const AkUniqueID STOP_FIRE = 2526624148U;
+        static const AkUniqueID STOP_MUSIC = 2837384057U;
     } // namespace EVENTS
 
     namespace STATES

@@ -542,6 +542,11 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 79067546}
   m_Script: {fileID: 11500000, guid: 352e418505bd3aa498aef4ca580faf3c, type: 3}
+--- !u!4 &89420487 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4777684651036630, guid: fc54370b38adb4c12981672f9d4fb12e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1975230309}
 --- !u!1001 &91166090
 Prefab:
   m_ObjectHideFlags: 0
@@ -2203,7 +2208,7 @@ Prefab:
         type: 2}
       propertyPath: tentPosition
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1085709288}
     - target: {fileID: 212500699274975884, guid: 22ba1d7a45c9ea64da5f7e96a9b4bbd6,
         type: 2}
       propertyPath: m_SortingOrder
@@ -2643,7 +2648,7 @@ Prefab:
         type: 2}
       propertyPath: tentPosition
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 89420487}
     - target: {fileID: 212500699274975884, guid: 22ba1d7a45c9ea64da5f7e96a9b4bbd6,
         type: 2}
       propertyPath: m_SortingOrder
@@ -2895,6 +2900,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1085709288 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4777684651036630, guid: fc54370b38adb4c12981672f9d4fb12e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1986106526}
 --- !u!1 &1096181351
 GameObject:
   m_ObjectHideFlags: 0

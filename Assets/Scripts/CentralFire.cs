@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CentralFire : MonoBehaviour
 {
@@ -24,6 +25,8 @@ public class CentralFire : MonoBehaviour
     int _animFireState = 0;
 
     [SerializeField] Animator _animator;
+    [SerializeField] Slider _slider;
+    [SerializeField] float _offset_y = 5;
 
     #region Singleton
     private static CentralFire _instance;
@@ -54,6 +57,23 @@ public class CentralFire : MonoBehaviour
         AkSoundEngine.PostEvent("Play_Fire", gameObject);
         AkSoundEngine.PostEvent("Play_Amb", gameObject);
         AkSoundEngine.PostEvent("Play_Music", gameObject);
+
+        Vector3 lSliderPos = new Vector3(transform.position.x, transform.position.y + _offset_y, transform.position.z);
+        Vector3 lPos = Camera.main.WorldToScreenPoint(lSliderPos);
+
+        _slider.transform.position = lPos;
+        _slider.gameObject.SetActive(false);
+        _slider.value = _levelFire;
+    }
+
+    void OnMouseOver()
+    {
+        _slider.gameObject.SetActive(true);
+    }
+
+    void OnMouseExit()
+    {
+        _slider.gameObject.SetActive(false);
     }
 
     public void UpdateFire(int pLumb, bool pIsUpgrade = true)
@@ -66,6 +86,8 @@ public class CentralFire : MonoBehaviour
         }
 
         if (!pIsUpgrade) DecreaseFire();
+
+        _slider.value = _levelFire;
     }
 
     void UpdateState(int pLumb)

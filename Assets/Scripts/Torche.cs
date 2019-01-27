@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Torche : MonoBehaviour {
 
@@ -17,6 +18,28 @@ public class Torche : MonoBehaviour {
 
     int _animFireState = 0;
 
+    [SerializeField] Slider _slider;
+    [SerializeField] float _offset_y = 5;
+
+    private void Start()
+    {
+        Vector3 lSliderPos = new Vector3(transform.position.x, transform.position.y + _offset_y, transform.position.z);
+        Vector3 lPos = Camera.main.WorldToScreenPoint(lSliderPos);
+
+        _slider.transform.position = lPos;
+        _slider.gameObject.SetActive(false);
+    }
+
+    void OnMouseOver()
+    {
+        _slider.gameObject.SetActive(true);
+    }
+
+    void OnMouseExit()
+    {
+        _slider.gameObject.SetActive(false);
+    }
+
     public void AddHeat(int value)
     {
         PNJ.AddHeat(value);
@@ -26,8 +49,8 @@ public class Torche : MonoBehaviour {
 
 	private void Update()
     {
-        /*float newSize = (PNJ._heat/50f);
-        transform.localScale = new Vector3(newSize,newSize,0);*/
+        _slider.value = PNJ._heat;
+
         if (0 <= PNJ._heat && PNJ._heat <= 30)
         {
             UpgradeFire0();

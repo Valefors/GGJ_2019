@@ -16,6 +16,8 @@ public class Player : MonoBehaviour {
     bool _isMoving;
     bool _hasFire = false;
 
+    Vector3 _previousPosition;
+
     const int LEFT_MOUSE_BUTTON = 0;
 
     delegate void DelAction();
@@ -74,11 +76,21 @@ public class Player : MonoBehaviour {
 
     void MovePlayer()
     {
-        //transform.LookAt(_targetPosition);
+        _previousPosition = transform.position;
         transform.position = Vector3.MoveTowards(transform.position, _targetPosition, _speed * Time.deltaTime);
+
+        UpdateSprite();
 
         if (transform.position == _targetPosition) _isMoving = false;
         Debug.DrawLine(transform.position, _targetPosition, Color.red);
+    }
+
+    void UpdateSprite()
+    {
+        if (transform.position.y > _previousPosition.y && (Mathf.Abs(transform.position.y - _previousPosition.y) > Mathf.Abs(transform.position.x - _previousPosition.x))) print("dos");
+        if (transform.position.y < _previousPosition.y && (Mathf.Abs(transform.position.y - _previousPosition.y) > Mathf.Abs(transform.position.x - _previousPosition.x))) print("face");
+        if (transform.position.x > _previousPosition.x && (Mathf.Abs(transform.position.y - _previousPosition.y) < Mathf.Abs(transform.position.x - _previousPosition.x))) print("droite");
+        if (transform.position.x < _previousPosition.x && (Mathf.Abs(transform.position.y - _previousPosition.y) < Mathf.Abs(transform.position.x - _previousPosition.x))) print("gauche");
     }
 
     private void OnTriggerEnter(Collider pCol)
@@ -108,11 +120,13 @@ public class Player : MonoBehaviour {
 
     void CutTree(Tree pTree)
     {
+        AkSoundEngine.PostEvent("Play_Wood", gameObject);
         pTree.Cut();
     }
 
     void TakeFire()
     {
+        AkSoundEngine.PostEvent("Play_PickTorch", gameObject);
         _hasFire = true;
         CentralFire.instance.UpdateFire(0, false);
     }
@@ -125,6 +139,7 @@ public class Player : MonoBehaviour {
 
     void TakeLumb(GameObject pLumb)
     {
+        AkSoundEngine.PostEvent("Play_PickWood", gameObject);
         _numberLumbs++;
         _speed -= SLOW_SPEED;
 
@@ -133,7 +148,8 @@ public class Player : MonoBehaviour {
 
     void UpdateFire()
     {
-        if(_numberLumbs > 0) CentralFire.instance.UpdateFire(_numberLumbs);
+        AkSoundEngine.PostEvent("Play_RefillFire", gameObject);
+        if (_numberLumbs > 0) CentralFire.instance.UpdateFire(_numberLumbs);
         _numberLumbs = 0;
         _speed = INITIAL_SPEED;
 

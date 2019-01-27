@@ -39,6 +39,7 @@ public class PNJ : MonoBehaviour {
     protected int _numberLumbs = 0;
     NavMeshAgent agent;
 
+    Vector3 _previousPosition;
 
     // Use this for initialization
     void Start () {
@@ -84,11 +85,13 @@ public class PNJ : MonoBehaviour {
 
     void CutTree(Tree pTree)
     {
+        AkSoundEngine.PostEvent("Play_PNJ_Wood", gameObject);
         pTree.Cut();
     }
 
     void UpdateFire()
     {
+        AkSoundEngine.PostEvent("Play_PNJ_RefillFire", gameObject);
         if (_numberLumbs > 0) CentralFire.instance.UpdateFire(_numberLumbs);
         _numberLumbs = 0;
         _speed = INITIAL_SPEED;
@@ -96,6 +99,7 @@ public class PNJ : MonoBehaviour {
 
     void TakeLumb(GameObject pLumb)
     {
+        AkSoundEngine.PostEvent("Play_PNJ_PickWood", gameObject);
         _numberLumbs++;
         _speed -= SLOW_SPEED;
         if (_speed < _minSpeed) _speed = _minSpeed;
@@ -132,6 +136,7 @@ public class PNJ : MonoBehaviour {
         }
         else if (_heat <0)
         {
+            AkSoundEngine.PostEvent("Play_BrasierOut", gameObject);
             Freeze();
         }
         else if (_heat<_heatWarm)
@@ -156,6 +161,7 @@ public class PNJ : MonoBehaviour {
     public void Freeze()
     {
         state = frozen;
+        //AkSoundEngine.PostEvent("Play_Ice", gameObject);
         // GERER CHANGEMEMENTS VISUELS
     }
 
@@ -167,6 +173,7 @@ public class PNJ : MonoBehaviour {
 
     public void AddHeat(int heatModifier)
     {
+        AkSoundEngine.PostEvent("Play_RefillBrasier", gameObject);
         _heat += heatModifier;
         if (_heat > _heatMax) _heat = _heatMax;
         HeatCheck();
@@ -236,13 +243,24 @@ public class PNJ : MonoBehaviour {
         //agent.SetDestination(obj.transform.position);
 
         //agent.Warp(obj.transform.position);
+        _previousPosition = transform.position;
 
         transform.position = Vector3.MoveTowards(transform.position, obj.transform.position, _speed*Time.deltaTime);
+        UpdateSprite();
+
         if (transform.position == obj.transform.position)
         {
             _hasReachedTarget = true;
             _isMoving = false;
             _moveTarget = null;
         }
+    }
+
+    void UpdateSprite()
+    {
+        if (transform.position.y > _previousPosition.y && (Mathf.Abs(transform.position.y - _previousPosition.y) > Mathf.Abs(transform.position.x - _previousPosition.x))) print("dos");
+        if (transform.position.y < _previousPosition.y && (Mathf.Abs(transform.position.y - _previousPosition.y) > Mathf.Abs(transform.position.x - _previousPosition.x))) print("face");
+        if (transform.position.x > _previousPosition.x && (Mathf.Abs(transform.position.y - _previousPosition.y) < Mathf.Abs(transform.position.x - _previousPosition.x))) print("droite");
+        if (transform.position.x < _previousPosition.x && (Mathf.Abs(transform.position.y - _previousPosition.y) < Mathf.Abs(transform.position.x - _previousPosition.x))) print("gauche");
     }
 }

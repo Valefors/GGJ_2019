@@ -15,7 +15,7 @@ public class CentralFire : MonoBehaviour
     int _currentState = 0;
 
     //Sates of the fire
-    [SerializeField] int[] _statesArray;
+    public int[] statesArray;
     [SerializeField] int _delayBetweenDecrease = 3;
     [SerializeField] int VALUE_PER_LUMB = 5;
     [SerializeField] int START_FIRE = 40;
@@ -50,10 +50,16 @@ public class CentralFire : MonoBehaviour
         _animFireState = 1;
 
         _animator.SetInteger("FireState", _animFireState);
+        print(GameManager.manager.isPlaying);
+        AkSoundEngine.PostEvent("Play_Fire", gameObject);
+        AkSoundEngine.PostEvent("Play_Amb", gameObject);
+        AkSoundEngine.PostEvent("Play_Music", gameObject);
     }
 
     public void UpdateFire(int pLumb, bool pIsUpgrade = true)
     {
+        AkSoundEngine.SetRTPCValue("FireValue", _levelFire);
+
         if (pIsUpgrade)
         {
             UpdateState(pLumb);
@@ -95,11 +101,11 @@ public class CentralFire : MonoBehaviour
 
     bool IsNextState()
     {
-        for (int i = 0; i < _statesArray.Length; i++)
+        for (int i = 0; i < statesArray.Length; i++)
         {
-            if (_levelFire > _statesArray[i] && _statesArray[i] > _currentState)
+            if (_levelFire > statesArray[i] && statesArray[i] > _currentState)
             {
-                _currentState = _statesArray[i];
+                _currentState = statesArray[i];
                 return true;
             }
         }
@@ -109,11 +115,11 @@ public class CentralFire : MonoBehaviour
 
     bool IsBeforeState()
     {
-        for (int i = 0; i < _statesArray.Length; i--)
+        for (int i = 0; i < statesArray.Length; i++)
         {
-            if (_levelFire <= _statesArray[i] && _statesArray[i] <= _currentState)
+            if (_levelFire <= statesArray[i] && statesArray[i] <= _currentState)
             {
-                _currentState = _statesArray[i];
+                _currentState = statesArray[i];
                 return true;
             }
         }
@@ -121,6 +127,24 @@ public class CentralFire : MonoBehaviour
         return false;
     }
 
+    public void Update()
+    {
+        if (GameManager.manager.isPlaying)
+        {
+            if (_animFireState == 0)
+            {
+                AkSoundEngine.SetState("FireState", "High");
+            }
+            if (_animFireState == 1)
+            {
+                AkSoundEngine.SetState("FireState", "Mid");
+            }
+            if (_animFireState == 2)
+            {
+                AkSoundEngine.SetState("FireState", "Low");
+            }
+        }
+    }
     IEnumerator DecreaseCoroutine()
     {
         while (GameManager.manager.isPlaying)

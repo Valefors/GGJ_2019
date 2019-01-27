@@ -6,17 +6,20 @@ public class Tree : MonoBehaviour {
 
     [SerializeField] GameObject _lumb;
     [SerializeField] SpriteRenderer _sr;
-    [SerializeField] Sprite _strumpSprite;
-    [SerializeField] Sprite _treeSprite;
+    [SerializeField] Sprite[] _strumpSprite;
+    [SerializeField] Sprite[] _treeSprite;
 
     [SerializeField] int _delayRepop = 2;
+    [SerializeField] Animator _animator;
 
     public void Cut()
     {
         Vector3 lPos = new Vector3(transform.position.x + 3, transform.position.y, transform.position.z);
 
         Instantiate(_lumb, lPos, Quaternion.identity, transform.parent);
-        _sr.sprite = _strumpSprite;
+
+        int lRandom = Random.Range(0, _strumpSprite.Length);
+        _sr.sprite = _strumpSprite[lRandom];
         tag = "Untagged";
 
         StartCoroutine(RepopCoroutine());
@@ -30,7 +33,9 @@ public class Tree : MonoBehaviour {
 
     void Repop()
     {
-        _sr.sprite = _treeSprite;
+        int lRandom = Random.Range(0, _treeSprite.Length);
+        _sr.sprite = _treeSprite[lRandom];
+        _animator.SetTrigger("PopPineTree_Trigger");
         tag = LevelManager.TREE_TAG;
     }
 }

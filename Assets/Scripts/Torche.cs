@@ -32,11 +32,13 @@ public class Torche : MonoBehaviour {
 
     void OnMouseOver()
     {
+        if (!GameManager.manager.isPlaying) return;
         _slider.gameObject.SetActive(true);
     }
 
     void OnMouseExit()
     {
+        if (!GameManager.manager.isPlaying) return;
         _slider.gameObject.SetActive(false);
     }
 
@@ -49,6 +51,8 @@ public class Torche : MonoBehaviour {
 
 	private void Update()
     {
+        if (!GameManager.manager.isPlaying) return;
+
         _slider.value = PNJ._heat;
 
         if (0 <= PNJ._heat && PNJ._heat <= 30)

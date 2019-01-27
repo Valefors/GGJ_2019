@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        isPlaying = true;
+        isPlaying = false;
 	}
 	
 	public void Play()
@@ -52,7 +52,12 @@ public class GameManager : MonoBehaviour {
     public void Menu()
     {
         isPlaying = false;
-        EventManager.TriggerEvent(EventManager.MENU_EVENT);
+        //EventManager.TriggerEvent(EventManager.MENU_EVENT);
+        AkSoundEngine.PostEvent("Stop_Amb", gameObject);
+        AkSoundEngine.PostEvent("Stop_Music", gameObject);
+        AkSoundEngine.PostEvent("Stop_Fire", gameObject);
+
+        SceneManager.LoadScene(0);
     }
 
     public void Pause()

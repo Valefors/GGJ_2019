@@ -219,7 +219,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1564,7 +1564,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1716,7 +1716,7 @@ Prefab:
       objectReference: {fileID: 1771740913}
     - target: {fileID: 1230766423863520, guid: 3047491fa0f284645a91b27e784c0fd5, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3047491fa0f284645a91b27e784c0fd5, type: 2}
@@ -1835,7 +1835,7 @@ Prefab:
       objectReference: {fileID: 1771740913}
     - target: {fileID: 1072786724709882, guid: 2ad2508c34c863c4e880a999c45b3e69, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2ad2508c34c863c4e880a999c45b3e69, type: 2}
@@ -2414,7 +2414,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b9312b6ffebe014c9998907550874ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlaying: 1
   heatingModifier: 15
+  nightMinDuration: 10
+  currentMinWait: 0
+  nbVillagersAlive: 0
+  maxFire: 100
+  totalVillagers: 0
 --- !u!4 &1879402633 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4025595843115942, guid: fc54370b38adb4c12981672f9d4fb12e,

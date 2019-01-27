@@ -113,7 +113,8 @@ MonoBehaviour:
   lumbCapacity: 3
   torch: {fileID: 0}
   tentPosition: {fileID: 0}
-  state: 2
+  state: -1
+  _moveTarget: {fileID: 0}
 --- !u!212 &212325785381424906
 SpriteRenderer:
   m_ObjectHideFlags: 1

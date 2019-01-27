@@ -5,10 +5,11 @@ using UnityEngine;
 public class Player : MonoBehaviour {
 
     [SerializeField] Camera cam;
-    [SerializeField] int _speed = 10;
+    [SerializeField] float _speed = 0;
 
-    [SerializeField] int INITIAL_SPEED = 10;
-    [SerializeField] int SLOW_SPEED = 2;
+    [SerializeField] float INITIAL_SPEED = 10f;
+    [SerializeField] float SLOW_SPEED = 2f;
+    [SerializeField] float MIN_SPEED = 0.5f;
 
     int _numberLumbs = 0;
 
@@ -45,6 +46,8 @@ public class Player : MonoBehaviour {
     void Start () {
         _targetPosition = transform.position;
         StopMoving();
+
+        _speed = INITIAL_SPEED;
 
         SetActionMove();
 	}
@@ -180,6 +183,7 @@ public class Player : MonoBehaviour {
         AkSoundEngine.PostEvent("Play_PickWood", gameObject);
         _numberLumbs++;
         _speed -= SLOW_SPEED;
+        if (_speed <= MIN_SPEED) _speed = MIN_SPEED;
 
         Destroy(pLumb);
     }

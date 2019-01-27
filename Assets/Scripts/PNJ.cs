@@ -288,7 +288,7 @@ public class PNJ : MonoBehaviour {
         _hasReachedTarget = true;
         _isMoving = false;
         _moveTarget = null;
-        animator.SetInteger("PNJWalkState", 0);
+        if(state>=warm)animator.SetInteger("PNJWalkState", 0);
     }
 
     void UpdateSprite()

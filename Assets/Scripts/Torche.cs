@@ -8,14 +8,6 @@ public class Torche : MonoBehaviour {
     [SerializeField] PNJ PNJ;
     [SerializeField] Animator _animator;
 
-    [SerializeField] int _decreasePerSecond = 2;
-    [SerializeField] int _delayBetweenDecrease = 3;
-
-    static int frozen = 0;
-    static int cold = 1;
-    static int warm = 2;
-    static int help = 3;
-
     int _animFireState = 0;
 
     [SerializeField] Slider _slider;

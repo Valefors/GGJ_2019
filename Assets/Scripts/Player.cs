@@ -23,6 +23,8 @@ public class Player : MonoBehaviour {
     delegate void DelAction();
     DelAction playerAction;
 
+    Animator animator;
+
     #region Singleton
     private static Player _instance;
     public static Player instance {
@@ -41,6 +43,7 @@ public class Player : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        //animator.GetComponent<Animator>();
         _targetPosition = transform.position;
         _isMoving = false;
 
@@ -86,11 +89,12 @@ public class Player : MonoBehaviour {
     }
 
     void UpdateSprite()
-    {
-        if (transform.position.y > _previousPosition.y && (Mathf.Abs(transform.position.y - _previousPosition.y) > Mathf.Abs(transform.position.x - _previousPosition.x))) print("dos");
-        if (transform.position.y < _previousPosition.y && (Mathf.Abs(transform.position.y - _previousPosition.y) > Mathf.Abs(transform.position.x - _previousPosition.x))) print("face");
-        if (transform.position.x > _previousPosition.x && (Mathf.Abs(transform.position.y - _previousPosition.y) < Mathf.Abs(transform.position.x - _previousPosition.x))) print("droite");
-        if (transform.position.x < _previousPosition.x && (Mathf.Abs(transform.position.y - _previousPosition.y) < Mathf.Abs(transform.position.x - _previousPosition.x))) print("gauche");
+    { /*
+        if (transform.position.y > _previousPosition.y && (Mathf.Abs(transform.position.y - _previousPosition.y) > Mathf.Abs(transform.position.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 1);
+        if (transform.position.y < _previousPosition.y && (Mathf.Abs(transform.position.y - _previousPosition.y) > Mathf.Abs(transform.position.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 2);
+        if (transform.position.x > _previousPosition.x && (Mathf.Abs(transform.position.y - _previousPosition.y) < Mathf.Abs(transform.position.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 4);
+        if (transform.position.x < _previousPosition.x && (Mathf.Abs(transform.position.y - _previousPosition.y) < Mathf.Abs(transform.position.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 3);
+   */
     }
 
     private void OnTriggerEnter(Collider pCol)

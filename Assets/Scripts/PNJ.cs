@@ -38,10 +38,14 @@ public class PNJ : MonoBehaviour {
     protected int _numberLumbs = 0;
     NavMeshAgent agent;
 
+    Animator animator;
+
     Vector3 _previousPosition;
 
     // Use this for initialization
     void Start () {
+        animator = GetComponent<Animator>();
+        transform.position = tentPosition.position;
         LevelManager.manager.nbVillagersAlive++;
         agent = GetComponent<NavMeshAgent>();
         _speed = INITIAL_SPEED;
@@ -79,6 +83,10 @@ public class PNJ : MonoBehaviour {
         {
             if (_numberLumbs <= 0) CutTree(pCol.GetComponent<Tree>());
         }
+
+        _moveTarget = null;
+        _isMoving = false;
+        Work();
     }
 
     void CutTree(Tree pTree)
@@ -142,14 +150,19 @@ public class PNJ : MonoBehaviour {
             if(state!=frozen)
             {
                 LevelManager.manager.nbVillagersAlive--;
+                animator.SetInteger("PNJWalkState", -1);
                 AkSoundEngine.PostEvent("Play_BrasierOut", gameObject);
                 Freeze();
             }
         }
         else if (_heat<_heatWarm)
         {
-            if(state == frozen) LevelManager.manager.nbVillagersAlive++;
-            Cold();
+            if (state == frozen)
+            {
+                LevelManager.manager.nbVillagersAlive++;
+                animator.SetInteger("PNJWalkState", 0);
+                Cold();
+            }
         }
     }
 
@@ -261,9 +274,9 @@ public class PNJ : MonoBehaviour {
 
     void UpdateSprite()
     {
-        if (transform.position.y > _previousPosition.y && (Mathf.Abs(transform.position.y - _previousPosition.y) > Mathf.Abs(transform.position.x - _previousPosition.x))) print("dos");
-        if (transform.position.y < _previousPosition.y && (Mathf.Abs(transform.position.y - _previousPosition.y) > Mathf.Abs(transform.position.x - _previousPosition.x))) print("face");
-        if (transform.position.x > _previousPosition.x && (Mathf.Abs(transform.position.y - _previousPosition.y) < Mathf.Abs(transform.position.x - _previousPosition.x))) print("droite");
-        if (transform.position.x < _previousPosition.x && (Mathf.Abs(transform.position.y - _previousPosition.y) < Mathf.Abs(transform.position.x - _previousPosition.x))) print("gauche");
+        if (transform.position.y > _previousPosition.y && (Mathf.Abs(transform.position.y - _previousPosition.y) > Mathf.Abs(transform.position.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 1);
+        if (transform.position.y < _previousPosition.y && (Mathf.Abs(transform.position.y - _previousPosition.y) > Mathf.Abs(transform.position.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 2);
+        if (transform.position.x > _previousPosition.x && (Mathf.Abs(transform.position.y - _previousPosition.y) < Mathf.Abs(transform.position.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 4);
+        if (transform.position.x < _previousPosition.x && (Mathf.Abs(transform.position.y - _previousPosition.y) < Mathf.Abs(transform.position.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 3);
     }
 }

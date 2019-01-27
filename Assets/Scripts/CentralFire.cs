@@ -45,7 +45,8 @@ public class CentralFire : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(DecreaseCoroutine());
+        EventManager.StartListening(EventManager.PLAY_EVENT, Play);
+
         _currentState = START_FIRE;
         _levelFire = START_FIRE;
 
@@ -65,13 +66,20 @@ public class CentralFire : MonoBehaviour
         _slider.value = _levelFire;
     }
 
+    void Play()
+    {
+        StartCoroutine(DecreaseCoroutine());
+    }
+
     void OnMouseOver()
     {
+        if (!GameManager.manager.isPlaying) return;
         _slider.gameObject.SetActive(true);
     }
 
     void OnMouseExit()
     {
+        if (!GameManager.manager.isPlaying) return;
         _slider.gameObject.SetActive(false);
     }
 
@@ -174,5 +182,9 @@ public class CentralFire : MonoBehaviour
             yield return new WaitForSecondsRealtime(_delayBetweenDecrease);
             DecreaseFire();
         }
+    }
+    private void OnDisable()
+    {
+        EventManager.StopListening(EventManager.PLAY_EVENT, Play);
     }
 }

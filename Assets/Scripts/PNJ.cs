@@ -50,11 +50,19 @@ public class PNJ : MonoBehaviour {
         agent = GetComponent<NavMeshAgent>();
         _speed = INITIAL_SPEED;
         HeatCheck();
+
+        EventManager.StartListening(EventManager.PLAY_EVENT, Play);
+    }
+
+    void Play()
+    {
         StartCoroutine(DecreaseCoroutine());
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
+
+    // Update is called once per frame
+    void Update () {
+        if (!GameManager.manager.isPlaying) return;
+
         if (_isMoving && _moveTarget != null)
         {
             MoveTo(_moveTarget);
@@ -65,6 +73,8 @@ public class PNJ : MonoBehaviour {
 
     private void OnTriggerEnter(Collider pCol)
     {
+        if (!GameManager.manager.isPlaying) return;
+
         if (pCol.gameObject.tag == LevelManager.LUMB_TAG)
         {
             if (_numberLumbs <= lumbCapacity)
@@ -278,5 +288,10 @@ public class PNJ : MonoBehaviour {
         if (transform.position.y < _previousPosition.y && (Mathf.Abs(transform.position.y - _previousPosition.y) > Mathf.Abs(transform.position.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 2);
         if (transform.position.x > _previousPosition.x && (Mathf.Abs(transform.position.y - _previousPosition.y) < Mathf.Abs(transform.position.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 4);
         if (transform.position.x < _previousPosition.x && (Mathf.Abs(transform.position.y - _previousPosition.y) < Mathf.Abs(transform.position.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 3);
+    }
+
+    private void OnDisable()
+    {
+        EventManager.StopListening(EventManager.PLAY_EVENT, Play);
     }
 }

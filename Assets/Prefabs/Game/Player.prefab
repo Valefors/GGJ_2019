@@ -140,7 +140,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
-  _speed: 10
+  _speed: 5
+  INITIAL_SPEED: 5
+  SLOW_SPEED: 2
 --- !u!212 &212087300008448974
 SpriteRenderer:
   m_ObjectHideFlags: 1

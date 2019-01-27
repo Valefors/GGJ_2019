@@ -52,6 +52,8 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (!GameManager.manager.isPlaying) return;
+
         if (playerAction != null) playerAction();  
 	}
 
@@ -99,7 +101,9 @@ public class Player : MonoBehaviour {
 
     private void OnTriggerEnter(Collider pCol)
     {
-        if(pCol.gameObject.tag == LevelManager.LUMB_TAG)
+        if (!GameManager.manager.isPlaying) return;
+
+        if (pCol.gameObject.tag == LevelManager.LUMB_TAG)
         {
             if(_numberLumbs < 3 && !_hasFire) TakeLumb(pCol.gameObject);
         }

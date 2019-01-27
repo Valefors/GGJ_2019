@@ -37,7 +37,7 @@ public class UIManager : MonoBehaviour {
         EventManager.StartListening(EventManager.RESUME_EVENT, Resume);
 
         _currentScreen = _menuScreen;
-        _currentScreen.gameObject.SetActive(true);
+        //_currentScreen.gameObject.SetActive(true);
     }
 	
     void Play()

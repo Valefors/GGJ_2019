@@ -39,6 +39,7 @@ public class PNJ : MonoBehaviour {
     protected int _numberLumbs = 0;
     NavMeshAgent agent;
 
+    Vector3 _previousPosition;
 
     // Use this for initialization
     void Start () {
@@ -242,13 +243,24 @@ public class PNJ : MonoBehaviour {
         //agent.SetDestination(obj.transform.position);
 
         //agent.Warp(obj.transform.position);
+        _previousPosition = transform.position;
 
         transform.position = Vector3.MoveTowards(transform.position, obj.transform.position, _speed*Time.deltaTime);
+        UpdateSprite();
+
         if (transform.position == obj.transform.position)
         {
             _hasReachedTarget = true;
             _isMoving = false;
             _moveTarget = null;
         }
+    }
+
+    void UpdateSprite()
+    {
+        if (transform.position.y > _previousPosition.y && (Mathf.Abs(transform.position.y - _previousPosition.y) > Mathf.Abs(transform.position.x - _previousPosition.x))) print("dos");
+        if (transform.position.y < _previousPosition.y && (Mathf.Abs(transform.position.y - _previousPosition.y) > Mathf.Abs(transform.position.x - _previousPosition.x))) print("face");
+        if (transform.position.x > _previousPosition.x && (Mathf.Abs(transform.position.y - _previousPosition.y) < Mathf.Abs(transform.position.x - _previousPosition.x))) print("droite");
+        if (transform.position.x < _previousPosition.x && (Mathf.Abs(transform.position.y - _previousPosition.y) < Mathf.Abs(transform.position.x - _previousPosition.x))) print("gauche");
     }
 }

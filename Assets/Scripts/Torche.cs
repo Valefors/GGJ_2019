@@ -44,21 +44,18 @@ public class Torche : MonoBehaviour {
 
     void UpgradeFire0()
     {
-        print("0 " + PNJ._heat);
         _animFireState = 0;
         _animator.SetInteger("FireState", _animFireState);
     }
 
     void UpgradeFire1()
     {
-        print("1 " + PNJ._heat);
         _animFireState = 1;
         _animator.SetInteger("FireState", _animFireState);
     }
 
     void UpgradeFire2()
     {
-        print("2 " + PNJ._heat);
         _animFireState = 2;
         _animator.SetInteger("FireState", _animFireState);
     }

@@ -160,7 +160,7 @@ public class PNJ : MonoBehaviour {
             {
                 LevelManager.manager.nbVillagersAlive--;
                 animator.SetInteger("PNJWalkState", -2);
-                AkSoundEngine.PostEvent("Play_BrasierOut", gameObject);
+                AkSoundEngine.PostEvent("Play_Ice", gameObject);
                 Freeze();
             }
         }

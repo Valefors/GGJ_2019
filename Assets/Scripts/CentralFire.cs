@@ -94,7 +94,7 @@ public class CentralFire : MonoBehaviour
     {
         _levelFire += pLumb * VALUE_PER_LUMB;
 
-        if (_levelFire > 99) print("WIN");
+        if (_levelFire > LevelManager.manager.maxFire) LevelManager.manager.WonFire();
 
         if (IsNextState())
         {
@@ -112,7 +112,7 @@ public class CentralFire : MonoBehaviour
     void DecreaseFire()
     {
         _levelFire -= _decreasePerSecond;
-        if (_levelFire <= 0) print("DEFEAT");
+        if (_levelFire <= 0) LevelManager.manager.LostFire();
 
         if (IsBeforeState())
         {

@@ -95,7 +95,7 @@ public class PNJ : MonoBehaviour {
         }
 
         StopMoving();
-        Work();
+        if(state==help)Work();
     }
 
     void CutTree(Tree pTree)
@@ -121,7 +121,7 @@ public class PNJ : MonoBehaviour {
 
         Destroy(pLumb);
         
-        Work();
+        if(state==help)Work();
     }
 
     IEnumerator DecreaseCoroutine()

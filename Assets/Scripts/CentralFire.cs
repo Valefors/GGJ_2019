@@ -75,12 +75,16 @@ public class CentralFire : MonoBehaviour
     {
         if (!GameManager.manager.isPlaying) return;
         _slider.gameObject.SetActive(true);
+
+        Cursor.SetCursor(LevelManager.manager.hooverCursor, Vector2.zero, CursorMode.Auto);
     }
 
     void OnMouseExit()
     {
         if (!GameManager.manager.isPlaying) return;
         _slider.gameObject.SetActive(false);
+
+        Cursor.SetCursor(LevelManager.manager.normalCursor, Vector2.zero, CursorMode.Auto);
     }
 
     public void UpdateFire(int pLumb, bool pIsUpgrade = true)

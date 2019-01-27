@@ -23,7 +23,7 @@ public class Player : MonoBehaviour {
     delegate void DelAction();
     DelAction playerAction;
 
-    Animator animator;
+    [SerializeField] Animator animator;
 
     #region Singleton
     private static Player _instance;
@@ -43,7 +43,6 @@ public class Player : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        //animator.GetComponent<Animator>();
         _targetPosition = transform.position;
         _isMoving = false;
 
@@ -91,12 +90,11 @@ public class Player : MonoBehaviour {
     }
 
     void UpdateSprite()
-    { /*
+    { 
         if (transform.position.y > _previousPosition.y && (Mathf.Abs(transform.position.y - _previousPosition.y) > Mathf.Abs(transform.position.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 1);
         if (transform.position.y < _previousPosition.y && (Mathf.Abs(transform.position.y - _previousPosition.y) > Mathf.Abs(transform.position.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 2);
         if (transform.position.x > _previousPosition.x && (Mathf.Abs(transform.position.y - _previousPosition.y) < Mathf.Abs(transform.position.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 4);
         if (transform.position.x < _previousPosition.x && (Mathf.Abs(transform.position.y - _previousPosition.y) < Mathf.Abs(transform.position.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 3);
-   */
     }
 
     private void OnTriggerEnter(Collider pCol)
@@ -137,12 +135,14 @@ public class Player : MonoBehaviour {
         AkSoundEngine.PostEvent("Play_PickTorch", gameObject);
         _hasFire = true;
         CentralFire.instance.UpdateFire(0, false);
+        animator.SetBool("isHoldingFire", true);
     }
 
     void UpdateTorche(Torche pTorche)
     {
         pTorche.AddHeat(LevelManager.manager.heatingModifier);
         _hasFire = false;
+        animator.SetBool("isHoldingFire", false);
     }
 
     void TakeLumb(GameObject pLumb)

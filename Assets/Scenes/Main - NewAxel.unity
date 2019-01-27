@@ -404,6 +404,10 @@ MonoBehaviour:
   _gameOverScreen: {fileID: 988769546}
   _ingameScreen: {fileID: 837072822}
   _creditsScreen: {fileID: 1884552748}
+  _victoryScreen1: {fileID: 0}
+  _victoryScreen2: {fileID: 0}
+  _defeatScreen1: {fileID: 0}
+  _defeatScreen2: {fileID: 0}
 --- !u!1 &179764834
 GameObject:
   m_ObjectHideFlags: 0
@@ -658,6 +662,11 @@ Prefab:
       propertyPath: tentPosition
       value: 
       objectReference: {fileID: 1653322410}
+    - target: {fileID: 114831475346993864, guid: 22ba1d7a45c9ea64da5f7e96a9b4bbd6,
+        type: 2}
+      propertyPath: _heat
+      value: 70
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 22ba1d7a45c9ea64da5f7e96a9b4bbd6, type: 2}
   m_IsPrefabAsset: 0
@@ -2860,7 +2869,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4777684651036630, guid: fc54370b38adb4c12981672f9d4fb12e, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4777684651036630, guid: fc54370b38adb4c12981672f9d4fb12e, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -1.42
+      objectReference: {fileID: 0}
+    - target: {fileID: 4777684651036630, guid: fc54370b38adb4c12981672f9d4fb12e, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc54370b38adb4c12981672f9d4fb12e, type: 2}
@@ -3195,6 +3212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPlaying: 1
+  type: 0
 --- !u!4 &1771740914
 Transform:
   m_ObjectHideFlags: 0
@@ -3282,7 +3300,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b9312b6ffebe014c9998907550874ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlaying: 1
   heatingModifier: 15
   nightMinDuration: 10
   currentMinWait: 0
@@ -3480,7 +3497,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4777684651036630, guid: fc54370b38adb4c12981672f9d4fb12e, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4777684651036630, guid: fc54370b38adb4c12981672f9d4fb12e, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -0.76
+      objectReference: {fileID: 0}
+    - target: {fileID: 4777684651036630, guid: fc54370b38adb4c12981672f9d4fb12e, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -1.32
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc54370b38adb4c12981672f9d4fb12e, type: 2}

@@ -94,8 +94,7 @@ public class PNJ : MonoBehaviour {
             if (_numberLumbs <= 0) CutTree(pCol.GetComponent<Tree>());
         }
 
-        _moveTarget = null;
-        _isMoving = false;
+        StopMoving();
         Work();
     }
 
@@ -276,10 +275,16 @@ public class PNJ : MonoBehaviour {
 
         if (transform.position == obj.transform.position)
         {
-            _hasReachedTarget = true;
-            _isMoving = false;
-            _moveTarget = null;
+            StopMoving();
         }
+    }
+
+    void StopMoving()
+    {
+        _hasReachedTarget = true;
+        _isMoving = false;
+        _moveTarget = null;
+        animator.SetInteger("PNJWalkState", 0);
     }
 
     void UpdateSprite()

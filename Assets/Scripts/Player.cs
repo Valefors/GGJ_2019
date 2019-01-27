@@ -130,7 +130,7 @@ public class Player : MonoBehaviour {
     void StopMoving()
     {
         _isMoving = false;
-        animator.SetInteger("PNJWalkState", 0);
+        if (!animator.GetBool("isHoldingFire")) animator.SetInteger("PNJWalkState", 0);
     }
 
     void CutTree(Tree pTree)

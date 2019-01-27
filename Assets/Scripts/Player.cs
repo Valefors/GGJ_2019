@@ -113,7 +113,10 @@ public class Player : MonoBehaviour {
         if (pCol.gameObject.tag == LevelManager.CENTRAL_FIRE_TAG)
         {
             if (_numberLumbs > 0) UpdateFire();
-            else TakeFire();
+            else
+            {
+                if(!_hasFire) TakeFire();
+            }
         }
 
         if (pCol.gameObject.tag == LevelManager.TORCHE_TAG)

@@ -99,7 +99,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: da3615159fb654eb295aa588d38a2b81, type: 3}
   _delayRepop: 15
   _animator: {fileID: 95882064330539854}
-  OFFSET_X: 3
+  OFFSET_X: 0.5
 --- !u!212 &212252380088704670
 SpriteRenderer:
   m_ObjectHideFlags: 1

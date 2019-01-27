@@ -124,7 +124,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PNJ: {fileID: 0}
-  LEVEL_STATE: 1
+  _animator: {fileID: 0}
+  _decreasePerSecond: 2
+  _delayBetweenDecrease: 3
+  _slider: {fileID: 0}
+  _offset_y: 1
 --- !u!212 &212684361294675810
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour {
     }
 
     public bool isPlaying = false;
+    public int type = 0;
 
     private void Awake()
     {
@@ -32,15 +33,17 @@ public class GameManager : MonoBehaviour {
         EventManager.TriggerEvent(EventManager.PLAY_EVENT);
     }
 
-    public void Victory()
+    public void Victory(int pType)
     {
         isPlaying = false;
+        type = pType;
         EventManager.TriggerEvent(EventManager.VICTORY_EVENT);
     }
 
-    public void GameOver()
+    public void GameOver(int pType)
     {
         isPlaying = false;
+        type = pType;
         EventManager.TriggerEvent(EventManager.GAME_OVER_EVENT);
     }
 

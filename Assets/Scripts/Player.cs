@@ -22,6 +22,8 @@ public class Player : MonoBehaviour {
 
     const int LEFT_MOUSE_BUTTON = 0;
 
+    Tree lastTree;
+
     delegate void DelAction();
     DelAction playerAction;
 
@@ -150,14 +152,24 @@ public class Player : MonoBehaviour {
             animator.SetTrigger("Patpat_Trigger");
             animator.SetBool("Patpat_Bool", true);
         }
+
+        if (pCol.gameObject.tag == LevelManager.TREE_TAG)
+        {
+
+            lastTree = pCol.GetComponent<Tree>();
+            lastTree.isBeingChopped = true;
+        }
     }
 
     private void OnTriggerExit(Collider pCol)
     {
-        //if (pCol.gameObject.tag == LevelManager.DOGGO_TAG)
+        animator.SetTrigger("PatpatEnd_Trigger");
+        animator.SetBool("Patpat_Bool",false);
+
+        if (lastTree != null)
         {
-            animator.SetTrigger("PatpatEnd_Trigger");
-            animator.SetBool("Patpat_Bool",false);
+            lastTree.isBeingChopped = false;
+            lastTree = null;
         }
     }
 

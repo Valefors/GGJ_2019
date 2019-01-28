@@ -14,6 +14,8 @@ public class Tree : MonoBehaviour {
 
     [SerializeField] float OFFSET_X = 3f;
 
+    public bool isBeingChopped = false;
+
     #region Blink
     float spriteBlinkingTimer = 0.0f;
     float spriteBlinkingMiniDuration = 0.1f;
@@ -72,30 +74,40 @@ public class Tree : MonoBehaviour {
 
     private void SpriteBlinkingEffect()
     {
-        spriteBlinkingTotalTimer += Time.deltaTime;
-        if (spriteBlinkingTotalTimer >= spriteBlinkingTotalDuration)
+        if(isBeingChopped)
         {
-            startBlinking = false;
-            spriteBlinkingTotalTimer = 0.0f;
-            this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
+            spriteBlinkingTotalTimer += Time.deltaTime;
+            if (spriteBlinkingTotalTimer >= spriteBlinkingTotalDuration)
+            {
+                startBlinking = false;
+                spriteBlinkingTotalTimer = 0.0f;
+                this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
 
-            SetModeLumb();
+                SetModeLumb();
 
-            return;
+                return;
+            }
+
+            spriteBlinkingTimer += Time.deltaTime;
+            if (spriteBlinkingTimer >= spriteBlinkingMiniDuration)
+            {
+                spriteBlinkingTimer = 0.0f;
+                if (this.gameObject.GetComponent<SpriteRenderer>().enabled == true)
+                {
+                    this.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+                }
+                else
+                {
+                    this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
+                }
+            }
         }
-
-        spriteBlinkingTimer += Time.deltaTime;
-        if (spriteBlinkingTimer >= spriteBlinkingMiniDuration)
+        else
         {
             spriteBlinkingTimer = 0.0f;
-            if (this.gameObject.GetComponent<SpriteRenderer>().enabled == true)
-            {
-                this.gameObject.GetComponent<SpriteRenderer>().enabled = false;
-            }
-            else
-            {
-                this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
-            }
+            spriteBlinkingTotalTimer = 0.0f;
+            startBlinking = false;
+            this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
         }
     }
 

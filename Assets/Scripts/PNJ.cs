@@ -25,6 +25,8 @@ public class PNJ : MonoBehaviour {
     [SerializeField] Torche torch;
     [SerializeField] Transform tentPosition;
 
+    Tree lastTree;
+
     static int frozen = 0;
     static int cold = 1;
     static int warm = 2;
@@ -103,6 +105,25 @@ public class PNJ : MonoBehaviour {
 
         StopMoving();
         if(state==help)Work();
+    }
+
+    private void OnTriggerStay(Collider pCol)
+    {
+        if (pCol.gameObject.tag == LevelManager.TREE_TAG)
+        {
+
+            lastTree = pCol.GetComponent<Tree>();
+            lastTree.isBeingChopped = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider pCol)
+    {
+        if (lastTree != null)
+        {
+            lastTree.isBeingChopped = false;
+            lastTree = null;
+        }
     }
 
     void CutTree(Tree pTree)

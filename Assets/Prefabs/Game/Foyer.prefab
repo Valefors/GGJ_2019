@@ -126,8 +126,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1856215619445140}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_LocalPosition: {x: -12.333332, y: -11.799998, z: 0}
+  m_LocalScale: {x: 4.5, y: 4.5, z: 4.5}
   m_Children:
   - {fileID: 4578700563985110}
   - {fileID: 4064577042161082}
@@ -193,7 +193,7 @@ MonoBehaviour:
   statesArray: 140000003c0000006e000000
   _delayBetweenDecrease: 5
   VALUE_PER_LUMB: 5
-  START_FIRE: 15
+  START_FIRE: 45
   _decreasePerSecond: 2
   _valueFireTaken: 10
   _animator: {fileID: 95229274420157660}

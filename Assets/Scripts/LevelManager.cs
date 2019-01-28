@@ -10,6 +10,10 @@ public class LevelManager : MonoBehaviour {
     public static string TORCHE_TAG = "Torche";
     public static string DOGGO_TAG = "Doggo";
 
+    [SerializeField] GameObject PnjGroup;
+    [SerializeField] Player player;
+    PNJ[] listPNJ;
+
     public int heatingModifier = 15;
     public int nightMinDuration = 10; // en minutes
 
@@ -21,6 +25,8 @@ public class LevelManager : MonoBehaviour {
 
     public Texture2D hooverCursor;
     public Texture2D normalCursor;
+
+    GameObject[] trees;
 
     private static LevelManager _manager;
     public static LevelManager manager {
@@ -34,10 +40,36 @@ public class LevelManager : MonoBehaviour {
         if (_manager == null) _manager = this;
 
         else if (_manager != this) Destroy(gameObject);
+
+        trees = GameObject.FindGameObjectsWithTag(TREE_TAG);
+        listPNJ = PnjGroup.GetComponentsInChildren<PNJ>();
+        totalVillagers = listPNJ.Length;
+    }
+
+    public void ResetLevel()
+    {
+        Start();
+        CentralFire.instance.Reset();
+        player.Reset();
+        for(int i=0; i<listPNJ.Length;i++)
+        {
+            listPNJ[i].Reset();
+        }
+        GameObject[] lumbs = GameObject.FindGameObjectsWithTag(LUMB_TAG);
+        for (int i = 0; i < lumbs.Length; i++)
+        {
+            Destroy(lumbs[i]);
+        }
+        
+        for (int i = 0; i < trees.Length; i++)
+        {
+            trees[i].GetComponent<Tree>().Repop();
+        }
     }
 
     private void Start()
     {
+        nbVillagersAlive = totalVillagers;
         EventManager.StartListening(EventManager.PLAY_EVENT, Play);
     }
 
@@ -58,24 +90,28 @@ public class LevelManager : MonoBehaviour {
 
     public void LostFire()
     {
+        StopAllCoroutines();
         GameManager.manager.GameOver(1);
         //Debug.Log("PERDU GROS NAZE, ton feu s'est éteint ahahah nul");
     }
 
     public void LostFrozen()
     {
+        StopAllCoroutines();
         GameManager.manager.GameOver(2);
         //Debug.Log("PERDU GROS NAZE, la moitié de ton village est congelé, t'es tellement mauvais putain tu me fais pité...");
     }
 
     public void WonFire()
     {
+        StopAllCoroutines();
         GameManager.manager.Victory(1);
         //Debug.Log("GAGNÉ BG, ton feu il est tro bo");
     }
 
     public void WonNight()
     {
+        StopAllCoroutines();
         GameManager.manager.Victory(2);
         //Debug.Log("GAGNÉ BG, ta passé la nuit, c'est moins cool mais t'as quand même gagné (deso pas deso)");
     }

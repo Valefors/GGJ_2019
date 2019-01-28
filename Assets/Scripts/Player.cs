@@ -10,6 +10,7 @@ public class Player : MonoBehaviour {
     [SerializeField] float INITIAL_SPEED = 10f;
     [SerializeField] float SLOW_SPEED = 2f;
     [SerializeField] float MIN_SPEED = 0.5f;
+    [SerializeField] int _lumbCapacity = 3;
 
     int _numberLumbs = 0;
 
@@ -44,11 +45,15 @@ public class Player : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        _hasFire = false;
+        _isMoving = false;
         _targetPosition = transform.position;
+        transform.position = transform.parent.position;
         StopMoving();
 
         _speed = INITIAL_SPEED;
 
+        animator.SetBool("isHoldingFire", false);
         SetActionMove();
 	}
 	
@@ -58,6 +63,11 @@ public class Player : MonoBehaviour {
 
         if (playerAction != null) playerAction();  
 	}
+
+    public void Reset()
+    {
+        Start();
+    }
 
     void SetActionMove()
     {
@@ -109,7 +119,7 @@ public class Player : MonoBehaviour {
 
         if (pCol.gameObject.tag == LevelManager.LUMB_TAG)
         {
-            if(_numberLumbs < 3 && !_hasFire) TakeLumb(pCol.gameObject);
+            if(_numberLumbs < _lumbCapacity && !_hasFire) TakeLumb(pCol.gameObject);
         }
 
         if (pCol.gameObject.tag == LevelManager.TREE_TAG)
@@ -165,15 +175,17 @@ public class Player : MonoBehaviour {
 
     void TakeFire()
     {
-        AkSoundEngine.PostEvent("Play_PickTorch", gameObject);
-        _hasFire = true;
-        CentralFire.instance.UpdateFire(0, false);
-        animator.SetBool("isHoldingFire", true);
+        if(CentralFire.instance.UpdateFire(0, false))
+        {
+            AkSoundEngine.PostEvent("Play_PickTorch", gameObject);
+            _hasFire = true;
+            animator.SetBool("isHoldingFire", true);
+        }
     }
 
     void UpdateTorche(Torche pTorche)
     {
-        pTorche.AddHeat(LevelManager.manager.heatingModifier);
+        pTorche.AddHeat(CentralFire.instance._valueFireTaken);
         _hasFire = false;
         animator.SetBool("isHoldingFire", false);
     }

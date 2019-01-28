@@ -27,6 +27,17 @@ public class GameManager : MonoBehaviour {
         isPlaying = false;
         Cursor.SetCursor(LevelManager.manager.normalCursor, Vector2.zero, CursorMode.Auto);
     }
+
+    public void ResetGame()
+    {
+        Start();
+        LevelManager.manager.ResetLevel();
+    }
+
+    public void SetIsPlaying(bool newPlay)
+    {
+        isPlaying = newPlay;
+    }
 	
 	public void Play()
     {

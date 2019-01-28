@@ -37,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1209886610995378}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.18, y: -4.16, z: 0}
+  m_LocalPosition: {x: -10.64, y: 7.53, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -101,7 +101,8 @@ MonoBehaviour:
   _animator: {fileID: 95882064330539854}
   OFFSET_X: 0.5
   spriteBlinkingTotalDuration: 3
-  nbLogsDropped: 6
+  nbMinLogsDropped: 2
+  nbMaxLogsDropped: 5
 --- !u!212 &212252380088704670
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -136,7 +137,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: deb262e26e0ff4e0e8eef8a7efcab072, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

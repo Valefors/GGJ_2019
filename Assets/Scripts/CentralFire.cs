@@ -12,7 +12,7 @@ public class CentralFire : MonoBehaviour
         get { return _levelFire; }
     }
 
-    int _currentState = 0;
+    public int _currentState = 0;
 
     //Sates of the fire
     public int[] statesArray;
@@ -20,8 +20,7 @@ public class CentralFire : MonoBehaviour
     [SerializeField] int VALUE_PER_LUMB = 5;
     [SerializeField] int START_FIRE = 40;
     [SerializeField] int _decreasePerSecond = 2;
-
-    int _animFireState = 0;
+    [SerializeField] public int _valueFireTaken = 5;
 
     [SerializeField] Animator _animator;
     [SerializeField] Slider _slider;
@@ -47,12 +46,10 @@ public class CentralFire : MonoBehaviour
     {
         EventManager.StartListening(EventManager.PLAY_EVENT, Play);
 
-        _currentState = START_FIRE;
         _levelFire = START_FIRE;
+        CheckState();
 
-        _animFireState = 1;
-
-        _animator.SetInteger("FireState", _animFireState);
+        _animator.SetInteger("FireState", _currentState);
         //print(GameManager.manager.isPlaying);
         AkSoundEngine.PostEvent("Play_Fire", gameObject);
         AkSoundEngine.PostEvent("Play_Amb", gameObject);
@@ -64,6 +61,11 @@ public class CentralFire : MonoBehaviour
         _slider.transform.position = lPos;
         _slider.gameObject.SetActive(false);
         _slider.value = _levelFire;
+    }
+
+    public void Reset()
+    {
+        Start();
     }
 
     void Play()
@@ -87,7 +89,7 @@ public class CentralFire : MonoBehaviour
         Cursor.SetCursor(LevelManager.manager.normalCursor, Vector2.zero, CursorMode.Auto);
     }
 
-    public void UpdateFire(int pLumb, bool pIsUpgrade = true)
+    public bool UpdateFire(int pLumb, bool pIsUpgrade = true)
     {
         AkSoundEngine.SetRTPCValue("FireValue", _levelFire);
 
@@ -95,30 +97,30 @@ public class CentralFire : MonoBehaviour
         {
             UpdateState(pLumb);
         }
+        if (!pIsUpgrade) return TakeFire();
+        return true;
+    }
 
-        if (!pIsUpgrade) DecreaseFire();
-
-        _slider.value = _levelFire;
+    bool TakeFire()
+    {
+        if(_levelFire-_valueFireTaken>0)
+        {
+            _levelFire -= _valueFireTaken;
+            _slider.value = _levelFire;
+            CheckState();
+            return true;
+        }
+        return false;
     }
 
     void UpdateState(int pLumb)
     {
         
         _levelFire += pLumb * VALUE_PER_LUMB;
-        //Debug.Log("maxFire:" + LevelManager.manager.maxFire);
         if (_levelFire >= LevelManager.manager.maxFire) LevelManager.manager.WonFire();
 
-        if (IsNextState())
-        {
-            _animFireState++;
-            _animator.SetInteger("FireState", _animFireState);
-        }
-
-        /*else
-        {
-            float lUpdate = _updateSize * pLumb;
-            transform.localScale += new Vector3(lUpdate, lUpdate, 0);
-        }*/
+        CheckState();
+        _slider.value = _levelFire;
     }
 
     void DecreaseFire()
@@ -126,14 +128,25 @@ public class CentralFire : MonoBehaviour
         _levelFire -= _decreasePerSecond;
         if (_levelFire <= 0) LevelManager.manager.LostFire();
 
-        if (IsBeforeState())
-        {
-            _animFireState--;
-            _animator.SetInteger("FireState", _animFireState);
-        }
+        CheckState();
     }
 
-    bool IsNextState()
+    void CheckState()
+    {
+        for (int i = statesArray.Length-1; i >=0 ; i--)
+        {
+            Debug.Log("array:" + statesArray[i]);
+            if (_levelFire <= statesArray[i])
+            {
+                _currentState = i;
+            }
+        }
+        _animator.SetInteger("FireState", _currentState);
+    }
+
+    /*
+     * 
+     *     bool IsNextState()
     {
         for (int i = 0; i < statesArray.Length; i++)
         {
@@ -146,6 +159,9 @@ public class CentralFire : MonoBehaviour
 
         return false;
     }
+    
+
+    */
 
     bool IsBeforeState()
     {
@@ -165,15 +181,15 @@ public class CentralFire : MonoBehaviour
     {
         if (GameManager.manager.isPlaying)
         {
-            if (_animFireState == 0)
+            if (_currentState == 0)
             {
                 AkSoundEngine.SetState("FireState", "High");
             }
-            if (_animFireState == 1)
+            if (_currentState == 1)
             {
                 AkSoundEngine.SetState("FireState", "Mid");
             }
-            if (_animFireState == 2)
+            if (_currentState == 2)
             {
                 AkSoundEngine.SetState("FireState", "Low");
             }

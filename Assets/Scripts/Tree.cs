@@ -19,7 +19,8 @@ public class Tree : MonoBehaviour {
     float spriteBlinkingMiniDuration = 0.1f;
     float spriteBlinkingTotalTimer = 0.0f;
     [SerializeField] float spriteBlinkingTotalDuration = 1.0f;
-    [SerializeField] int nbLogsDropped = 3;
+    [SerializeField] int nbMinLogsDropped = 3;
+    [SerializeField] int nbMaxLogsDropped = 3;
     bool startBlinking = false;
     #endregion
 
@@ -48,8 +49,9 @@ public class Tree : MonoBehaviour {
 
     void SetModeLumb()
     {
-       // Vector3 lPos = new Vector3(transform.position.x + OFFSET_X, transform.position.y, transform.position.z);
+        // Vector3 lPos = new Vector3(transform.position.x + OFFSET_X, transform.position.y, transform.position.z);
 
+        int nbLogsDropped = Random.Range(nbMinLogsDropped, nbMaxLogsDropped);
         
         for(int i=0;i<nbLogsDropped;i++)
         {
@@ -103,7 +105,7 @@ public class Tree : MonoBehaviour {
         Repop();
     }
 
-    void Repop()
+    public void Repop()
     {
         int lRandom = Random.Range(0, _treeSprite.Length);
         _sr.sprite = _treeSprite[lRandom];

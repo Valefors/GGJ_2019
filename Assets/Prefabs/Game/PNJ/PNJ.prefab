@@ -100,16 +100,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 352e418505bd3aa498aef4ca580faf3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _heat: 70
+  _heat: 0
+  INITIAL_HEAT: 30
   _heatMax: 100
   _heatMin: -20
-  _timeFreeze: 10
+  _timeFreeze: 3
   _heatHelp: 60
   _heatWarm: 20
-  _speed: 2
-  _minSpeed: 1
-  INITIAL_SPEED: 4
-  SLOW_SPEED: 1
+  _speed: 0
+  _minSpeed: 0.1
+  INITIAL_SPEED: 1.5
+  SLOW_SPEED: 0.15
   lumbCapacity: 3
   torch: {fileID: 0}
   tentPosition: {fileID: 0}

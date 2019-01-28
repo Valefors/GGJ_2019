@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class PNJ : MonoBehaviour {
 
     public int _heat = 30;
+    [SerializeField] protected int INITIAL_HEAT = 30;
     #region Warmth
     [SerializeField] protected int _heatMax=100;
     [SerializeField] protected int _heatMin = -20;
@@ -44,9 +45,9 @@ public class PNJ : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        _heat = INITIAL_HEAT;
         animator = GetComponent<Animator>();
         transform.position = tentPosition.position;
-        LevelManager.manager.nbVillagersAlive++;
         agent = GetComponent<NavMeshAgent>();
         _speed = INITIAL_SPEED;
         HeatCheck();
@@ -83,7 +84,7 @@ public class PNJ : MonoBehaviour {
 
         if (pCol.gameObject.tag == LevelManager.LUMB_TAG)
         {
-            if (_numberLumbs <= lumbCapacity)
+            if (_numberLumbs < lumbCapacity)
             {
                 TakeLumb(pCol.gameObject);
             }
@@ -139,6 +140,11 @@ public class PNJ : MonoBehaviour {
         }
     }
 
+    public void Reset()
+    {
+        Start();
+    }
+
     void DecreaseHeat()
     {
         _heat--;
@@ -162,9 +168,6 @@ public class PNJ : MonoBehaviour {
         {
             if(state!=frozen)
             {
-                LevelManager.manager.nbVillagersAlive--;
-                animator.SetInteger("PNJWalkState", -2);
-                AkSoundEngine.PostEvent("Play_Ice", gameObject);
                 Freeze();
             }
         }
@@ -173,7 +176,7 @@ public class PNJ : MonoBehaviour {
             if (state!=cold)
             {
                 animator.SetInteger("PNJWalkState", -1);
-                LevelManager.manager.nbVillagersAlive++;
+                if(state==frozen)LevelManager.manager.nbVillagersAlive++;
                 Cold();
             }
         }
@@ -195,6 +198,8 @@ public class PNJ : MonoBehaviour {
     public void Freeze()
     {
         state = frozen;
+        LevelManager.manager.nbVillagersAlive--;
+        animator.SetInteger("PNJWalkState", -2);
         AkSoundEngine.PostEvent("Play_Ice", gameObject);
         // GERER CHANGEMEMENTS VISUELS
     }

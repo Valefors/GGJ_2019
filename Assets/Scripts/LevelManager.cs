@@ -29,6 +29,8 @@ public class LevelManager : MonoBehaviour {
     [SerializeField] int[] valueParticleBlizzardStates = new int[4];
 
     public int[] blizzardStates = new int[4];
+    [SerializeField] GameObject flag;
+    Animator flagAnim;
 
     public int nbVillagersAlive = 0;
     public int maxFire = 100;
@@ -55,6 +57,8 @@ public class LevelManager : MonoBehaviour {
         if (_manager == null) _manager = this;
 
         else if (_manager != this) Destroy(gameObject);
+
+        flagAnim = flag.GetComponent<Animator>();
 
         listPNJ = new List<PNJ>();
         ResetLevel();
@@ -83,6 +87,9 @@ public class LevelManager : MonoBehaviour {
 
     public void ResetLevel()
     {
+        currentTimeBlizzardWait = 0;
+        currentMinNightWait = 0;
+        isBlizzardOn = true;
         for (int i = 0; i < levels.Length; i++)
         {
             levels[i].SetActive(false);
@@ -196,27 +203,28 @@ public class LevelManager : MonoBehaviour {
 
     void SetBlizzardState(int state)
     {
-        /*ParticleSystem test=snowParticles;
-        test.E
-        test.emission.rateOverTime = 0;
-        EmissionModule newRate = snowParticles.emission;*/
+        ParticleSystem.EmissionModule newRate = snowParticles.emission;
         switch (state)
         {
             case 0:
                 Debug.Log("Etat Blizzard 1");
-                //newRate.rateOverTime= valueParticleBlizzardStates[0];
+                newRate.rateOverTime= valueParticleBlizzardStates[0];
+                flagAnim.SetInteger("BlizzardState", 0);
                 break;
             case 1:
                 Debug.Log("Etat Blizzard 2");
-                //newRate.rateOverTime = valueParticleBlizzardStates[1];
+                newRate.rateOverTime = valueParticleBlizzardStates[1];
+                flagAnim.SetInteger("BlizzardState", 1);
                 break;
             case 2:
                 Debug.Log("Etat Blizzard 3");
-                //newRate.rateOverTime = valueParticleBlizzardStates[2];
+                newRate.rateOverTime = valueParticleBlizzardStates[2];
+                flagAnim.SetInteger("BlizzardState", 2);
                 break;
             case 3:
                 Debug.Log("Etat Blizzard 4");
-                //newRate.rateOverTime = valueParticleBlizzardStates[3];
+                newRate.rateOverTime = valueParticleBlizzardStates[3];
+                flagAnim.SetInteger("BlizzardState", 3);
                 break;
         }
     }

@@ -151,7 +151,6 @@ public class Player : MonoBehaviour {
     {
         if (pCol.gameObject.tag == LevelManager.DOGGO_TAG)
         {
-            animator.SetTrigger("Patpat_Trigger");
             animator.SetBool("Patpat_Bool", true);
         }
 
@@ -165,7 +164,6 @@ public class Player : MonoBehaviour {
 
     private void OnTriggerExit(Collider pCol)
     {
-        animator.SetTrigger("PatpatEnd_Trigger");
         animator.SetBool("Patpat_Bool",false);
 
         if (lastTree != null)

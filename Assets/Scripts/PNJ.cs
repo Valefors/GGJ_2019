@@ -322,6 +322,8 @@ public class PNJ : MonoBehaviour {
 
     void UpdateSprite()
     {
+        if(_numberLumbs>0) animator.SetBool("isHoldingWood", true);
+        else animator.SetBool("isHoldingWood", false);
         if (transform.position.y > _previousPosition.y && (Mathf.Abs(transform.position.y - _previousPosition.y) > Mathf.Abs(transform.position.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 1);
         if (transform.position.y < _previousPosition.y && (Mathf.Abs(transform.position.y - _previousPosition.y) > Mathf.Abs(transform.position.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 2);
         if (transform.position.x > _previousPosition.x && (Mathf.Abs(transform.position.y - _previousPosition.y) < Mathf.Abs(transform.position.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 4);

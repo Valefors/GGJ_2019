@@ -4518,11 +4518,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b9312b6ffebe014c9998907550874ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeBlizzardWave: 2
   PnjGroup: {fileID: 1177021028}
   player: {fileID: 1588481765}
   heatingModifier: 5
   nightMinDuration: 10
-  currentMinWait: 0
+  currentMinNightWait: 0
+  currentMinBlizzardWait: 0
   nbVillagersAlive: 0
   maxFire: 150
   totalVillagers: 0

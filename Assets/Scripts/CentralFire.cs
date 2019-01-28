@@ -117,7 +117,6 @@ public class CentralFire : MonoBehaviour
     {
         
         _levelFire += pLumb * VALUE_PER_LUMB;
-        if (_levelFire >= LevelManager.manager.maxFire) LevelManager.manager.WonFire();
 
         CheckState();
         _slider.value = _levelFire;
@@ -126,7 +125,7 @@ public class CentralFire : MonoBehaviour
     void DecreaseFire()
     {
         _levelFire -= _decreasePerSecond;
-        if (_levelFire <= 0) LevelManager.manager.LostFire();
+
 
         CheckState();
     }
@@ -135,13 +134,16 @@ public class CentralFire : MonoBehaviour
     {
         for (int i = statesArray.Length-1; i >=0 ; i--)
         {
-            Debug.Log("array:" + statesArray[i]);
             if (_levelFire <= statesArray[i])
             {
                 _currentState = i;
             }
+            if (_levelFire > statesArray[statesArray.Length - 1]) _currentState = statesArray.Length - 1;
         }
         _animator.SetInteger("FireState", _currentState);
+
+        if (_levelFire <= 0) LevelManager.manager.LostFire();
+        else if (_levelFire >= LevelManager.manager.maxFire) LevelManager.manager.WonFire();
     }
 
     /*

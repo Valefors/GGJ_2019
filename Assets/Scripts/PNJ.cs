@@ -52,6 +52,8 @@ public class PNJ : MonoBehaviour {
         transform.position = tentPosition.position;
         agent = GetComponent<NavMeshAgent>();
         _speed = INITIAL_SPEED;
+
+        if (state == frozen) LevelManager.manager.nbVillagersAlive--;
         HeatCheck();
 
         EventManager.StartListening(EventManager.PLAY_EVENT, Play);
@@ -164,6 +166,7 @@ public class PNJ : MonoBehaviour {
     public void Reset()
     {
         Start();
+        Play();
     }
 
     void DecreaseHeat()

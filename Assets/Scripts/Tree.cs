@@ -91,6 +91,7 @@ public class Tree : MonoBehaviour {
             spriteBlinkingTimer += Time.deltaTime;
             if (spriteBlinkingTimer >= spriteBlinkingMiniDuration)
             {
+                AkSoundEngine.PostEvent("Play_Wood", gameObject);
                 spriteBlinkingTimer = 0.0f;
                 if (this.gameObject.GetComponent<SpriteRenderer>().enabled == true)
                 {

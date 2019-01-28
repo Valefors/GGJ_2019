@@ -181,7 +181,6 @@ public class Player : MonoBehaviour {
 
     void CutTree(Tree pTree)
     {
-        AkSoundEngine.PostEvent("Play_Wood", gameObject);
         pTree.Cut();
     }
 

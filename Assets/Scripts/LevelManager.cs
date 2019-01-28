@@ -10,6 +10,7 @@ public class LevelManager : MonoBehaviour {
     public static string TORCHE_TAG = "Torche";
     public static string DOGGO_TAG = "Doggo";
 
+    [SerializeField] float timeBlizzardWave = 2;
     [SerializeField] GameObject PnjGroup;
     [SerializeField] Player player;
     PNJ[] listPNJ;
@@ -17,7 +18,8 @@ public class LevelManager : MonoBehaviour {
     public int heatingModifier = 15;
     public int nightMinDuration = 10; // en minutes
 
-    public int currentMinWait = 0;
+    public int currentMinNightWait = 0;
+    public int currentMinBlizzardWait = 0;
 
     public int nbVillagersAlive = 0;
     public int maxFire = 100;
@@ -65,10 +67,13 @@ public class LevelManager : MonoBehaviour {
         {
             trees[i].GetComponent<Tree>().Repop();
         }
+        Play();
     }
 
     private void Start()
     {
+        currentMinBlizzardWait = 0;
+        currentMinNightWait = 0;
         nbVillagersAlive = totalVillagers;
         EventManager.StartListening(EventManager.PLAY_EVENT, Play);
     }
@@ -121,11 +126,19 @@ public class LevelManager : MonoBehaviour {
         while (GameManager.manager.isPlaying)
         {
             yield return new WaitForSecondsRealtime(60);
-            currentMinWait++;
-            if (currentMinWait >= nightMinDuration) break;
+            currentMinNightWait++;
+            currentMinBlizzardWait++;
+            if (currentMinNightWait >= nightMinDuration) break;
+            if (currentMinBlizzardWait >= timeBlizzardWave) Blizzard();
         }
         // FIN DE LA NUIT
-        WonNight();
+        if(GameManager.manager.isPlaying)WonNight();
+    }
+
+    void Blizzard()
+    {
+        currentMinBlizzardWait = 0;
+        // CODER LE BLIZZARD
     }
 
     private void OnDisable()

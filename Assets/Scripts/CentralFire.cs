@@ -66,6 +66,7 @@ public class CentralFire : MonoBehaviour
     public void Reset()
     {
         Start();
+        Play();
     }
 
     void Play()

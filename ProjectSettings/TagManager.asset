@@ -9,6 +9,7 @@ TagManager:
   - Torche
   - Tree
   - Doggo
+  - PNJ
   layers:
   - Default
   - TransparentFX

@@ -11,9 +11,12 @@ public class LevelManager : MonoBehaviour {
     public static string DOGGO_TAG = "Doggo";
 
     [SerializeField] float timeBlizzardWave = 2;
-    [SerializeField] GameObject PnjGroup;
     [SerializeField] Player player;
-    PNJ[] listPNJ;
+    List<PNJ> listPNJ;
+
+    [SerializeField] GameObject[] levels;
+    public int currentLevel = 1;
+    
 
     public int heatingModifier = 15;
     public int nightMinDuration = 10; // en minutes
@@ -43,26 +46,50 @@ public class LevelManager : MonoBehaviour {
 
         else if (_manager != this) Destroy(gameObject);
 
-        trees = GameObject.FindGameObjectsWithTag(TREE_TAG);
-        listPNJ = PnjGroup.GetComponentsInChildren<PNJ>();
-        totalVillagers = listPNJ.Length;
+        listPNJ = new List<PNJ>();
+        ResetLevel();
+    }
+
+    public void NextLevel()
+    {
+       /* Destroy(Player.instance);
+        Destroy(CentralFire.instance);*/
+        if(currentLevel<levels.Length) currentLevel++;
+        trees = null;
+        ResetLevel();
+    }
+
+    public void ResetVillagers()
+    {
+        listPNJ.Clear();
+        GameObject[] temp = GameObject.FindGameObjectsWithTag("PNJ");
+        for (int i = 0; i < temp.Length; i++)
+        {
+            listPNJ.Add(temp[i].GetComponent<PNJ>());
+            listPNJ[i].Reset();
+        }
+        totalVillagers = listPNJ.Count;
     }
 
     public void ResetLevel()
     {
+        for (int i = 0; i < levels.Length; i++)
+        {
+            levels[i].SetActive(false);
+        }
+        levels[currentLevel - 1].SetActive(true);
+        ResetVillagers();
         Start();
         CentralFire.instance.Reset();
         player.Reset();
-        for(int i=0; i<listPNJ.Length;i++)
-        {
-            listPNJ[i].Reset();
-        }
+
         GameObject[] lumbs = GameObject.FindGameObjectsWithTag(LUMB_TAG);
         for (int i = 0; i < lumbs.Length; i++)
         {
             Destroy(lumbs[i]);
         }
         
+        if(trees==null) trees = GameObject.FindGameObjectsWithTag(TREE_TAG);
         for (int i = 0; i < trees.Length; i++)
         {
             trees[i].GetComponent<Tree>().Repop();

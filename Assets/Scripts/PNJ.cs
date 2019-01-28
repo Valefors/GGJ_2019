@@ -171,7 +171,7 @@ public class PNJ : MonoBehaviour {
 
     void DecreaseHeat()
     {
-        _heat--;
+        _heat-=1+ LevelManager.manager.currentBlizzardColdModifier;
         HeatCheck();
     }
 

@@ -125,7 +125,7 @@ public class CentralFire : MonoBehaviour
 
     void DecreaseFire()
     {
-        _levelFire -= _decreasePerSecond;
+        _levelFire -= _decreasePerSecond+LevelManager.manager.currentBlizzardColdModifier;
 
 
         CheckState();

@@ -10,7 +10,6 @@ public class LevelManager : MonoBehaviour {
     public static string TORCHE_TAG = "Torche";
     public static string DOGGO_TAG = "Doggo";
 
-    [SerializeField] float timeBlizzardWave = 2;
     [SerializeField] Player player;
     List<PNJ> listPNJ;
 
@@ -22,11 +21,22 @@ public class LevelManager : MonoBehaviour {
     public int nightMinDuration = 10; // en minutes
 
     public int currentMinNightWait = 0;
-    public int currentMinBlizzardWait = 0;
+    public float currentTimeBlizzardWait = 0;
+    public float blizzardDuration = 1; // en secondes
+    public int currentBlizzardColdModifier = 0;
+    [SerializeField] int BlizzardModifier = 3;
+    [SerializeField] ParticleSystem snowParticles;
+    [SerializeField] int[] valueParticleBlizzardStates = new int[4];
+
+    public int[] blizzardStates = new int[4];
 
     public int nbVillagersAlive = 0;
     public int maxFire = 100;
     public int totalVillagers;
+
+    bool isBlizzardOn = false;
+
+    int seconds=0;
 
     public Texture2D hooverCursor;
     public Texture2D normalCursor;
@@ -99,7 +109,7 @@ public class LevelManager : MonoBehaviour {
 
     private void Start()
     {
-        currentMinBlizzardWait = 0;
+        currentTimeBlizzardWait = 0;
         currentMinNightWait = 0;
         nbVillagersAlive = totalVillagers;
         EventManager.StartListening(EventManager.PLAY_EVENT, Play);
@@ -152,19 +162,79 @@ public class LevelManager : MonoBehaviour {
     {
         while (GameManager.manager.isPlaying)
         {
-            yield return new WaitForSecondsRealtime(60);
-            currentMinNightWait++;
-            currentMinBlizzardWait++;
-            if (currentMinNightWait >= nightMinDuration) break;
-            if (currentMinBlizzardWait >= timeBlizzardWave) Blizzard();
+            yield return new WaitForSecondsRealtime(1);
+            seconds++;
+            currentTimeBlizzardWait++;
+            if (seconds==60)
+            {
+                seconds = 0;
+                currentMinNightWait++;
+                if (currentMinNightWait >= nightMinDuration)
+                {
+                    break;
+                }
+            }
+            if (!isBlizzardOn)
+            {
+                for(int i=blizzardStates.Length-1;i>=0;i--)
+                {
+                    if (currentTimeBlizzardWait <= blizzardStates[i]) SetBlizzardState(i);
+                }
+                if (currentTimeBlizzardWait >= blizzardDuration)
+                {
+                    Blizzard(true);
+                }
+            }
+            else if (isBlizzardOn && currentTimeBlizzardWait >= blizzardStates[3])
+            {
+                Blizzard(false);
+            }
         }
         // FIN DE LA NUIT
         if(GameManager.manager.isPlaying)WonNight();
     }
 
-    void Blizzard()
+    void SetBlizzardState(int state)
     {
-        currentMinBlizzardWait = 0;
+        /*ParticleSystem test=snowParticles;
+        test.E
+        test.emission.rateOverTime = 0;
+        EmissionModule newRate = snowParticles.emission;*/
+        switch (state)
+        {
+            case 0:
+                Debug.Log("Etat Blizzard 1");
+                //newRate.rateOverTime= valueParticleBlizzardStates[0];
+                break;
+            case 1:
+                Debug.Log("Etat Blizzard 2");
+                //newRate.rateOverTime = valueParticleBlizzardStates[1];
+                break;
+            case 2:
+                Debug.Log("Etat Blizzard 3");
+                //newRate.rateOverTime = valueParticleBlizzardStates[2];
+                break;
+            case 3:
+                Debug.Log("Etat Blizzard 4");
+                //newRate.rateOverTime = valueParticleBlizzardStates[3];
+                break;
+        }
+    }
+
+
+    void Blizzard(bool b)
+    {
+        currentTimeBlizzardWait = 0;
+        isBlizzardOn = b;
+        if(isBlizzardOn)
+        {
+            currentBlizzardColdModifier = BlizzardModifier;
+        }
+        else
+        {
+            currentBlizzardColdModifier = 0;
+        }
+
         // CODER LE BLIZZARD
     }
 

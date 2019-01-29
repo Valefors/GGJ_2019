@@ -12950,14 +12950,14 @@ MonoBehaviour:
   BlizzardModifier: 3
   snowParticles: {fileID: 964006370}
   valueParticleBlizzardStates: 0a000000140000002800000050000000
-  blizzardStates: 050000000a0000000f00000014000000
+  blizzardStates: 0f0000001e0000002d0000003c000000
   blizzardFog:
   - 0.2
   - 0.4
   - 0.8
   - 1.2
-  blizzardFlag: 27010000360100004a01000067010000
-  blizzardDuration: 5
+  blizzardFlag: 22010000360100004a01000068010000
+  blizzardDuration: 7
   flag: {fileID: 61481282}
   flagRotation: {fileID: 1655286957}
   nbVillagersAlive: 0

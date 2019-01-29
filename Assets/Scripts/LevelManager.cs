@@ -29,8 +29,10 @@ public class LevelManager : MonoBehaviour {
     [SerializeField] int[] valueParticleBlizzardStates = new int[4];
     [SerializeField] int[] blizzardStates = new int[4];
     [SerializeField] float[] blizzardFog = new float[4];
+    [SerializeField] int[] blizzardFlag = new int[4];
     public int blizzardDuration = 1; // en secondes
     [SerializeField] GameObject flag;
+    [SerializeField] GameObject flagRotation;
     Animator flagAnim;
 
     public int nbVillagersAlive = 0;
@@ -38,6 +40,7 @@ public class LevelManager : MonoBehaviour {
     public int totalVillagers;
 
     public bool isBlizzardOn = false;
+    int currentBlizzardState = 0;
 
     int seconds=0;
 
@@ -91,7 +94,6 @@ public class LevelManager : MonoBehaviour {
 
     public void ResetLevel()
     {
-        Blizzard(false);
         seconds = 0;
         currentTimeBlizzardWait = 0;
         currentMinNightWait = 0;
@@ -117,6 +119,7 @@ public class LevelManager : MonoBehaviour {
         {
             trees[i].GetComponent<Tree>().Repop();
         }
+        Blizzard(false);
         Play();
     }
 
@@ -132,6 +135,8 @@ public class LevelManager : MonoBehaviour {
     {
         StopAllCoroutines();
         StartCoroutine(TimeCoroutine());
+        fog.Density =0f;
+        SetBlizzardState(0);
     }
 
     private void Update()
@@ -196,7 +201,7 @@ public class LevelManager : MonoBehaviour {
                 {
                     if (currentTimeBlizzardWait <= blizzardStates[i])
                     {
-                        if(flagAnim.GetInteger("BlizzardState")!=i) SetBlizzardState(i);
+                        if(currentBlizzardState!=i) SetBlizzardState(i);
                         break;
                     }
                 }
@@ -214,7 +219,7 @@ public class LevelManager : MonoBehaviour {
         if(GameManager.manager.isPlaying)WonNight();
     }
 
-    IEnumerator FogCoroutine(float goal)
+    IEnumerator FogCoroutine(float goal, int rotation)
     {
         float firstValue = fog.Density;
         while (GameManager.manager.isPlaying)
@@ -222,7 +227,8 @@ public class LevelManager : MonoBehaviour {
             yield return new WaitForSecondsRealtime(0.1f);
             //print("fog:" + fog.Density);
             //print("goal:" + goal);
-            if(firstValue<goal)
+            flagRotation.transform.localEulerAngles = Vector3.Lerp(flagRotation.transform.localEulerAngles, new Vector3(flagRotation.transform.localEulerAngles.x, flagRotation.transform.localEulerAngles.y, rotation), 0.1f);
+            if (firstValue<goal)
             {
                 if (fog.Density < goal)
                 {
@@ -258,33 +264,34 @@ public class LevelManager : MonoBehaviour {
             case 0:
                 newRate.rateOverTime= valueParticleBlizzardStates[0];
                 newMain.simulationSpeed = 1;
-                flagAnim.SetInteger("BlizzardState", 0);
-                StartCoroutine(FogCoroutine(blizzardFog[0]));
-                //fog.Density = blizzardFog[0];
+                //flagAnim.SetInteger("BlizzardState", 0);
+                flagAnim.speed = 1;
+                StartCoroutine(FogCoroutine(blizzardFog[0], blizzardFlag[0]));
+                currentBlizzardState = 0;
                 break;
             case 1:
-                //Debug.Log("Etat Blizzard 2");
                 newMain.simulationSpeed = 2;
                 newRate.rateOverTime = valueParticleBlizzardStates[1];
-                flagAnim.SetInteger("BlizzardState", 1);
-                StartCoroutine(FogCoroutine(blizzardFog[1]));
-                //fog.Density = blizzardFog[1];
+                //flagAnim.SetInteger("BlizzardState", 1);
+                flagAnim.speed = 1.5f;
+                StartCoroutine(FogCoroutine(blizzardFog[1], blizzardFlag[1]));
+                currentBlizzardState = 1;
                 break;
             case 2:
-                //Debug.Log("Etat Blizzard 3");
                 newMain.simulationSpeed = 3;
+                flagAnim.speed = 2;
                 newRate.rateOverTime = valueParticleBlizzardStates[2];
-                flagAnim.SetInteger("BlizzardState", 2);
-                StartCoroutine(FogCoroutine(blizzardFog[2]));
-                //fog.Density = blizzardFog[2];
+                //flagAnim.SetInteger("BlizzardState", 2);
+                StartCoroutine(FogCoroutine(blizzardFog[2], blizzardFlag[2]));
+                currentBlizzardState =2;
                 break;
             case 3:
-                //Debug.Log("Etat Blizzard 4");
                 newMain.simulationSpeed = 4;
+                flagAnim.speed = 3;
                 newRate.rateOverTime = valueParticleBlizzardStates[3];
-                flagAnim.SetInteger("BlizzardState", 3);
-                StartCoroutine(FogCoroutine(blizzardFog[3]));
-                //fog.Density = blizzardFog[3];
+                //flagAnim.SetInteger("BlizzardState", 3);
+                StartCoroutine(FogCoroutine(blizzardFog[3], blizzardFlag[3]));
+                currentBlizzardState = 3;
                 break;
         }
     }

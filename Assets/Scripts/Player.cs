@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Player : MonoBehaviour {
 
@@ -29,6 +30,8 @@ public class Player : MonoBehaviour {
 
     [SerializeField] Animator animator;
 
+    NavMeshAgent agent;
+
     #region Singleton
     private static Player _instance;
     public static Player instance {
@@ -42,6 +45,8 @@ public class Player : MonoBehaviour {
         if (_instance == null) _instance = this;
 
         else if (_instance != this) Destroy(gameObject);
+
+        agent = GetComponent<NavMeshAgent>();
     }
     #endregion
 
@@ -91,7 +96,11 @@ public class Player : MonoBehaviour {
         Ray lRay = cam.ScreenPointToRay(Input.mousePosition);
         float lPoint = 0f;
 
-        if (lPlane.Raycast(lRay, out lPoint)) _targetPosition = lRay.GetPoint(lPoint);
+        if (lPlane.Raycast(lRay, out lPoint))
+        {
+            _targetPosition = lRay.GetPoint(lPoint);
+            //agent.SetDestination = lRay.GetPoint(lPoint);
+        }
 
         _isMoving = true;
     }

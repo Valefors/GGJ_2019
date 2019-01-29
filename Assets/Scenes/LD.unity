@@ -3019,6 +3019,7 @@ GameObject:
   - component: {fileID: 534669907}
   - component: {fileID: 534669906}
   - component: {fileID: 534669903}
+  - component: {fileID: 534669908}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3125,6 +3126,23 @@ MonoBehaviour:
     positionOffset: {x: 0, y: 0, z: 0}
   m_posOffsetData: {fileID: 0}
   listenerMask: 1
+--- !u!114 &534669908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 534669902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bc17351fc38a45ca9bfb8e99cdcda5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Color: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
+  Size: 1
+  HorizontalSpeed: 0.5
+  VerticalSpeed: 0.5
+  Density: 0.4
+  Shader: {fileID: 4800000, guid: fdac6dc07af404deba03f0e8f95edf1f, type: 3}
 --- !u!1 &537063587
 GameObject:
   m_ObjectHideFlags: 0
@@ -12716,6 +12734,11 @@ MonoBehaviour:
   snowParticles: {fileID: 964006370}
   valueParticleBlizzardStates: 0a000000140000002800000050000000
   blizzardStates: 0f0000001e0000002d0000003c000000
+  blizzardFog:
+  - 0.2
+  - 0.4
+  - 0.8
+  - 1.2
   flag: {fileID: 1810736645}
   nbVillagersAlive: 0
   maxFire: 150

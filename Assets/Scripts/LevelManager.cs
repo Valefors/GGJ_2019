@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UB;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour {
@@ -22,13 +23,13 @@ public class LevelManager : MonoBehaviour {
 
     public int currentMinNightWait = 0;
     public int currentTimeBlizzardWait = 0;
-    public int blizzardDuration = 1; // en secondes
     public int currentBlizzardColdModifier = 0;
     [SerializeField] int BlizzardModifier = 3;
     [SerializeField] ParticleSystem snowParticles;
     [SerializeField] int[] valueParticleBlizzardStates = new int[4];
-
-    public int[] blizzardStates = new int[4];
+    [SerializeField] int[] blizzardStates = new int[4];
+    [SerializeField] float[] blizzardFog = new float[4];
+    public int blizzardDuration = 1; // en secondes
     [SerializeField] GameObject flag;
     Animator flagAnim;
 
@@ -42,6 +43,8 @@ public class LevelManager : MonoBehaviour {
 
     public Texture2D hooverCursor;
     public Texture2D normalCursor;
+
+    D2FogsPE fog;
 
     GameObject[] trees;
 
@@ -61,6 +64,7 @@ public class LevelManager : MonoBehaviour {
         flagAnim = flag.GetComponent<Animator>();
 
         listPNJ = new List<PNJ>();
+        fog = Camera.main.GetComponent<D2FogsPE>();
         ResetLevel();
     }
 
@@ -100,6 +104,7 @@ public class LevelManager : MonoBehaviour {
         Start();
         CentralFire.instance.Reset();
         player.Reset();
+        flagAnim.SetInteger("BlizzardState", 0);
 
         GameObject[] lumbs = GameObject.FindGameObjectsWithTag(LUMB_TAG);
         for (int i = 0; i < lumbs.Length; i++)
@@ -172,7 +177,6 @@ public class LevelManager : MonoBehaviour {
         //Debug.Log("Coroutine");
         while (GameManager.manager.isPlaying)
         {
-            
             yield return new WaitForSecondsRealtime(1);
             //Debug.Log("1sec");
             seconds++;
@@ -188,9 +192,13 @@ public class LevelManager : MonoBehaviour {
             }
             if (!isBlizzardOn)
             {
-                for(int i=blizzardStates.Length-1;i>=0;i--)
+                for(int i=0;i<blizzardStates.Length;i++)
                 {
-                    if (currentTimeBlizzardWait <= blizzardStates[i]) SetBlizzardState(i);
+                    if (currentTimeBlizzardWait <= blizzardStates[i])
+                    {
+                        if(flagAnim.GetInteger("BlizzardState")!=i) SetBlizzardState(i);
+                        break;
+                    }
                 }
                 if (currentTimeBlizzardWait >= blizzardStates[3])
                 {
@@ -206,6 +214,41 @@ public class LevelManager : MonoBehaviour {
         if(GameManager.manager.isPlaying)WonNight();
     }
 
+    IEnumerator FogCoroutine(float goal)
+    {
+        float firstValue = fog.Density;
+        while (GameManager.manager.isPlaying)
+        {
+            yield return new WaitForSecondsRealtime(0.1f);
+            //print("fog:" + fog.Density);
+            //print("goal:" + goal);
+            if(firstValue<goal)
+            {
+                if (fog.Density < goal)
+                {
+                    fog.Density += 0.01f;
+                }
+                else
+                {
+                    fog.Density = goal;
+                    break;
+                }
+            }
+            else if (firstValue>goal)
+            {
+                if (fog.Density > goal)
+                {
+                    fog.Density -= 0.03f;
+                }
+                else
+                {
+                    fog.Density = goal;
+                    break;
+                }
+            }
+        }
+    }
+
     void SetBlizzardState(int state)
     {
         ParticleSystem.EmissionModule newRate = snowParticles.emission;
@@ -213,28 +256,35 @@ public class LevelManager : MonoBehaviour {
         switch (state)
         {
             case 0:
-                //Debug.Log("Etat Blizzard 1");
                 newRate.rateOverTime= valueParticleBlizzardStates[0];
                 newMain.simulationSpeed = 1;
                 flagAnim.SetInteger("BlizzardState", 0);
+                StartCoroutine(FogCoroutine(blizzardFog[0]));
+                //fog.Density = blizzardFog[0];
                 break;
             case 1:
                 //Debug.Log("Etat Blizzard 2");
                 newMain.simulationSpeed = 2;
                 newRate.rateOverTime = valueParticleBlizzardStates[1];
                 flagAnim.SetInteger("BlizzardState", 1);
+                StartCoroutine(FogCoroutine(blizzardFog[1]));
+                //fog.Density = blizzardFog[1];
                 break;
             case 2:
                 //Debug.Log("Etat Blizzard 3");
                 newMain.simulationSpeed = 3;
                 newRate.rateOverTime = valueParticleBlizzardStates[2];
                 flagAnim.SetInteger("BlizzardState", 2);
+                StartCoroutine(FogCoroutine(blizzardFog[2]));
+                //fog.Density = blizzardFog[2];
                 break;
             case 3:
                 //Debug.Log("Etat Blizzard 4");
                 newMain.simulationSpeed = 4;
                 newRate.rateOverTime = valueParticleBlizzardStates[3];
                 flagAnim.SetInteger("BlizzardState", 3);
+                StartCoroutine(FogCoroutine(blizzardFog[3]));
+                //fog.Density = blizzardFog[3];
                 break;
         }
     }

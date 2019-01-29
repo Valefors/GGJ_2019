@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: PNJ2_AOC
+  m_Controller: {fileID: 9100000, guid: ba8f33c117d8a45648d72a7edc5c3852, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: af27196488fd24c5f9f329539632e1c0, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 40f19912503d548ea8337954cbdc7111, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: a9de4ab31435a4df696ef3b811092f19, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 2501f0d55de3648a98afbf23168a4661, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 69373b8ae7f0d4482950794a18169cde, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 42f0273cb221944038b85cd24e8131ab, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: fd5ef6091a1b44cd58e790307a4c8465, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: e48572c6b176c4a71b7ba48af6ff81c5, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 45709bae4bb484006889638766e54fdb, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: dec8a4e85060b4e2ea7bbc3dd211e7cf, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 1dd10ef31a01a4f39a7bace351dce318, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 9d2f9db58a2d8499d814558efe5832eb, type: 2}

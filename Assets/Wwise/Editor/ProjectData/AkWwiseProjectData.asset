@@ -1,0 +1,333 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a9cd49a52516b645a9bcffe7f3d2c9d, type: 3}
+  m_Name: AkWwiseProjectData
+  m_EditorClassIdentifier: 
+  AcousticTextureWwu:
+  - PhysicalPath: Virtual Acoustics\Default Work Unit.wwu
+    ParentPhysicalPath: 
+    guid: d6cd72ae04809041a03dfaee3776835c
+    m_lastTime: -8586530247720925292
+    List: []
+  AuxBusWwu:
+  - PhysicalPath: Master-Mixer Hierarchy\Default Work Unit.wwu
+    ParentPhysicalPath: 
+    guid: f2fea763524afc4cb00a5da990600f70
+    m_lastTime: -8586530247730160464
+    List: []
+  BankWwu:
+  - PhysicalPath: SoundBanks\Default Work Unit.wwu
+    ParentPhysicalPath: 
+    guid: b1e20dd1a1dc904badaecf39637817d2
+    m_lastTime: -8586530080348982294
+    List:
+    - name: Main_Bank
+      guid: 6a846edc92a6e347b58098b8c22f81ef
+      id: 3989171651
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Main_Bank
+        ObjectType: 7
+      Path: Default Work Unit\Main_Bank
+  EventWwu:
+  - PhysicalPath: Events\Default Work Unit.wwu
+    ParentPhysicalPath: 
+    guid: ee154b6b6400dc43890cd5c458a1df81
+    m_lastTime: -8586530080349032016
+    List:
+    - name: Play_Amb
+      guid: c3809d8beb2b044a9a6b9d7fee3b6fa7
+      id: 2959533290
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Play_Amb
+        ObjectType: 3
+      Path: Default Work Unit\Play_Amb
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Play_BrasierOut
+      guid: 5b1462a6e0de974fb85f72599ea4fea8
+      id: 1004451622
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Play_BrasierOut
+        ObjectType: 3
+      Path: Default Work Unit\Play_BrasierOut
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Play_Fire
+      guid: 415608d1d3f68147ab8b351793a8ea59
+      id: 3015324718
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Play_Fire
+        ObjectType: 3
+      Path: Default Work Unit\Play_Fire
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Play_Footstep
+      guid: 2b1a43f0132df8448d902cab71b0b368
+      id: 1602358412
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Play_Footstep
+        ObjectType: 3
+      Path: Default Work Unit\Play_Footstep
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Play_Ice
+      guid: 18b7d20ffa089a4894f3340baff39b57
+      id: 2658815887
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Play_Ice
+        ObjectType: 3
+      Path: Default Work Unit\Play_Ice
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Play_Music
+      guid: 9f46170239c1284abf0e40db7c8aec69
+      id: 2932040671
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Play_Music
+        ObjectType: 3
+      Path: Default Work Unit\Play_Music
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Play_PickTorch
+      guid: 6079c98270dbfe419502f1cf2c8fcd10
+      id: 1970873953
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Play_PickTorch
+        ObjectType: 3
+      Path: Default Work Unit\Play_PickTorch
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Play_PickWood
+      guid: f628e3a0df3c5546956eaa5fb9bf1aae
+      id: 764264338
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Play_PickWood
+        ObjectType: 3
+      Path: Default Work Unit\Play_PickWood
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Play_PNJ_Footstep
+      guid: 4a5dcf2e55d6cc45a8e5aabf7a8f1558
+      id: 1359336119
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Play_PNJ_Footstep
+        ObjectType: 3
+      Path: Default Work Unit\Play_PNJ_Footstep
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Play_PNJ_PickWood
+      guid: 23741269468faa49b6e54df317b3db7d
+      id: 4261964841
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Play_PNJ_PickWood
+        ObjectType: 3
+      Path: Default Work Unit\Play_PNJ_PickWood
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Play_PNJ_RefillFire
+      guid: ed2a37b926ba8c46a5ec9d13b564d10c
+      id: 191496653
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Play_PNJ_RefillFire
+        ObjectType: 3
+      Path: Default Work Unit\Play_PNJ_RefillFire
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Play_PNJ_Wood
+      guid: 6c5a6b83be09d24087d5a47ea1bd2017
+      id: 1262388170
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Play_PNJ_Wood
+        ObjectType: 3
+      Path: Default Work Unit\Play_PNJ_Wood
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Play_RefillBrasier
+      guid: afe836d88073474bb86a43cd84b0cfea
+      id: 737814230
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Play_RefillBrasier
+        ObjectType: 3
+      Path: Default Work Unit\Play_RefillBrasier
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Play_RefillFire
+      guid: b0caddb25d0af34e8f32298484cf5d27
+      id: 1620508282
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Play_RefillFire
+        ObjectType: 3
+      Path: Default Work Unit\Play_RefillFire
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Play_Wood
+      guid: 034b9225b86240438093316066daf60f
+      id: 1574178725
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Play_Wood
+        ObjectType: 3
+      Path: Default Work Unit\Play_Wood
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Stop_Amb
+      guid: f5ab645fba508a448dbd69cefc357638
+      id: 435770000
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Stop_Amb
+        ObjectType: 3
+      Path: Default Work Unit\Stop_Amb
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Stop_Fire
+      guid: 0c218c273673a741b1bbf009793f732a
+      id: 2526624148
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Stop_Fire
+        ObjectType: 3
+      Path: Default Work Unit\Stop_Fire
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Stop_Music
+      guid: 9e4dd02fe61abb46b34549280eb7ee37
+      id: 2837384057
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Stop_Music
+        ObjectType: 3
+      Path: Default Work Unit\Stop_Music
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+  RtpcWwu:
+  - PhysicalPath: Game Parameters\Default Work Unit.wwu
+    ParentPhysicalPath: 
+    guid: caed21f79dedbb4eb94974445dd42487
+    m_lastTime: -8586530247730270166
+    List:
+    - name: FireValue
+      guid: 1841b631f65e024a838ea28181f7869f
+      id: 740779000
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: FireValue
+        ObjectType: 13
+      Path: Default Work Unit\FireValue
+  StateWwu:
+  - PhysicalPath: States\Default Work Unit.wwu
+    ParentPhysicalPath: 
+    guid: 563189aef3ed03459b546c97c08bc33b
+    m_lastTime: -8586530247720995108
+    List:
+    - name: FireState
+      guid: 04143ee274785149a37fc0c0b92887d4
+      id: 1043523140
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: FireState
+        ObjectType: 9
+      Path: Default Work Unit\FireState
+      values:
+      - name: High
+        guid: 7d02f4ab17834f4199749cb00fb7998a
+        id: 3550808449
+        PathAndIcons:
+        - ElementName: High
+          ObjectType: 8
+      - name: Low
+        guid: 12dc54577744124db4183644448fb33e
+        id: 545371365
+        PathAndIcons:
+        - ElementName: Low
+          ObjectType: 8
+      - name: Mid
+        guid: babd00c0cd632a4cad0d029d256a9c18
+        id: 1182670505
+        PathAndIcons:
+        - ElementName: Mid
+          ObjectType: 8
+      - name: None
+        guid: 4e6934bc5efe944db535ba8a57136bbd
+        id: 748895195
+        PathAndIcons:
+        - ElementName: None
+          ObjectType: 8
+  SwitchWwu:
+  - PhysicalPath: Switches\Default Work Unit.wwu
+    ParentPhysicalPath: 
+    guid: ceb3d1004abcfe46be254dc0d8ebf019
+    m_lastTime: -8586530247720985133
+    List: []
+  TriggerWwu:
+  - PhysicalPath: Triggers\Default Work Unit.wwu
+    ParentPhysicalPath: 
+    guid: 5cedaadcca0d9b43afc20f31359421fe
+    m_lastTime: -8586530247720935272
+    List: []
+  ExpandedItems:
+  - /WwiseFire
+  autoPopulateEnabled: 1
+  CurrentPluginConfig: 

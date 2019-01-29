@@ -160,12 +160,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _levelFire: 0
   _currentState: 0
-  statesArray: 0f0000001e0000005000000078000000
+  statesArray: 1e0000003c0000006400000096000000
   _delayBetweenDecrease: 3
-  VALUE_PER_LUMB: 5
+  VALUE_PER_LUMB: 7
   START_FIRE: 40
   _decreasePerSecond: 2
-  _valueFireTaken: 5
+  _valueFireTaken: 10
+  _valueFireGiven: 15
   _animator: {fileID: 95229274420157660}
   _slider: {fileID: 0}
   _offset_y: 5

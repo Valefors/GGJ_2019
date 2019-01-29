@@ -22,8 +22,8 @@ GameObject:
   - component: {fileID: 212246744117312100}
   - component: {fileID: 95868259764184954}
   - component: {fileID: 54965478487591542}
-  - component: {fileID: 65676397459132502}
   - component: {fileID: 114489084325374800}
+  - component: {fileID: 65676397459132502}
   m_Layer: 0
   m_Name: PNJ3
   m_TagString: PNJ
@@ -38,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1501907817354866}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.24, y: 0, z: 0}
+  m_LocalPosition: {x: 3.99, y: -0.1, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _heat: 0
-  INITIAL_HEAT: 30
+  INITIAL_HEAT: 35
   _heatMax: 100
   _heatMin: -20
   _timeFreeze: 3

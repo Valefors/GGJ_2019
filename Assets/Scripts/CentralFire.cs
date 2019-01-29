@@ -21,6 +21,7 @@ public class CentralFire : MonoBehaviour
     [SerializeField] int START_FIRE = 40;
     [SerializeField] int _decreasePerSecond = 2;
     [SerializeField] public int _valueFireTaken = 5;
+    [SerializeField] public int _valueFireGiven = 10;
 
     [SerializeField] Animator _animator;
     [SerializeField] Slider _slider;

@@ -28,7 +28,6 @@ public class Tree : MonoBehaviour {
 
     public void Cut()
     {
-        //print("cut");
         startBlinking = true;
     }
 
@@ -59,8 +58,6 @@ public class Tree : MonoBehaviour {
         {
             float newX = transform.position.x + Random.Range(-1f, 1f);
             float newY = transform.position.y + Random.Range(-1f, 1f);
-            Debug.Log(newX);
-            Debug.Log(newY);
             Vector3 position = new Vector3(newX, newY, 0);
             Instantiate(_lumb, position, Quaternion.identity, transform.parent);
         }

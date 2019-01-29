@@ -21,8 +21,8 @@ public class LevelManager : MonoBehaviour {
     public int nightMinDuration = 10; // en minutes
 
     public int currentMinNightWait = 0;
-    public float currentTimeBlizzardWait = 0;
-    public float blizzardDuration = 1; // en secondes
+    public int currentTimeBlizzardWait = 0;
+    public int blizzardDuration = 1; // en secondes
     public int currentBlizzardColdModifier = 0;
     [SerializeField] int BlizzardModifier = 3;
     [SerializeField] ParticleSystem snowParticles;
@@ -36,7 +36,7 @@ public class LevelManager : MonoBehaviour {
     public int maxFire = 100;
     public int totalVillagers;
 
-    bool isBlizzardOn = false;
+    public bool isBlizzardOn = false;
 
     int seconds=0;
 
@@ -87,9 +87,10 @@ public class LevelManager : MonoBehaviour {
 
     public void ResetLevel()
     {
+        Blizzard(false);
+        seconds = 0;
         currentTimeBlizzardWait = 0;
         currentMinNightWait = 0;
-        isBlizzardOn = true;
         for (int i = 0; i < levels.Length; i++)
         {
             levels[i].SetActive(false);
@@ -124,6 +125,7 @@ public class LevelManager : MonoBehaviour {
 
     void Play()
     {
+        StopAllCoroutines();
         StartCoroutine(TimeCoroutine());
     }
 
@@ -167,9 +169,12 @@ public class LevelManager : MonoBehaviour {
 
     IEnumerator TimeCoroutine()
     {
+        //Debug.Log("Coroutine");
         while (GameManager.manager.isPlaying)
         {
+            
             yield return new WaitForSecondsRealtime(1);
+            //Debug.Log("1sec");
             seconds++;
             currentTimeBlizzardWait++;
             if (seconds==60)
@@ -187,12 +192,12 @@ public class LevelManager : MonoBehaviour {
                 {
                     if (currentTimeBlizzardWait <= blizzardStates[i]) SetBlizzardState(i);
                 }
-                if (currentTimeBlizzardWait >= blizzardDuration)
+                if (currentTimeBlizzardWait >= blizzardStates[3])
                 {
                     Blizzard(true);
                 }
             }
-            else if (isBlizzardOn && currentTimeBlizzardWait >= blizzardStates[3])
+            else if (isBlizzardOn && currentTimeBlizzardWait >= blizzardDuration)
             {
                 Blizzard(false);
             }
@@ -204,25 +209,30 @@ public class LevelManager : MonoBehaviour {
     void SetBlizzardState(int state)
     {
         ParticleSystem.EmissionModule newRate = snowParticles.emission;
+        ParticleSystem.MainModule newMain = snowParticles.main;
         switch (state)
         {
             case 0:
-                Debug.Log("Etat Blizzard 1");
+                //Debug.Log("Etat Blizzard 1");
                 newRate.rateOverTime= valueParticleBlizzardStates[0];
+                newMain.simulationSpeed = 1;
                 flagAnim.SetInteger("BlizzardState", 0);
                 break;
             case 1:
-                Debug.Log("Etat Blizzard 2");
+                //Debug.Log("Etat Blizzard 2");
+                newMain.simulationSpeed = 2;
                 newRate.rateOverTime = valueParticleBlizzardStates[1];
                 flagAnim.SetInteger("BlizzardState", 1);
                 break;
             case 2:
-                Debug.Log("Etat Blizzard 3");
+                //Debug.Log("Etat Blizzard 3");
+                newMain.simulationSpeed = 3;
                 newRate.rateOverTime = valueParticleBlizzardStates[2];
                 flagAnim.SetInteger("BlizzardState", 2);
                 break;
             case 3:
-                Debug.Log("Etat Blizzard 4");
+                //Debug.Log("Etat Blizzard 4");
+                newMain.simulationSpeed = 4;
                 newRate.rateOverTime = valueParticleBlizzardStates[3];
                 flagAnim.SetInteger("BlizzardState", 3);
                 break;
@@ -241,9 +251,8 @@ public class LevelManager : MonoBehaviour {
         else
         {
             currentBlizzardColdModifier = 0;
+            SetBlizzardState(0);
         }
-
-        // CODER LE BLIZZARD
     }
 
     private void OnDisable()

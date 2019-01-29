@@ -61,6 +61,7 @@ public class PNJ : MonoBehaviour {
 
     void Play()
     {
+        StopAllCoroutines();
         StartCoroutine(DecreaseCoroutine());
     }
 

@@ -71,6 +71,7 @@ public class CentralFire : MonoBehaviour
 
     void Play()
     {
+        StopAllCoroutines();
         StartCoroutine(DecreaseCoroutine());
     }
 

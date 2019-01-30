@@ -5,9 +5,15 @@
 //
 //////////////////////////////////////////////////////////////////////
 
+[UnityEditor.InitializeOnLoad]
 public class AkWwiseXMLBuilder
 {
 	private static readonly System.DateTime s_LastParsed = System.DateTime.MinValue;
+
+	static AkWwiseXMLBuilder()
+	{
+		AkWwiseXMLWatcher.Instance.PopulateXML = Populate;
+	}
 
 	public static bool Populate()
 	{

@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Name: AkWwiseInitializationSettings
   m_EditorClassIdentifier: 
   PlatformSettingsNameList:
+  - Android
   - Mac
   - Windows
   PlatformSettingsList:
+  - {fileID: 11400000, guid: 1a6a10ff8b8c6b141bfa0e170f819b6c, type: 2}
   - {fileID: 11400000, guid: af846b316ad8f4c4a834df264e8979e9, type: 2}
   - {fileID: 11400000, guid: 99930255de225734ea75da58036440a6, type: 2}
-  InvalidReferencePlatforms:
-  - Android
+  InvalidReferencePlatforms: []
   UserSettings:
     m_BasePath: Audio\GeneratedSoundBanks
     m_StartupLanguage: English(US)
@@ -61,8 +62,8 @@ MonoBehaviour:
     m_MonitorQueuePoolSize: 65536
     m_MaximumHardwareTimeoutMs: 1000
     m_SpatialAudioSettings:
-      m_DiffractionShadowAttenuationFactor: 0
-      m_DiffractionShadowDegrees: 0
+      m_DiffractionShadowAttenuationFactor: 2
+      m_DiffractionShadowDegrees: 30
   CommsSettings:
     m_PoolSize: 262144
     m_DiscoveryBroadcastPort: 24024

@@ -53,11 +53,13 @@ public class Tree : MonoBehaviour {
         // Vector3 lPos = new Vector3(transform.position.x + OFFSET_X, transform.position.y, transform.position.z);
         AkSoundEngine.PostEvent("Stop_Cut", gameObject);
         int nbLogsDropped = Random.Range(nbMinLogsDropped, nbMaxLogsDropped);
+
+        float aleaRange = 0.5f;
         
         for(int i=0;i<nbLogsDropped;i++)
         {
-            float newX = transform.position.x + Random.Range(-1f, 1f);
-            float newY = transform.position.y + Random.Range(-1f, 1f);
+            float newX = transform.position.x + Random.Range(-aleaRange, aleaRange);
+            float newY = transform.position.y + Random.Range(-aleaRange, aleaRange);
             Vector3 position = new Vector3(newX, newY, 0);
             Instantiate(_lumb, position, Quaternion.identity, transform.parent);
         }

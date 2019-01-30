@@ -135,6 +135,9 @@ public class LevelManager : MonoBehaviour {
 
     void Play()
     {
+        AkSoundEngine.PostEvent("Play_Amb", gameObject);
+        AkSoundEngine.PostEvent("Play_Music", gameObject);
+        AkSoundEngine.PostEvent("Play_Fire", gameObject);
         print("play");
         StopAllCoroutines();
         StartCoroutine(TimeCoroutine());
@@ -154,6 +157,8 @@ public class LevelManager : MonoBehaviour {
 
     public void LostFire()
     {
+        AkSoundEngine.PostEvent("Stop_Music",gameObject);
+        AkSoundEngine.PostEvent("Stop_SFX", gameObject);
         StopAllCoroutines();
         GameManager.manager.GameOver(1);
         //Debug.Log("PERDU GROS NAZE, ton feu s'est éteint ahahah nul");
@@ -161,6 +166,8 @@ public class LevelManager : MonoBehaviour {
 
     public void LostFrozen()
     {
+        AkSoundEngine.PostEvent("Stop_Music", gameObject);
+        AkSoundEngine.PostEvent("Stop_SFX", gameObject);
         StopAllCoroutines();
         GameManager.manager.GameOver(2);
         //Debug.Log("PERDU GROS NAZE, la moitié de ton village est congelé, t'es tellement mauvais putain tu me fais pité...");
@@ -168,6 +175,8 @@ public class LevelManager : MonoBehaviour {
 
     public void WonFire()
     {
+        AkSoundEngine.PostEvent("Stop_Music", gameObject);
+        AkSoundEngine.PostEvent("Stop_SFX", gameObject);
         StopAllCoroutines();
         GameManager.manager.Victory(1);
         //Debug.Log("GAGNÉ BG, ton feu il est tro bo");
@@ -175,6 +184,8 @@ public class LevelManager : MonoBehaviour {
 
     public void WonNight()
     {
+        AkSoundEngine.PostEvent("Stop_Music", gameObject);
+        AkSoundEngine.PostEvent("Stop_SFX", gameObject);
         StopAllCoroutines();
         GameManager.manager.Victory(2);
         //Debug.Log("GAGNÉ BG, ta passé la nuit, c'est moins cool mais t'as quand même gagné (deso pas deso)");
@@ -265,6 +276,7 @@ public class LevelManager : MonoBehaviour {
         switch (state)
         {
             case 0:
+                AkSoundEngine.SetState("BlizzardState", "Low");
                 newRate.rateOverTime= valueParticleBlizzardStates[0];
                 newMain.simulationSpeed = 1;
                 //flagAnim.SetInteger("BlizzardState", 0);
@@ -273,6 +285,7 @@ public class LevelManager : MonoBehaviour {
                 currentBlizzardState = 0;
                 break;
             case 1:
+                AkSoundEngine.SetState("BlizzardState", "Medium");
                 newMain.simulationSpeed = 2;
                 newRate.rateOverTime = valueParticleBlizzardStates[1];
                 //flagAnim.SetInteger("BlizzardState", 1);
@@ -281,6 +294,7 @@ public class LevelManager : MonoBehaviour {
                 currentBlizzardState = 1;
                 break;
             case 2:
+                AkSoundEngine.SetState("BlizzardState", "High");
                 newMain.simulationSpeed = 3;
                 flagAnim.speed = 2;
                 newRate.rateOverTime = valueParticleBlizzardStates[2];
@@ -289,6 +303,7 @@ public class LevelManager : MonoBehaviour {
                 currentBlizzardState =2;
                 break;
             case 3:
+                AkSoundEngine.SetState("BlizzardState", "Blizzard");
                 newMain.simulationSpeed = 4;
                 flagAnim.speed = 3;
                 newRate.rateOverTime = valueParticleBlizzardStates[3];

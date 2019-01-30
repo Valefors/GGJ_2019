@@ -51,7 +51,7 @@ public class Tree : MonoBehaviour {
     void SetModeLumb()
     {
         // Vector3 lPos = new Vector3(transform.position.x + OFFSET_X, transform.position.y, transform.position.z);
-
+        AkSoundEngine.PostEvent("Stop_Cut", gameObject);
         int nbLogsDropped = Random.Range(nbMinLogsDropped, nbMaxLogsDropped);
         
         for(int i=0;i<nbLogsDropped;i++)
@@ -88,7 +88,6 @@ public class Tree : MonoBehaviour {
             spriteBlinkingTimer += Time.deltaTime;
             if (spriteBlinkingTimer >= spriteBlinkingMiniDuration)
             {
-                AkSoundEngine.PostEvent("Play_Wood", gameObject);
                 spriteBlinkingTimer = 0.0f;
                 if (this.gameObject.GetComponent<SpriteRenderer>().enabled == true)
                 {

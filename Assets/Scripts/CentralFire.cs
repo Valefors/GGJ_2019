@@ -52,9 +52,6 @@ public class CentralFire : MonoBehaviour
 
         _animator.SetInteger("FireState", _currentState);
         //print(GameManager.manager.isPlaying);
-        AkSoundEngine.PostEvent("Play_Fire", gameObject);
-        AkSoundEngine.PostEvent("Play_Amb", gameObject);
-        AkSoundEngine.PostEvent("Play_Music", gameObject);
 
         Vector3 lSliderPos = new Vector3(transform.position.x, transform.position.y + _offset_y, transform.position.z);
         Vector3 lPos = Camera.main.WorldToScreenPoint(lSliderPos);

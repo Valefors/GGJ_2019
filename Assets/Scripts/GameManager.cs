@@ -24,6 +24,9 @@ public class GameManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        AkSoundEngine.PostEvent("Stop_Amb", gameObject);
+        AkSoundEngine.PostEvent("Stop_Fire", gameObject);
+        AkSoundEngine.PostEvent("Play_Menu", gameObject);
         isPlaying = false;
         Cursor.SetCursor(LevelManager.manager.normalCursor, Vector2.zero, CursorMode.Auto);
     }
@@ -31,7 +34,7 @@ public class GameManager : MonoBehaviour {
     public void ResetGame()
     {
         Start();
-        LevelManager.manager.ResetLevel();
+        LevelManager.manager.SetLevel();
     }
 
     public void SetIsPlaying(bool newPlay)

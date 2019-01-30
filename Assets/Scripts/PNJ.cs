@@ -81,8 +81,11 @@ public class PNJ : MonoBehaviour {
             _isMoving = true;
         }
 
+        if (agent.remainingDistance <= 0) StopMoving();
         if (state == help) Work();
-	}
+
+        UpdateSprite();
+    }
 
     private void OnTriggerEnter2D(Collider2D pCol)
     {
@@ -300,15 +303,10 @@ public class PNJ : MonoBehaviour {
     {
         _previousPosition = transform.position;
 
-        //transform.position = Vector3.MoveTowards();
         if(_moveTarget!=null)agent.SetDestination(_moveTarget.transform.position);
         UpdateSprite();
 
-        if(!agent.hasPath) StopMoving();
-        /*if (transform.position == obj.transform.position)
-        {
-            StopMoving();
-        }*/
+
     }
 
     void StopMoving()

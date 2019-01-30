@@ -69,14 +69,21 @@ public class Player : MonoBehaviour {
         if (!GameManager.manager.isPlaying) return;
 
         if (playerAction != null) playerAction();
-
+        //print(agent.remainingDistance);
+        if (agent.remainingDistance <= 0) StopMoving();
         UpdateSprite();
-        if (agent.movingDirection == Vector2.zero || !agent.hasPath)
-        {
-            StopMoving();
-        }
-        
     }
+
+    void OnEnable()
+    {
+        agent.OnDestinationReached += StopMoving;
+    }
+
+    void OnDisable()
+    {
+        agent.OnDestinationReached += StopMoving;
+    }
+
 
     public void Reset()
     {
@@ -114,12 +121,9 @@ public class Player : MonoBehaviour {
     void MovePlayer()
     {
         _previousPosition = transform.position;
-        //transform.position = Vector3.MoveTowards(transform.position, _targetPosition, _speed * Time.deltaTime);
         agent.SetDestination(_targetPosition);
         UpdateSprite();
 
-       // agent.activePath
-        if (transform.position == _targetPosition) StopMoving();
         Debug.DrawLine(transform.position, _targetPosition, Color.red);
     }
 
@@ -136,7 +140,6 @@ public class Player : MonoBehaviour {
         
         if (_numberLumbs > 0) animator.SetBool("isHoldingWood", true);
         else animator.SetBool("isHoldingWood", false);
-        
     }
 
     private void OnTriggerEnter2D(Collider2D pCol)

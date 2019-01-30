@@ -301,13 +301,14 @@ public class PNJ : MonoBehaviour {
         _previousPosition = transform.position;
 
         //transform.position = Vector3.MoveTowards();
-        agent.SetDestination(_moveTarget.transform.position);
+        if(_moveTarget!=null)agent.SetDestination(_moveTarget.transform.position);
         UpdateSprite();
 
-        if (transform.position == obj.transform.position)
+        if(!agent.hasPath) StopMoving();
+        /*if (transform.position == obj.transform.position)
         {
             StopMoving();
-        }
+        }*/
     }
 
     void StopMoving()

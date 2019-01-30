@@ -17,7 +17,7 @@ public class Player : MonoBehaviour {
     int _numberLumbs = 0;
 
     Vector3 _targetPosition;
-    bool _isMoving;
+    public bool _isMoving;
     bool _hasFire = false;
 
     Vector3 _previousPosition;
@@ -68,8 +68,15 @@ public class Player : MonoBehaviour {
 	void Update () {
         if (!GameManager.manager.isPlaying) return;
 
-        if (playerAction != null) playerAction();  
-	}
+        if (playerAction != null) playerAction();
+
+        UpdateSprite();
+        if (agent.movingDirection == Vector2.zero || !agent.hasPath)
+        {
+            StopMoving();
+        }
+        
+    }
 
     public void Reset()
     {
@@ -111,18 +118,25 @@ public class Player : MonoBehaviour {
         agent.SetDestination(_targetPosition);
         UpdateSprite();
 
+       // agent.activePath
         if (transform.position == _targetPosition) StopMoving();
         Debug.DrawLine(transform.position, _targetPosition, Color.red);
     }
 
     void UpdateSprite()
     {
+        if(_isMoving)
+        {
+            if (_targetPosition.y > _previousPosition.y && (Mathf.Abs(_targetPosition.y - _previousPosition.y) > Mathf.Abs(_targetPosition.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 1);
+            if (_targetPosition.y < _previousPosition.y && (Mathf.Abs(_targetPosition.y - _previousPosition.y) > Mathf.Abs(_targetPosition.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 2);
+            if (_targetPosition.x > _previousPosition.x && (Mathf.Abs(_targetPosition.y - _previousPosition.y) < Mathf.Abs(_targetPosition.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 4);
+            if (_targetPosition.x < _previousPosition.x && (Mathf.Abs(_targetPosition.y - _previousPosition.y) < Mathf.Abs(_targetPosition.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 3);
+        }
+        else animator.SetInteger("PNJWalkState", 0);
+        
         if (_numberLumbs > 0) animator.SetBool("isHoldingWood", true);
         else animator.SetBool("isHoldingWood", false);
-        if (_targetPosition.y > _previousPosition.y && (Mathf.Abs(_targetPosition.y - _previousPosition.y) > Mathf.Abs(_targetPosition.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 1);
-        if (_targetPosition.y < _previousPosition.y && (Mathf.Abs(_targetPosition.y - _previousPosition.y) > Mathf.Abs(_targetPosition.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 2);
-        if (_targetPosition.x > _previousPosition.x && (Mathf.Abs(_targetPosition.y - _previousPosition.y) < Mathf.Abs(_targetPosition.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 4);
-        if (_targetPosition.x < _previousPosition.x && (Mathf.Abs(_targetPosition.y - _previousPosition.y) < Mathf.Abs(_targetPosition.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 3);
+        
     }
 
     private void OnTriggerEnter2D(Collider2D pCol)
@@ -179,7 +193,8 @@ public class Player : MonoBehaviour {
     void StopMoving()
     {
         _isMoving = false;
-        if (!animator.GetBool("isHoldingFire")) animator.SetInteger("PNJWalkState", 0);
+        //if (!animator.GetBool("isHoldingFire")) 
+        animator.SetInteger("PNJWalkState", 0);
     }
 
     void CutTree(Tree pTree)

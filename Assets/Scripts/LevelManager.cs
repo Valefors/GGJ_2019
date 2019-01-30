@@ -68,7 +68,7 @@ public class LevelManager : MonoBehaviour {
 
         listPNJ = new List<PNJ>();
         fog = Camera.main.GetComponent<D2FogsPE>();
-        ResetLevel();
+        SetLevel();
     }
 
     public void NextLevel()
@@ -92,7 +92,7 @@ public class LevelManager : MonoBehaviour {
         totalVillagers = listPNJ.Count;
     }
 
-    public void ResetLevel()
+    public void SetLevel()
     {
         seconds = 0;
         currentTimeBlizzardWait = 0;
@@ -103,36 +103,39 @@ public class LevelManager : MonoBehaviour {
         }
         levels[currentLevel - 1].SetActive(true);
         ResetVillagers();
-        Start();
-        CentralFire.instance.Reset();
-        player.Reset();
+        currentTimeBlizzardWait = 0;
+        currentMinNightWait = 0;
+        nbVillagersAlive = totalVillagers;
         flagAnim.SetInteger("BlizzardState", 0);
-
         GameObject[] lumbs = GameObject.FindGameObjectsWithTag(LUMB_TAG);
         for (int i = 0; i < lumbs.Length; i++)
         {
             Destroy(lumbs[i]);
         }
-        
-        if(trees==null) trees = GameObject.FindGameObjectsWithTag(TREE_TAG);
+        if (trees == null) trees = GameObject.FindGameObjectsWithTag(TREE_TAG);
         for (int i = 0; i < trees.Length; i++)
         {
             trees[i].GetComponent<Tree>().Repop();
         }
         Blizzard(false);
+    }
+
+    public void ResetLevel()
+    {
+        SetLevel();
+        CentralFire.instance.Reset();
+        player.Reset();
         Play();
     }
 
     private void Start()
     {
-        currentTimeBlizzardWait = 0;
-        currentMinNightWait = 0;
-        nbVillagersAlive = totalVillagers;
         EventManager.StartListening(EventManager.PLAY_EVENT, Play);
     }
 
     void Play()
     {
+        print("play");
         StopAllCoroutines();
         StartCoroutine(TimeCoroutine());
         fog.Density =0f;

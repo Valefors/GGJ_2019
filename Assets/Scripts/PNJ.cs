@@ -83,7 +83,7 @@ public class PNJ : MonoBehaviour {
         if (state == help) Work();
 	}
 
-    private void OnTriggerEnter(Collider pCol)
+    private void OnTriggerEnter2D(Collider2D pCol)
     {
         if (!GameManager.manager.isPlaying) return;
 
@@ -110,7 +110,7 @@ public class PNJ : MonoBehaviour {
         if(state==help)Work();
     }
 
-    private void OnTriggerStay(Collider pCol)
+    private void OnTriggerStay2D(Collider2D pCol)
     {
         if (pCol.gameObject.tag == LevelManager.TREE_TAG)
         {
@@ -120,7 +120,7 @@ public class PNJ : MonoBehaviour {
         }
     }
 
-    private void OnTriggerExit(Collider pCol)
+    private void OnTriggerExit2D(Collider2D pCol)
     {
         if (lastTree != null)
         {

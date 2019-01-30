@@ -99,7 +99,6 @@ public class Player : MonoBehaviour {
         if (lPlane.Raycast(lRay, out lPoint))
         {
             _targetPosition = lRay.GetPoint(lPoint);
-            //agent.SetDestination = lRay.GetPoint(lPoint);
         }
 
         _isMoving = true;
@@ -126,9 +125,11 @@ public class Player : MonoBehaviour {
         if (transform.position.x < _previousPosition.x && (Mathf.Abs(transform.position.y - _previousPosition.y) < Mathf.Abs(transform.position.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 3);
     }
 
-    private void OnTriggerEnter(Collider pCol)
+    private void OnTriggerEnter2D(Collider2D pCol)
     {
         if (!GameManager.manager.isPlaying) return;
+
+        print("collision");
 
         if (pCol.gameObject.tag == LevelManager.LUMB_TAG)
         {
@@ -138,7 +139,12 @@ public class Player : MonoBehaviour {
         if (pCol.gameObject.tag == LevelManager.TREE_TAG)
         {
             _isMoving = false;
-            if (_numberLumbs <= 0 && !_hasFire) CutTree(pCol.GetComponent<Tree>());
+            if (_numberLumbs <= 0 && !_hasFire)
+            {
+                lastTree = pCol.GetComponent<Tree>();
+                lastTree.isBeingChopped = true;
+                CutTree(lastTree);
+            }
         }
 
         if (pCol.gameObject.tag == LevelManager.CENTRAL_FIRE_TAG)
@@ -154,24 +160,15 @@ public class Player : MonoBehaviour {
         {
             if (_hasFire) UpdateTorche(pCol.gameObject.GetComponent<Torche>());
         }
-    }
 
-    private void OnTriggerStay(Collider pCol)
-    {
         if (pCol.gameObject.tag == LevelManager.DOGGO_TAG)
         {
+            print("doggo");
             animator.SetBool("Patpat_Bool", true);
-        }
-
-        if (pCol.gameObject.tag == LevelManager.TREE_TAG)
-        {
-
-            lastTree = pCol.GetComponent<Tree>();
-            lastTree.isBeingChopped = true;
         }
     }
 
-    private void OnTriggerExit(Collider pCol)
+    private void OnTriggerExit2D(Collider2D pCol)
     {
         animator.SetBool("Patpat_Bool",false);
 

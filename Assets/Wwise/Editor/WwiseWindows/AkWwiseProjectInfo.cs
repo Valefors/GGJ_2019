@@ -66,6 +66,8 @@ public static class AkWwiseProjectInfo
 			if (bDirty)
 			{
 				UnityEditor.EditorUtility.SetDirty(GetData());
+				UnityEditor.AssetDatabase.SaveAssets();
+				UnityEditor.AssetDatabase.Refresh();
 			}
 		}
 
@@ -80,6 +82,8 @@ public static class AkWwiseProjectInfo
 		if (bDirty)
 		{
 			UnityEditor.EditorUtility.SetDirty(GetData());
+			UnityEditor.AssetDatabase.SaveAssets();
+			UnityEditor.AssetDatabase.Refresh();
 		}
 	}
 }

@@ -77,12 +77,10 @@ public class WwiseSetupWizard
 			UnityEditor.AssetDatabase.Refresh();
 
 			UnityEngine.Debug.Log("WwiseUnity: End of demo scene setup, exiting Unity.");
-			UnityEditor.EditorApplication.Exit(0);
 		}
 		catch (System.Exception e)
 		{
 			UnityEngine.Debug.LogError("WwiseUnity: Exception caught: " + e);
-			UnityEditor.EditorApplication.Exit(1);
 		}
 	}
 

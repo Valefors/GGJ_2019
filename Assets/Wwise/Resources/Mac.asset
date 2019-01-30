@@ -99,8 +99,8 @@ MonoBehaviour:
     m_MonitorQueuePoolSize: 65536
     m_MaximumHardwareTimeoutMs: 1000
     m_SpatialAudioSettings:
-      m_DiffractionShadowAttenuationFactor: 0
-      m_DiffractionShadowDegrees: 0
+      m_DiffractionShadowAttenuationFactor: 2
+      m_DiffractionShadowDegrees: 30
   CommsSettings:
     m_PoolSize: 262144
     m_DiscoveryBroadcastPort: 24024

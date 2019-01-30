@@ -584,8 +584,6 @@ public class AkWwiseWWUBuilder
 			}
 		}
 
-		UnityEditor.AssetDatabase.SaveAssets();
-		UnityEditor.AssetDatabase.Refresh();
 		UnityEditor.EditorUtility.ClearProgressBar();
 	}
 

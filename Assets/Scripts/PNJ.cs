@@ -39,7 +39,7 @@ public class PNJ : MonoBehaviour {
     protected bool _hasReachedTarget=false;
     public GameObject _moveTarget;
 
-    public int _numberLumbs = 0;
+    protected int _numberLumbs = 0;
     PolyNavAgent agent;
 
     Animator animator;
@@ -53,7 +53,6 @@ public class PNJ : MonoBehaviour {
         transform.position = tentPosition.position;
         agent = GetComponent<PolyNavAgent>();
         _speed = INITIAL_SPEED;
-        agent.maxSpeed = INITIAL_SPEED;
 
         if (state == frozen) LevelManager.manager.nbVillagersAlive--;
         HeatCheck();
@@ -85,7 +84,7 @@ public class PNJ : MonoBehaviour {
         if (agent.remainingDistance <= 0) StopMoving();
         if (state == help) Work();
 
-        //UpdateSprite();
+        UpdateSprite();
     }
 
     private void OnTriggerEnter2D(Collider2D pCol)
@@ -111,32 +110,13 @@ public class PNJ : MonoBehaviour {
             if (_numberLumbs <= 0)
             {
                 lastTree = pCol.GetComponent<Tree>();
-                if(!lastTree.isBeingChopped)
-                {
-                    lastTree.isBeingChopped = true;
-                    CutTree(lastTree);
-                }
+                lastTree.isBeingChopped = true;
+                CutTree(lastTree);
             }
         }
 
         StopMoving();
         if(state==help)Work();
-    }
-
-    private void OnTriggerStay2D(Collider2D pCol)
-    {
-        if (pCol.gameObject.tag == LevelManager.TREE_TAG)
-        {
-            if (_numberLumbs <= 0)
-            {
-                lastTree = pCol.GetComponent<Tree>();
-                if (!lastTree.isBeingChopped)
-                {
-                    lastTree.isBeingChopped = true;
-                    CutTree(lastTree);
-                }
-            }
-        }
     }
 
     private void OnTriggerExit2D(Collider2D pCol)
@@ -160,7 +140,6 @@ public class PNJ : MonoBehaviour {
         if (_numberLumbs > 0) CentralFire.instance.UpdateFire(_numberLumbs);
         _numberLumbs = 0;
         _speed = INITIAL_SPEED;
-        agent.maxSpeed = INITIAL_SPEED;
     }
 
     void TakeLumb(GameObject pLumb)
@@ -168,12 +147,7 @@ public class PNJ : MonoBehaviour {
         AkSoundEngine.PostEvent("Play_PNJ_PickWood", gameObject);
         _numberLumbs++;
         _speed -= SLOW_SPEED;
-        agent.maxSpeed -= SLOW_SPEED;
-        if (_speed < _minSpeed)
-        {
-            _speed = _minSpeed;
-            agent.maxSpeed = _minSpeed;
-        }
+        if (_speed < _minSpeed) _speed = _minSpeed;
 
         Destroy(pLumb);
         
@@ -320,7 +294,7 @@ public class PNJ : MonoBehaviour {
         }
         else
         {
-            _moveTarget = CentralFire.instance.fire.gameObject;
+            _moveTarget = CentralFire.instance.gameObject;
             _isMoving = true;
         }
     }

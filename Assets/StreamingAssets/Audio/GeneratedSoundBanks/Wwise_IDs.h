@@ -18,6 +18,8 @@ namespace AK
         static const AkUniqueID PLAY_FIRE = 3015324718U;
         static const AkUniqueID PLAY_FOOTSTEP = 1602358412U;
         static const AkUniqueID PLAY_ICE = 2658815887U;
+        static const AkUniqueID PLAY_INITLEVEL = 633908326U;
+        static const AkUniqueID PLAY_MENU = 1278378707U;
         static const AkUniqueID PLAY_MUSIC = 2932040671U;
         static const AkUniqueID PLAY_PICKTORCH = 1970873953U;
         static const AkUniqueID PLAY_PICKWOOD = 764264338U;
@@ -29,18 +31,34 @@ namespace AK
         static const AkUniqueID PLAY_REFILLFIRE = 1620508282U;
         static const AkUniqueID PLAY_WOOD = 1574178725U;
         static const AkUniqueID STOP_AMB = 435770000U;
+        static const AkUniqueID STOP_CUT = 503277848U;
         static const AkUniqueID STOP_FIRE = 2526624148U;
         static const AkUniqueID STOP_MUSIC = 2837384057U;
+        static const AkUniqueID STOP_SFX = 287728669U;
     } // namespace EVENTS
 
     namespace STATES
     {
+        namespace BLIZZARDSTATE
+        {
+            static const AkUniqueID GROUP = 2547608014U;
+
+            namespace STATE
+            {
+                static const AkUniqueID BLIZZARD = 3610151219U;
+                static const AkUniqueID HIGH = 3550808449U;
+                static const AkUniqueID LOW = 545371365U;
+                static const AkUniqueID MEDIUM = 2849147824U;
+            } // namespace STATE
+        } // namespace BLIZZARDSTATE
+
         namespace FIRESTATE
         {
             static const AkUniqueID GROUP = 1043523140U;
 
             namespace STATE
             {
+                static const AkUniqueID DYING = 3328495488U;
                 static const AkUniqueID HIGH = 3550808449U;
                 static const AkUniqueID LOW = 545371365U;
                 static const AkUniqueID MID = 1182670505U;

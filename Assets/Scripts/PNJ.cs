@@ -127,7 +127,7 @@ public class PNJ : MonoBehaviour {
 
     void CutTree(Tree pTree)
     {
-        AkSoundEngine.PostEvent("Play_PNJ_Wood", gameObject);
+        AkSoundEngine.PostEvent("Play_PNJ_Wood", pTree.gameObject);
         pTree.Cut();
     }
 

@@ -36,6 +36,7 @@ GameObject:
   - component: {fileID: 4626584335582840}
   - component: {fileID: 114968825678005186}
   - component: {fileID: 95944638716881226}
+  - component: {fileID: 114022374164993306}
   - component: {fileID: 212949629625707904}
   - component: {fileID: 50912563936093834}
   - component: {fileID: 60801137523962706}
@@ -342,6 +343,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114022374164993306
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1436482250791912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f60a408ab2577f458f9dfc260fc6713, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  footsteps:
+    valueGuid: 
+    WwiseObjectReference: {fileID: 11400000, guid: 44712e3f793c086488991461c18cab3a,
+      type: 2}
 --- !u!114 &114796826113969030
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -388,6 +404,7 @@ MonoBehaviour:
   SLOW_SPEED: 0.5
   MIN_SPEED: 0.8
   _lumbCapacity: 3
+  _isMoving: 0
   animator: {fileID: 95944638716881226}
 --- !u!212 &212087300008448974
 SpriteRenderer:

@@ -103,21 +103,16 @@ public class PNJ : MonoBehaviour {
 
         if (pCol.gameObject.tag == LevelManager.TREE_TAG)
         {
-            if (_numberLumbs <= 0) CutTree(pCol.GetComponent<Tree>());
+            if (_numberLumbs <= 0)
+            {
+                lastTree = pCol.GetComponent<Tree>();
+                lastTree.isBeingChopped = true;
+                CutTree(lastTree);
+            }
         }
 
         StopMoving();
         if(state==help)Work();
-    }
-
-    private void OnTriggerStay2D(Collider2D pCol)
-    {
-        if (pCol.gameObject.tag == LevelManager.TREE_TAG)
-        {
-
-            lastTree = pCol.GetComponent<Tree>();
-            lastTree.isBeingChopped = true;
-        }
     }
 
     private void OnTriggerExit2D(Collider2D pCol)

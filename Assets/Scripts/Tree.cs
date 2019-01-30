@@ -15,6 +15,7 @@ public class Tree : MonoBehaviour {
     [SerializeField] float OFFSET_X = 3f;
 
     public bool isBeingChopped = false;
+    public bool hasSomeoneNear = false;
 
     #region Blink
     float spriteBlinkingTimer = 0.0f;
@@ -47,6 +48,20 @@ public class Tree : MonoBehaviour {
         if (!GameManager.manager.isPlaying) return;
         Cursor.SetCursor(LevelManager.manager.normalCursor, Vector2.zero, CursorMode.Auto);
     }
+
+    /*private void OnTriggerStay2D(Collider2D pCol)
+    {
+        Player p= pCol.GetComponent<Player>();
+        PNJ pnj = pCol.GetComponent<PNJ>();
+        if (p!=null)
+        {
+            if (p._numberLumbs <= 0)
+            {
+                isBeingChopped = true;
+                CutTree(lastTree);
+            }
+        }
+    }*/
 
     void SetModeLumb()
     {
@@ -129,6 +144,10 @@ public class Tree : MonoBehaviour {
         if (startBlinking == true)
         {
             SpriteBlinkingEffect();
+        }
+        else
+        {
+            AkSoundEngine.PostEvent("Stop_Cut", gameObject);
         }
     }
 }

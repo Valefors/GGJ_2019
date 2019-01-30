@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PolyNav;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -39,7 +40,7 @@ public class PNJ : MonoBehaviour {
     public GameObject _moveTarget;
 
     protected int _numberLumbs = 0;
-    NavMeshAgent agent;
+    PolyNavAgent agent;
 
     Animator animator;
 
@@ -50,7 +51,7 @@ public class PNJ : MonoBehaviour {
         _heat = INITIAL_HEAT;
         animator = GetComponent<Animator>();
         transform.position = tentPosition.position;
-        agent = GetComponent<NavMeshAgent>();
+        agent = GetComponent<PolyNavAgent>();
         _speed = INITIAL_SPEED;
 
         if (state == frozen) LevelManager.manager.nbVillagersAlive--;
@@ -299,7 +300,8 @@ public class PNJ : MonoBehaviour {
     {
         _previousPosition = transform.position;
 
-        transform.position = Vector3.MoveTowards(transform.position, obj.transform.position, _speed*Time.deltaTime);
+        //transform.position = Vector3.MoveTowards();
+        agent.SetDestination(_moveTarget.transform.position);
         UpdateSprite();
 
         if (transform.position == obj.transform.position)
@@ -320,10 +322,10 @@ public class PNJ : MonoBehaviour {
     {
         if(_numberLumbs>0) animator.SetBool("isHoldingWood", true);
         else animator.SetBool("isHoldingWood", false);
-        if (transform.position.y > _previousPosition.y && (Mathf.Abs(transform.position.y - _previousPosition.y) > Mathf.Abs(transform.position.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 1);
-        if (transform.position.y < _previousPosition.y && (Mathf.Abs(transform.position.y - _previousPosition.y) > Mathf.Abs(transform.position.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 2);
-        if (transform.position.x > _previousPosition.x && (Mathf.Abs(transform.position.y - _previousPosition.y) < Mathf.Abs(transform.position.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 4);
-        if (transform.position.x < _previousPosition.x && (Mathf.Abs(transform.position.y - _previousPosition.y) < Mathf.Abs(transform.position.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 3);
+        if (_moveTarget.transform.position.y > _previousPosition.y && (Mathf.Abs(_moveTarget.transform.position.y - _previousPosition.y) > Mathf.Abs(_moveTarget.transform.position.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 1);
+        if (_moveTarget.transform.position.y < _previousPosition.y && (Mathf.Abs(_moveTarget.transform.position.y - _previousPosition.y) > Mathf.Abs(_moveTarget.transform.position.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 2);
+        if (_moveTarget.transform.position.x > _previousPosition.x && (Mathf.Abs(_moveTarget.transform.position.y - _previousPosition.y) < Mathf.Abs(_moveTarget.transform.position.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 4);
+        if (_moveTarget.transform.position.x < _previousPosition.x && (Mathf.Abs(_moveTarget.transform.position.y - _previousPosition.y) < Mathf.Abs(_moveTarget.transform.position.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 3);
     }
 
     private void OnDisable()

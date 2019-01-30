@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PolyNav;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -30,7 +31,7 @@ public class Player : MonoBehaviour {
 
     [SerializeField] Animator animator;
 
-    NavMeshAgent agent;
+    PolyNavAgent agent;
 
     #region Singleton
     private static Player _instance;
@@ -45,8 +46,7 @@ public class Player : MonoBehaviour {
         if (_instance == null) _instance = this;
 
         else if (_instance != this) Destroy(gameObject);
-
-        agent = GetComponent<NavMeshAgent>();
+        agent = GetComponent<PolyNavAgent>();
     }
     #endregion
 
@@ -107,8 +107,8 @@ public class Player : MonoBehaviour {
     void MovePlayer()
     {
         _previousPosition = transform.position;
-        transform.position = Vector3.MoveTowards(transform.position, _targetPosition, _speed * Time.deltaTime);
-
+        //transform.position = Vector3.MoveTowards(transform.position, _targetPosition, _speed * Time.deltaTime);
+        agent.SetDestination(_targetPosition);
         UpdateSprite();
 
         if (transform.position == _targetPosition) StopMoving();
@@ -119,17 +119,15 @@ public class Player : MonoBehaviour {
     {
         if (_numberLumbs > 0) animator.SetBool("isHoldingWood", true);
         else animator.SetBool("isHoldingWood", false);
-        if (transform.position.y > _previousPosition.y && (Mathf.Abs(transform.position.y - _previousPosition.y) > Mathf.Abs(transform.position.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 1);
-        if (transform.position.y < _previousPosition.y && (Mathf.Abs(transform.position.y - _previousPosition.y) > Mathf.Abs(transform.position.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 2);
-        if (transform.position.x > _previousPosition.x && (Mathf.Abs(transform.position.y - _previousPosition.y) < Mathf.Abs(transform.position.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 4);
-        if (transform.position.x < _previousPosition.x && (Mathf.Abs(transform.position.y - _previousPosition.y) < Mathf.Abs(transform.position.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 3);
+        if (_targetPosition.y > _previousPosition.y && (Mathf.Abs(_targetPosition.y - _previousPosition.y) > Mathf.Abs(_targetPosition.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 1);
+        if (_targetPosition.y < _previousPosition.y && (Mathf.Abs(_targetPosition.y - _previousPosition.y) > Mathf.Abs(_targetPosition.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 2);
+        if (_targetPosition.x > _previousPosition.x && (Mathf.Abs(_targetPosition.y - _previousPosition.y) < Mathf.Abs(_targetPosition.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 4);
+        if (_targetPosition.x < _previousPosition.x && (Mathf.Abs(_targetPosition.y - _previousPosition.y) < Mathf.Abs(_targetPosition.x - _previousPosition.x))) animator.SetInteger("PNJWalkState", 3);
     }
 
     private void OnTriggerEnter2D(Collider2D pCol)
     {
         if (!GameManager.manager.isPlaying) return;
-
-        print("collision");
 
         if (pCol.gameObject.tag == LevelManager.LUMB_TAG)
         {
@@ -163,7 +161,6 @@ public class Player : MonoBehaviour {
 
         if (pCol.gameObject.tag == LevelManager.DOGGO_TAG)
         {
-            print("doggo");
             animator.SetBool("Patpat_Bool", true);
         }
     }

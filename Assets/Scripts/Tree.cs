@@ -71,7 +71,6 @@ public class Tree : MonoBehaviour {
 
     private void SpriteBlinkingEffect()
     {
-        print(isBeingChopped);
         if(isBeingChopped)
         {
             spriteBlinkingTotalTimer += Time.deltaTime;

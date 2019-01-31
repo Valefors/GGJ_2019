@@ -356,7 +356,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   footsteps:
     valueGuid: 
-    WwiseObjectReference: {fileID: 11400000, guid: 44712e3f793c086488991461c18cab3a,
+    WwiseObjectReference: {fileID: 11400000, guid: 71cd0b2ebc6f4014eac71d7e6c0664d7,
       type: 2}
 --- !u!114 &114796826113969030
 MonoBehaviour:
@@ -372,12 +372,12 @@ MonoBehaviour:
   _map: {fileID: 0}
   maxSpeed: 3.5
   mass: 1
-  stoppingDistance: 0
+  stoppingDistance: 0.1
   slowingDistance: 0.1
   accelerationRate: 50
   decelerationRate: 50
   lookAheadDistance: 1
-  avoidRadius: 0
+  avoidRadius: 0.1
   avoidanceConsiderStuckedTime: 3
   avoidanceConsiderReachedDistance: 1
   rotateTransform: 0
@@ -404,6 +404,7 @@ MonoBehaviour:
   SLOW_SPEED: 0.5
   MIN_SPEED: 0.8
   _lumbCapacity: 3
+  _numberLumbs: 0
   _isMoving: 0
   animator: {fileID: 95944638716881226}
 --- !u!212 &212087300008448974

@@ -15,6 +15,7 @@ public class Tree : MonoBehaviour {
     [SerializeField] float OFFSET_X = 3f;
 
     public bool isBeingChopped = false;
+    public bool hasSomeoneNear = false;
 
     #region Blink
     float spriteBlinkingTimer = 0.0f;
@@ -129,6 +130,10 @@ public class Tree : MonoBehaviour {
         if (startBlinking == true)
         {
             SpriteBlinkingEffect();
+        }
+        else
+        {
+            AkSoundEngine.PostEvent("Stop_Cut", gameObject);
         }
     }
 }

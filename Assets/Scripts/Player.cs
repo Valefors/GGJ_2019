@@ -14,7 +14,7 @@ public class Player : MonoBehaviour {
     [SerializeField] float MIN_SPEED = 0.5f;
     [SerializeField] int _lumbCapacity = 3;
 
-    int _numberLumbs = 0;
+    public int _numberLumbs = 0;
 
     Vector3 _targetPosition;
     public bool _isMoving;
@@ -59,6 +59,7 @@ public class Player : MonoBehaviour {
         StopMoving();
 
         _speed = INITIAL_SPEED;
+        agent.maxSpeed = INITIAL_SPEED;
 
         animator.SetBool("isHoldingFire", false);
         SetActionMove();
@@ -153,12 +154,15 @@ public class Player : MonoBehaviour {
 
         if (pCol.gameObject.tag == LevelManager.TREE_TAG)
         {
-            _isMoving = false;
+            //_isMoving = false;
             if (_numberLumbs <= 0 && !_hasFire)
             {
                 lastTree = pCol.GetComponent<Tree>();
-                lastTree.isBeingChopped = true;
-                CutTree(lastTree);
+                if (!lastTree.isBeingChopped)
+                {
+                    lastTree.isBeingChopped = true;
+                    CutTree(lastTree);
+                }
             }
         }
 
@@ -179,6 +183,22 @@ public class Player : MonoBehaviour {
         if (pCol.gameObject.tag == LevelManager.DOGGO_TAG)
         {
             animator.SetBool("Patpat_Bool", true);
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D pCol)
+    {
+        if (pCol.gameObject.tag == LevelManager.TREE_TAG)
+        {
+            if (_numberLumbs <= 0 && !_hasFire)
+            {
+                lastTree = pCol.GetComponent<Tree>();
+                if (!lastTree.isBeingChopped)
+                {
+                    lastTree.isBeingChopped = true;
+                    CutTree(lastTree);
+                }
+            }
         }
     }
 
@@ -228,6 +248,7 @@ public class Player : MonoBehaviour {
         AkSoundEngine.PostEvent("Play_PickWood", gameObject);
         _numberLumbs++;
         _speed -= SLOW_SPEED;
+        agent.maxSpeed -= SLOW_SPEED;
         if (_speed <= MIN_SPEED) _speed = MIN_SPEED;
 
         Destroy(pLumb);
@@ -239,6 +260,7 @@ public class Player : MonoBehaviour {
         if (_numberLumbs > 0) CentralFire.instance.UpdateFire(_numberLumbs);
         _numberLumbs = 0;
         _speed = INITIAL_SPEED;
+        agent.maxSpeed = INITIAL_SPEED;
 
     }
 }

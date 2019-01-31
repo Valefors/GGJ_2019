@@ -138,7 +138,7 @@ public class LevelManager : MonoBehaviour {
         AkSoundEngine.PostEvent("Play_Amb", gameObject);
         AkSoundEngine.PostEvent("Play_Music", gameObject);
         AkSoundEngine.PostEvent("Play_Fire", gameObject);
-        print("play");
+        //print("play");
         StopAllCoroutines();
         StartCoroutine(TimeCoroutine());
         fog.Density =0f;

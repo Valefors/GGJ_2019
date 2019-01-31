@@ -22,10 +22,12 @@ public class CentralFire : MonoBehaviour
     [SerializeField] int _decreasePerSecond = 2;
     [SerializeField] public int _valueFireTaken = 5;
     [SerializeField] public int _valueFireGiven = 10;
+    [SerializeField] public Transform fire;
 
     [SerializeField] Animator _animator;
     [SerializeField] Slider _slider;
     [SerializeField] float _offset_y = 5;
+    
 
     #region Singleton
     private static CentralFire _instance;

@@ -268,12 +268,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _map: {fileID: 0}
-  maxSpeed: 2
-  mass: 20
+  maxSpeed: 1.5
+  mass: 1
   stoppingDistance: 0.1
-  slowingDistance: 1
-  accelerationRate: 2
-  decelerationRate: 2
+  slowingDistance: 0.1
+  accelerationRate: 40
+  decelerationRate: 40
   lookAheadDistance: 1
   avoidRadius: 0
   avoidanceConsiderStuckedTime: 3
@@ -299,9 +299,9 @@ MonoBehaviour:
   _heat: 0
   INITIAL_HEAT: 15
   _heatMax: 100
-  _heatMin: -20
-  _timeFreeze: 3
-  _heatHelp: 60
+  _heatMin: -10
+  _timeFreeze: 3.5
+  _heatHelp: 50
   _heatWarm: 20
   _speed: 0
   _minSpeed: 0.1
@@ -312,6 +312,7 @@ MonoBehaviour:
   tentPosition: {fileID: 0}
   state: -1
   _moveTarget: {fileID: 0}
+  _numberLumbs: 0
 --- !u!212 &212500699274975884
 SpriteRenderer:
   m_ObjectHideFlags: 1

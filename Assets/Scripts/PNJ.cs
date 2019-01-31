@@ -295,7 +295,7 @@ public class PNJ : MonoBehaviour {
             }
             else if(_numberLumbs>0)
             {
-                _moveTarget = CentralFire.instance.gameObject;
+                _moveTarget = CentralFire.instance.fire.gameObject;
                 _isMoving = true;
             }
             else

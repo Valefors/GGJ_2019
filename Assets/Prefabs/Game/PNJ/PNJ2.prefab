@@ -305,8 +305,8 @@ MonoBehaviour:
   _heatWarm: 20
   _speed: 0
   _minSpeed: 0.1
-  INITIAL_SPEED: 1
-  SLOW_SPEED: 0.15
+  INITIAL_SPEED: 1.5
+  SLOW_SPEED: 0.3
   lumbCapacity: 3
   torch: {fileID: 0}
   tentPosition: {fileID: 0}

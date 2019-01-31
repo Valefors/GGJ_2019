@@ -22,8 +22,8 @@ GameObject:
   - component: {fileID: 212500699274975884}
   - component: {fileID: 95239255326935372}
   - component: {fileID: 50211749713734088}
-  - component: {fileID: 60760619858700058}
   - component: {fileID: 114831475346993864}
+  - component: {fileID: 60760619858700058}
   - component: {fileID: 114742526830278478}
   m_Layer: 0
   m_Name: PNJ

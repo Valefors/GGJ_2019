@@ -48,18 +48,28 @@ public class PNJ : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        _heat = INITIAL_HEAT;
         animator = GetComponent<Animator>();
-        transform.position = tentPosition.position;
         agent = GetComponent<PolyNavAgent>();
-        _speed = INITIAL_SPEED;
-        agent.maxSpeed = INITIAL_SPEED;
-
-        if (state == frozen) LevelManager.manager.nbVillagersAlive--;
-        HeatCheck();
-
+        SetPNJ();
         EventManager.StartListening(EventManager.PLAY_EVENT, Play);
     }
+
+    void SetPNJ()
+    {
+        transform.position = tentPosition.position;
+        _speed = INITIAL_SPEED;
+        _heat = INITIAL_HEAT;
+        agent.maxSpeed = INITIAL_SPEED;
+        if (state == frozen) LevelManager.manager.nbVillagersAlive--;
+        HeatCheck();
+    }
+
+    public void Reset()
+    {
+        SetPNJ();
+        Play();
+    }
+
 
     void Play()
     {
@@ -84,8 +94,6 @@ public class PNJ : MonoBehaviour {
 
         if (agent.remainingDistance <= 0) StopMoving();
         if (state == help) Work();
-
-        //UpdateSprite();
     }
 
     private void OnTriggerEnter2D(Collider2D pCol)
@@ -187,12 +195,6 @@ public class PNJ : MonoBehaviour {
             yield return new WaitForSecondsRealtime(_timeFreeze);
             DecreaseHeat();
         }
-    }
-
-    public void Reset()
-    {
-        Start();
-        Play();
     }
 
     void DecreaseHeat()

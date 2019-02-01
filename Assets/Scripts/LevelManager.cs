@@ -67,14 +67,12 @@ public class LevelManager : MonoBehaviour {
         flagAnim = flag.GetComponent<Animator>();
 
         listPNJ = new List<PNJ>();
-        fog = Camera.main.GetComponent<D2FogsPE>();
+        fog = Player.instance.cam.GetComponent<D2FogsPE>();
         SetLevel();
     }
 
     public void NextLevel()
     {
-       /* Destroy(Player.instance);
-        Destroy(CentralFire.instance);*/
         if(currentLevel<levels.Length) currentLevel++;
         trees = null;
         ResetLevel();
@@ -138,11 +136,10 @@ public class LevelManager : MonoBehaviour {
         AkSoundEngine.PostEvent("Play_Amb", gameObject);
         AkSoundEngine.PostEvent("Play_Music", gameObject);
         AkSoundEngine.PostEvent("Play_Fire", gameObject);
-        //print("play");
+        fog.Density = 0f;
+        SetBlizzardState(0);
         StopAllCoroutines();
         StartCoroutine(TimeCoroutine());
-        fog.Density =0f;
-        SetBlizzardState(0);
     }
 
     private void Update()
@@ -193,11 +190,9 @@ public class LevelManager : MonoBehaviour {
 
     IEnumerator TimeCoroutine()
     {
-        //Debug.Log("Coroutine");
         while (GameManager.manager.isPlaying)
         {
             yield return new WaitForSecondsRealtime(1);
-            //Debug.Log("1sec");
             seconds++;
             currentTimeBlizzardWait++;
             if (seconds==60)

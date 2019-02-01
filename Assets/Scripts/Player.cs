@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class Player : MonoBehaviour {
 
-    [SerializeField] Camera cam;
+    [SerializeField] public Camera cam;
     [SerializeField] float _speed = 0;
 
     [SerializeField] float INITIAL_SPEED = 10f;
@@ -52,17 +52,7 @@ public class Player : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        _hasFire = false;
-        _isMoving = false;
-        _targetPosition = transform.position;
-        transform.position = transform.parent.position;
-        StopMoving();
-
-        _speed = INITIAL_SPEED;
-        agent.maxSpeed = INITIAL_SPEED;
-
-        animator.SetBool("isHoldingFire", false);
-        SetActionMove();
+        SetPlayer();
 	}
 	
 	// Update is called once per frame
@@ -70,25 +60,23 @@ public class Player : MonoBehaviour {
         if (!GameManager.manager.isPlaying) return;
 
         if (playerAction != null) playerAction();
-        //print(agent.remainingDistance);
-        if (agent.remainingDistance <= 0) StopMoving();
-        UpdateSprite();
     }
 
-    void OnEnable()
+    void SetPlayer()
     {
-        agent.OnDestinationReached += StopMoving;
+        _hasFire = false;
+        StopMoving();
+        _targetPosition = transform.position;
+        transform.position = transform.parent.position;
+        _speed = INITIAL_SPEED;
+        agent.maxSpeed = INITIAL_SPEED;
+        animator.SetBool("isHoldingFire", false);
+        SetActionMove();
     }
-
-    void OnDisable()
-    {
-        agent.OnDestinationReached += StopMoving;
-    }
-
 
     public void Reset()
     {
-        Start();
+        SetPlayer();
     }
 
     void SetActionMove()
@@ -100,28 +88,27 @@ public class Player : MonoBehaviour {
     {
         if(GameManager.manager.isPlaying)
         {
-            if (Input.GetMouseButton(LEFT_MOUSE_BUTTON)) SetTargetPosition();
-            if (_isMoving) MovePlayer();
+            if (Input.GetMouseButtonDown(LEFT_MOUSE_BUTTON))
+            {
+                MovePlayer();
+            }
+            if (_isMoving)
+            {
+                if (agent.remainingDistance <= 0) StopMoving();
+            }
         }
     }
 
     void SetTargetPosition()
     {
-        Plane lPlane = new Plane(Vector3.forward, transform.position);
-        Ray lRay = cam.ScreenPointToRay(Input.mousePosition);
-        float lPoint = 0f;
-
-        if (lPlane.Raycast(lRay, out lPoint))
-        {
-            _targetPosition = lRay.GetPoint(lPoint);
-        }
-
+        _targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         _isMoving = true;
     }
 
     void MovePlayer()
     {
         _previousPosition = transform.position;
+        SetTargetPosition();
         agent.SetDestination(_targetPosition);
         UpdateSprite();
 
@@ -215,8 +202,8 @@ public class Player : MonoBehaviour {
 
     void StopMoving()
     {
+        print("stop");
         _isMoving = false;
-        //if (!animator.GetBool("isHoldingFire")) 
         animator.SetInteger("PNJWalkState", 0);
     }
 

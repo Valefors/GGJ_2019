@@ -158,7 +158,6 @@ public class LevelManager : MonoBehaviour {
         AkSoundEngine.PostEvent("Stop_SFX", gameObject);
         StopAllCoroutines();
         GameManager.manager.GameOver(1);
-        //Debug.Log("PERDU GROS NAZE, ton feu s'est éteint ahahah nul");
     }
 
     public void LostFrozen()
@@ -167,7 +166,6 @@ public class LevelManager : MonoBehaviour {
         AkSoundEngine.PostEvent("Stop_SFX", gameObject);
         StopAllCoroutines();
         GameManager.manager.GameOver(2);
-        //Debug.Log("PERDU GROS NAZE, la moitié de ton village est congelé, t'es tellement mauvais putain tu me fais pité...");
     }
 
     public void WonFire()
@@ -175,8 +173,9 @@ public class LevelManager : MonoBehaviour {
         AkSoundEngine.PostEvent("Stop_Music", gameObject);
         AkSoundEngine.PostEvent("Stop_SFX", gameObject);
         StopAllCoroutines();
+        if (currentLevel >= levels.Length - 1) UIManager.manager.LastLevel();
         GameManager.manager.Victory(1);
-        //Debug.Log("GAGNÉ BG, ton feu il est tro bo");
+        
     }
 
     public void WonNight()
@@ -184,8 +183,9 @@ public class LevelManager : MonoBehaviour {
         AkSoundEngine.PostEvent("Stop_Music", gameObject);
         AkSoundEngine.PostEvent("Stop_SFX", gameObject);
         StopAllCoroutines();
+        if (currentLevel >= levels.Length - 1) UIManager.manager.LastLevel();
         GameManager.manager.Victory(2);
-        //Debug.Log("GAGNÉ BG, ta passé la nuit, c'est moins cool mais t'as quand même gagné (deso pas deso)");
+        
     }
 
     IEnumerator TimeCoroutine()

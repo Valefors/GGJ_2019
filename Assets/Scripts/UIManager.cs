@@ -19,6 +19,9 @@ public class UIManager : MonoBehaviour {
     [SerializeField] RectTransform _ingameScreen;
     [SerializeField] RectTransform _creditsScreen;
     [SerializeField] RectTransform _tutoScreen;
+    [SerializeField] RectTransform _NextLevelCanvas;
+    [SerializeField] RectTransform _EndLevelCanvas;
+    [SerializeField] RectTransform _EndLevelScreen;
 
     RectTransform _currentScreen;
 
@@ -55,6 +58,12 @@ public class UIManager : MonoBehaviour {
         _currentScreen = _ingameScreen;
 
         _currentScreen.gameObject.SetActive(true);
+    }
+
+    public void LastLevel()
+    {
+        _NextLevelCanvas.gameObject.SetActive(false);
+        _EndLevelCanvas.gameObject.SetActive(true);
     }
 
     void Victory()

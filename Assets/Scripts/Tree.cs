@@ -31,11 +31,15 @@ public class Tree : MonoBehaviour {
     bool startBlinking = false;
     #endregion
 
+    private void Awake()
+    {
+        col = GetComponent<BoxCollider2D>();
+    }
+
     private void Start()
     {
         currentSprite = Random.Range(0, _strumpSprite.Length);
         _sr.sprite = _treeSprite[currentSprite];
-        col = GetComponent<BoxCollider2D>();
     }
 
     public void Cut()

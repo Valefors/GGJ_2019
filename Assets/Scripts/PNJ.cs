@@ -36,9 +36,13 @@ public class PNJ : MonoBehaviour {
 
     Vector3 _previousPosition;
 
-    void Start () {
-        animator = GetComponent<Animator>();
+    private void Awake()
+    {
         agent = GetComponent<PolyNavAgent>();
+        animator = GetComponent<Animator>();
+    }
+
+    void Start () {
         tentPosition.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         SetPNJ();
         EventManager.StartListening(EventManager.PLAY_EVENT, Play);
@@ -55,6 +59,7 @@ public class PNJ : MonoBehaviour {
 
     public void Reset()
     {
+        
         SetPNJ();
         Play();
     }
@@ -152,7 +157,7 @@ public class PNJ : MonoBehaviour {
     void UpdateFire()
     {
         AkSoundEngine.PostEvent("Play_PNJ_RefillFire", gameObject);
-        if (_numberLumbs > 0) CentralFire.instance.UpdateFire(_numberLumbs);
+        if (_numberLumbs > 0) LevelManager.manager.centralFire.UpdateFire(_numberLumbs);
         _numberLumbs = 0;
         agent.maxSpeed = INITIAL_SPEED;
     }
@@ -282,7 +287,7 @@ public class PNJ : MonoBehaviour {
                 }
                 else if (_numberLumbs > 0)
                 {
-                    _moveTarget = CentralFire.instance.fire.gameObject;
+                    _moveTarget = LevelManager.manager.centralFire.fire.gameObject;
                     Move();
                 }
                 else
@@ -308,7 +313,7 @@ public class PNJ : MonoBehaviour {
             }
             else
             {
-                _moveTarget = CentralFire.instance.fire.gameObject;
+                _moveTarget = LevelManager.manager.centralFire.fire.gameObject;
                 Move();
             }
         }

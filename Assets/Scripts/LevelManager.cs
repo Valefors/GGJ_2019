@@ -20,6 +20,7 @@ public class LevelManager : MonoBehaviour {
     [SerializeField] public int _heatMin = -20;
     [SerializeField] public float _timeFreeze = 10;
 
+    [SerializeField] public CentralFire centralFire;
     [SerializeField] Player player;
     List<PNJ> listPNJ;
 
@@ -115,8 +116,7 @@ public class LevelManager : MonoBehaviour {
         currentTimeBlizzardWait = 0;
         currentMinNightWait = 0;
         nbVillagersAlive = totalVillagers;
-        flagAnim.SetInteger("BlizzardState", 0);
-        GameObject[] lumbs = GameObject.FindGameObjectsWithTag(LUMB_TAG);
+        GameObject[] lumbs = GameObject.FindGameObjectsWithTag(LUMB_TAG);;
         for (int i = 0; i < lumbs.Length; i++)
         {
             Destroy(lumbs[i]);
@@ -132,7 +132,7 @@ public class LevelManager : MonoBehaviour {
     public void ResetLevel()
     {
         SetLevel();
-        CentralFire.instance.Reset();
+        centralFire.Reset();
         player.Reset();
         Play();
     }

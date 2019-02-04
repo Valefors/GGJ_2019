@@ -32,23 +32,6 @@ public class CentralFire : MonoBehaviour
     [SerializeField] Sprite baseSprite;
     [SerializeField] Sprite highlightSprite;
 
-
-    #region Singleton
-    private static CentralFire _instance;
-    public static CentralFire instance {
-        get {
-            return _instance;
-        }
-    }
-
-    private void Awake()
-    {
-        if (_instance == null) _instance = this;
-
-        else if (_instance != this) Destroy(gameObject);
-    }
-    #endregion
-
     private void Start()
     {
         EventManager.StartListening(EventManager.PLAY_EVENT, Play);
@@ -63,9 +46,9 @@ public class CentralFire : MonoBehaviour
     {
         _levelFire = START_FIRE;
         CheckState();
-        _animator.SetInteger("FireState", _currentState);
         _slider.value = _levelFire;
         _slider.gameObject.SetActive(false);
+        _animator.SetInteger("FireState", _currentState);
     }
 
     public void Reset()
@@ -150,7 +133,6 @@ public class CentralFire : MonoBehaviour
                 _currentState = i;
                 break;
             }
-            //if (_levelFire > statesArray[statesArray.Length - 1]) _currentState = statesArray.Length - 1;
         }
         _animator.SetInteger("FireState", _currentState);
 

@@ -100,7 +100,7 @@ public class Player : MonoBehaviour {
     void SetTargetPosition()
     {
         _targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (LevelManager.manager.isTargetFire) _targetPosition = CentralFire.instance.fire.transform.position;
+        if (LevelManager.manager.isTargetFire) _targetPosition = LevelManager.manager.centralFire.fire.transform.position;
         _isMoving = true;
     }
 
@@ -217,7 +217,7 @@ public class Player : MonoBehaviour {
 
     void TakeFire()
     {
-        if(CentralFire.instance.UpdateFire(0, false))
+        if(LevelManager.manager.centralFire.UpdateFire(0, false))
         {
             AkSoundEngine.PostEvent("Play_PickTorch", gameObject);
             _hasFire = true;
@@ -227,7 +227,7 @@ public class Player : MonoBehaviour {
 
     void UpdateTorche(Torche pTorche)
     {
-        pTorche.AddHeat(CentralFire.instance._valueFireTaken);
+        pTorche.AddHeat(LevelManager.manager.centralFire._valueFireTaken);
         _hasFire = false;
         animator.SetBool("isHoldingFire", false);
     }
@@ -245,7 +245,7 @@ public class Player : MonoBehaviour {
     void UpdateFire()
     {
         AkSoundEngine.PostEvent("Play_RefillFire", gameObject);
-        if (_numberLumbs > 0) CentralFire.instance.UpdateFire(_numberLumbs);
+        if (_numberLumbs > 0) LevelManager.manager.centralFire.UpdateFire(_numberLumbs);
         _numberLumbs = 0;
         agent.maxSpeed = INITIAL_SPEED;
 

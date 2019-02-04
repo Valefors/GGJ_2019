@@ -87,6 +87,7 @@ public class CentralFire : MonoBehaviour
 
         Cursor.SetCursor(LevelManager.manager.hooverCursor, Vector2.zero, CursorMode.Auto);
         _sr.sprite = highlightSprite;
+        LevelManager.manager.isTargetFire = true;
     }
 
     void OnMouseExit()
@@ -96,6 +97,7 @@ public class CentralFire : MonoBehaviour
 
         Cursor.SetCursor(LevelManager.manager.normalCursor, Vector2.zero, CursorMode.Auto);
         _sr.sprite = baseSprite;
+        LevelManager.manager.isTargetFire = false;
     }
 
     public bool UpdateFire(int pLumb, bool pIsUpgrade = true)

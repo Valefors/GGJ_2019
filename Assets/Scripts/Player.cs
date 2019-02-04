@@ -100,6 +100,7 @@ public class Player : MonoBehaviour {
     void SetTargetPosition()
     {
         _targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        if (LevelManager.manager.isTargetFire) _targetPosition = CentralFire.instance.fire.transform.position;
         _isMoving = true;
     }
 
@@ -237,7 +238,7 @@ public class Player : MonoBehaviour {
         _numberLumbs++;
         agent.maxSpeed -= SLOW_SPEED;
         if (agent.maxSpeed <= MIN_SPEED) agent.maxSpeed = MIN_SPEED;
-
+        UpdateSprite();
         Destroy(pLumb);
     }
 

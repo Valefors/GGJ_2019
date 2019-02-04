@@ -21,10 +21,10 @@ GameObject:
   - component: {fileID: 4064543326142084}
   - component: {fileID: 212246744117312100}
   - component: {fileID: 95868259764184954}
-  - component: {fileID: 50131826130189104}
   - component: {fileID: 114489084325374800}
   - component: {fileID: 114460942448456378}
   - component: {fileID: 61514941331430626}
+  - component: {fileID: 50980636212565580}
   m_Layer: 0
   m_Name: PNJ3
   m_TagString: PNJ
@@ -45,7 +45,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &50131826130189104
+--- !u!50 &50980636212565580
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 1

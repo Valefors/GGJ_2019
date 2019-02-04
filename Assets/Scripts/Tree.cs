@@ -13,8 +13,6 @@ public class Tree : MonoBehaviour {
     [SerializeField] int _delayRepop = 2;
     [SerializeField] Animator _animator;
 
-    [SerializeField] float OFFSET_X = 3f;
-
     public bool isBeingChopped = false;
     public bool hasSomeoneNear = false;
 
@@ -37,7 +35,7 @@ public class Tree : MonoBehaviour {
     {
         currentSprite = Random.Range(0, _strumpSprite.Length);
         _sr.sprite = _treeSprite[currentSprite];
-        collider = GetComponent<BoxCollider2D>();
+        col = GetComponent<BoxCollider2D>();
     }
 
     public void Cut()

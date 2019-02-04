@@ -9,18 +9,10 @@ public class PNJ : MonoBehaviour {
     public int _heat = 30;
     [SerializeField] protected int INITIAL_HEAT = 30;
     #region Warmth
-    [SerializeField] protected int _heatMax=100;
-    [SerializeField] protected int _heatMin = -20;
-    [SerializeField] protected float _timeFreeze = 10;
 
-    [SerializeField] protected int _heatHelp = 60;
-    [SerializeField] protected int _heatWarm = 20;
     #endregion
 
-    [SerializeField] float _minSpeed = 1;
     [SerializeField] float INITIAL_SPEED = 4;
-    [SerializeField] float SLOW_SPEED = 1;
-    [SerializeField] int lumbCapacity = 3;
 
     [SerializeField] Transform tentPosition;
 
@@ -78,7 +70,7 @@ public class PNJ : MonoBehaviour {
     void Update () {
         if (!GameManager.manager.isPlaying) return;
 
-        if (_heat < _heatHelp && _heat > 0)
+        if (_heat < LevelManager.manager._heatHelp && _heat > 0)
         {
             _moveTarget = tentPosition.gameObject;
             Move();
@@ -94,7 +86,7 @@ public class PNJ : MonoBehaviour {
 
         if (pCol.gameObject.tag == LevelManager.LUMB_TAG)
         {
-            if (_numberLumbs < lumbCapacity)
+            if (_numberLumbs < LevelManager.manager.lumbCapacity)
             {
                 TakeLumb(pCol.gameObject);
             }
@@ -169,10 +161,10 @@ public class PNJ : MonoBehaviour {
     {
         AkSoundEngine.PostEvent("Play_PNJ_PickWood", gameObject);
         _numberLumbs++;
-        agent.maxSpeed -= SLOW_SPEED;
-        if (agent.maxSpeed < _minSpeed)
+        agent.maxSpeed -= LevelManager.manager.SLOW_SPEED;
+        if (agent.maxSpeed < LevelManager.manager._minSpeed)
         {
-            agent.maxSpeed = _minSpeed;
+            agent.maxSpeed = LevelManager.manager._minSpeed;
         }
 
         Destroy(pLumb);
@@ -184,7 +176,7 @@ public class PNJ : MonoBehaviour {
     {
         while (GameManager.manager.isPlaying)
         {
-            yield return new WaitForSecondsRealtime(_timeFreeze);
+            yield return new WaitForSecondsRealtime(LevelManager.manager._timeFreeze);
             DecreaseHeat();
         }
     }
@@ -197,11 +189,11 @@ public class PNJ : MonoBehaviour {
 
     void HeatCheck()
     {
-        if (_heat >= _heatHelp)
+        if (_heat >= LevelManager.manager._heatHelp)
         {
             if(state !=help)  Help();
         }
-        else if (_heat >= _heatWarm)
+        else if (_heat >= LevelManager.manager._heatWarm)
         {
             if (state!=warm)
             {
@@ -215,7 +207,7 @@ public class PNJ : MonoBehaviour {
                 Freeze();
             }
         }
-        else if (_heat<_heatWarm)
+        else if (_heat< LevelManager.manager._heatWarm)
         {
             if (state!=cold)
             {
@@ -257,7 +249,7 @@ public class PNJ : MonoBehaviour {
     {
         AkSoundEngine.PostEvent("Play_RefillBrasier", gameObject);
         _heat += heatModifier;
-        if (_heat > _heatMax) _heat = _heatMax;
+        if (_heat > LevelManager.manager._heatMax) _heat = LevelManager.manager._heatMax;
         HeatCheck();
     }
 
@@ -270,7 +262,7 @@ public class PNJ : MonoBehaviour {
     {
         if(GameManager.manager.isPlaying)
         {
-            if (_numberLumbs < lumbCapacity)
+            if (_numberLumbs < LevelManager.manager.lumbCapacity)
             {
                 GameObject[] lumbs = GameObject.FindGameObjectsWithTag("Lumb");
                 if (lumbs != null && lumbs.Length > 0)

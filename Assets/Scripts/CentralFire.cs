@@ -53,23 +53,24 @@ public class CentralFire : MonoBehaviour
     {
         EventManager.StartListening(EventManager.PLAY_EVENT, Play);
 
-        _levelFire = START_FIRE;
-        CheckState();
-
-        _animator.SetInteger("FireState", _currentState);
-        //print(GameManager.manager.isPlaying);
-
         Vector3 lSliderPos = new Vector3(transform.position.x, transform.position.y + _offset_y, transform.position.z);
         Vector3 lPos = Camera.main.WorldToScreenPoint(lSliderPos);
-
         _slider.transform.position = lPos;
-        _slider.gameObject.SetActive(false);
+        SetFeu();
+    }
+
+    void SetFeu()
+    {
+        _levelFire = START_FIRE;
+        CheckState();
+        _animator.SetInteger("FireState", _currentState);
         _slider.value = _levelFire;
+        _slider.gameObject.SetActive(false);
     }
 
     public void Reset()
     {
-        Start();
+        SetFeu();
         Play();
     }
 
@@ -140,38 +141,20 @@ public class CentralFire : MonoBehaviour
 
     void CheckState()
     {
-        for (int i = statesArray.Length-1; i >=0 ; i--)
+        for (int i = 0; i<statesArray.Length; i++)
         {
             if (_levelFire <= statesArray[i])
             {
                 _currentState = i;
+                break;
             }
-            if (_levelFire > statesArray[statesArray.Length - 1]) _currentState = statesArray.Length - 1;
+            //if (_levelFire > statesArray[statesArray.Length - 1]) _currentState = statesArray.Length - 1;
         }
         _animator.SetInteger("FireState", _currentState);
 
         if (_levelFire <= 0) LevelManager.manager.LostFire();
         else if (_levelFire >= LevelManager.manager.maxFire) LevelManager.manager.WonFire();
     }
-
-    /*
-     * 
-     *     bool IsNextState()
-    {
-        for (int i = 0; i < statesArray.Length; i++)
-        {
-            if (_levelFire > statesArray[i] && statesArray[i] > _currentState)
-            {
-                _currentState = statesArray[i];
-                return true;
-            }
-        }
-
-        return false;
-    }
-    
-
-    */
 
     bool IsBeforeState()
     {

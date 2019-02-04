@@ -149,16 +149,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _heat: 0
-  INITIAL_HEAT: 35
-  _heatMax: 100
-  _heatMin: -10
-  _timeFreeze: 3.5
-  _heatHelp: 50
-  _heatWarm: 20
-  _minSpeed: 0.1
+  INITIAL_HEAT: 55
   INITIAL_SPEED: 1.5
-  SLOW_SPEED: 0.3
-  lumbCapacity: 3
   tentPosition: {fileID: 0}
   state: -1
   _moveTarget: {fileID: 0}

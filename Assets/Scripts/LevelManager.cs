@@ -11,6 +11,15 @@ public class LevelManager : MonoBehaviour {
     public static string TORCHE_TAG = "Torche";
     public static string DOGGO_TAG = "Doggo";
 
+    [SerializeField] public int _heatHelp = 50;
+    [SerializeField] public int _heatWarm = 20;
+    [SerializeField] public float SLOW_SPEED = 1;
+    [SerializeField] public int lumbCapacity = 3;
+    [SerializeField] public float _minSpeed = 0.2f;
+    [SerializeField] public int _heatMax = 100;
+    [SerializeField] public int _heatMin = -20;
+    [SerializeField] public float _timeFreeze = 10;
+
     [SerializeField] Player player;
     List<PNJ> listPNJ;
 

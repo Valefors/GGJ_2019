@@ -21,7 +21,7 @@ public class Tree : MonoBehaviour {
     bool isChopped = false;
 
     int currentSprite;
-    BoxCollider2D collider;
+    BoxCollider2D col;
 
     #region Blink
     float spriteBlinkingTimer = 0.0f;
@@ -84,7 +84,7 @@ public class Tree : MonoBehaviour {
         _sr.sprite = _strumpSprite[currentSprite];
         tag = "Untagged";
         isChopped = true;
-        collider.enabled = false;
+        col.enabled = false;
         StartCoroutine(RepopCoroutine());
     }
 
@@ -140,7 +140,7 @@ public class Tree : MonoBehaviour {
         _animator.SetTrigger("PopPineTree_Trigger");
         tag = LevelManager.TREE_TAG;
         isChopped = false;
-        collider.enabled = true;
+        col.enabled = true;
     }
 
     void Update()

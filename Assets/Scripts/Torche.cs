@@ -54,11 +54,11 @@ public class Torche : MonoBehaviour {
 
         _slider.value = PNJ._heat;
 
-        if (0 <= PNJ._heat && PNJ._heat <= 30)
+        if (0 <= PNJ._heat && PNJ._heat <= LevelManager.manager._heatWarm)
         {
             UpgradeFire0();
         }
-        else if (30 < PNJ._heat && PNJ._heat <= 70)
+        else if (LevelManager.manager._heatWarm < PNJ._heat && PNJ._heat <= LevelManager.manager._heatHelp)
         {
             UpgradeFire1();
         }

@@ -30,6 +30,7 @@ public class PNJ : MonoBehaviour {
     public GameObject _moveTarget;
 
     public int _numberLumbs = 0;
+    bool hasObjective = false;
     PolyNavAgent agent;
 
     Animator animator;
@@ -55,11 +56,11 @@ public class PNJ : MonoBehaviour {
         agent.maxSpeed = INITIAL_SPEED;
         HeatCheck();
         if (state == frozen) LevelManager.manager.nbVillagersAlive--;
+        hasObjective = false;
     }
 
     public void Reset()
     {
-        
         SetPNJ();
         Play();
     }
@@ -145,6 +146,7 @@ public class PNJ : MonoBehaviour {
             lastTree.isBeingChopped = false;
             lastTree = null;
             animator.SetBool("isChopping", false);
+            hasObjective = false;
         }
     }
 
@@ -160,6 +162,7 @@ public class PNJ : MonoBehaviour {
         if (_numberLumbs > 0) LevelManager.manager.centralFire.UpdateFire(_numberLumbs);
         _numberLumbs = 0;
         agent.maxSpeed = INITIAL_SPEED;
+        hasObjective = false;
     }
 
     void TakeLumb(GameObject pLumb)
@@ -270,7 +273,7 @@ public class PNJ : MonoBehaviour {
             if (_numberLumbs < LevelManager.manager.lumbCapacity)
             {
                 GameObject[] lumbs = GameObject.FindGameObjectsWithTag("Lumb");
-                if (lumbs != null && lumbs.Length > 0)
+                if (lumbs != null && lumbs.Length > 0 && !hasObjective)
                 {
                     float distanceMin = GetDistance(lumbs[0]);
                     int id = 0;
@@ -285,7 +288,7 @@ public class PNJ : MonoBehaviour {
                     _moveTarget = lumbs[id];
                     Move();
                 }
-                else if (_numberLumbs > 0)
+                else if (_numberLumbs > 0 && !hasObjective)
                 {
                     _moveTarget = LevelManager.manager.centralFire.fire.gameObject;
                     Move();
@@ -293,9 +296,9 @@ public class PNJ : MonoBehaviour {
                 else
                 {
                     GameObject[] trees = GameObject.FindGameObjectsWithTag("Tree");
-                    //print(trees.Length);
                     if (trees != null && trees.Length > 0)
                     {
+                        hasObjective = true;
                         float distanceMin = GetDistance(trees[0]);
                         int id = 0;
                         for (int i = 0; i < trees.Length; i++)

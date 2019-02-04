@@ -134,6 +134,7 @@ public class PNJ : MonoBehaviour {
                 if (!lastTree.isBeingChopped)
                 {
                     lastTree.isBeingChopped = true;
+                    animator.SetBool("isChopping", true);
                     CutTree(lastTree);
                 }
             }

@@ -141,10 +141,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 74c5cc55b9ae348e3bcca66426e4d07b, type: 3}
   - {fileID: 21300000, guid: 5e3be552ff3074ea1b667335f52c3c4f, type: 3}
   - {fileID: 21300000, guid: 2e78d4e8606974ccab42483b60659f9b, type: 3}
-  _highlightSprite:
-  - {fileID: 21300000, guid: 7a05daa0f352d40989575526baec0345, type: 3}
-  - {fileID: 21300000, guid: be6890d526a644173b34047f1d376dd5, type: 3}
-  - {fileID: 21300000, guid: a708c9abd993b442e8f7fe9c0eb6df61, type: 3}
+  highlightSprite: {fileID: 21300000, guid: 8da173bce51035441ab09d61d1322cb3, type: 3}
 --- !u!212 &212485512194218064
 SpriteRenderer:
   m_ObjectHideFlags: 1

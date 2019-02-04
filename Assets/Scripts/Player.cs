@@ -182,6 +182,7 @@ public class Player : MonoBehaviour {
                 if (!lastTree.isBeingChopped)
                 {
                     lastTree.isBeingChopped = true;
+                    animator.SetBool("isChopping", true);
                     CutTree(lastTree);
                 }
             }

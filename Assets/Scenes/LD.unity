@@ -19307,7 +19307,7 @@ MonoBehaviour:
   - {fileID: 1186717568}
   - {fileID: 31889620}
   - {fileID: 1873094009}
-  currentLevel: 4
+  currentLevel: 1
   heatingModifier: 5
   nightMinDuration: 10
   currentMinNightWait: 0

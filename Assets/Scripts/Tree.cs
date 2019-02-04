@@ -8,6 +8,7 @@ public class Tree : MonoBehaviour {
     [SerializeField] SpriteRenderer _sr;
     [SerializeField] Sprite[] _strumpSprite;
     [SerializeField] Sprite[] _treeSprite;
+    [SerializeField] Sprite[] _highlightSprite;
 
     [SerializeField] int _delayRepop = 2;
     [SerializeField] Animator _animator;
@@ -16,6 +17,10 @@ public class Tree : MonoBehaviour {
 
     public bool isBeingChopped = false;
     public bool hasSomeoneNear = false;
+
+    bool isChopped = false;
+
+    int currentSprite;
 
     #region Blink
     float spriteBlinkingTimer = 0.0f;
@@ -26,6 +31,12 @@ public class Tree : MonoBehaviour {
     [SerializeField] int nbMaxLogsDropped = 3;
     bool startBlinking = false;
     #endregion
+
+    private void Start()
+    {
+        currentSprite = Random.Range(0, _strumpSprite.Length);
+        _sr.sprite = _treeSprite[currentSprite];
+    }
 
     public void Cut()
     {
@@ -39,14 +50,16 @@ public class Tree : MonoBehaviour {
 
     void OnMouseOver()
     {
-        if (!GameManager.manager.isPlaying) return;
+        if (!GameManager.manager.isPlaying || isChopped) return;
         Cursor.SetCursor(LevelManager.manager.hooverCursor, Vector2.zero, CursorMode.Auto);
+        _sr.sprite = _highlightSprite[currentSprite];
     }
 
     void OnMouseExit()
     {
-        if (!GameManager.manager.isPlaying) return;
+        if (!GameManager.manager.isPlaying || isChopped) return;
         Cursor.SetCursor(LevelManager.manager.normalCursor, Vector2.zero, CursorMode.Auto);
+        _sr.sprite = _treeSprite[currentSprite];
     }
 
     void SetModeLumb()
@@ -65,9 +78,10 @@ public class Tree : MonoBehaviour {
             Instantiate(_lumb, position, Quaternion.identity, transform.parent);
         }
 
-        int lRandom = Random.Range(0, _strumpSprite.Length);
-        _sr.sprite = _strumpSprite[lRandom];
+        currentSprite = Random.Range(0, _strumpSprite.Length);
+        _sr.sprite = _strumpSprite[currentSprite];
         tag = "Untagged";
+        isChopped = true;
 
         StartCoroutine(RepopCoroutine());
     }
@@ -119,10 +133,11 @@ public class Tree : MonoBehaviour {
 
     public void Repop()
     {
-        int lRandom = Random.Range(0, _treeSprite.Length);
-        _sr.sprite = _treeSprite[lRandom];
+        currentSprite = Random.Range(0, _treeSprite.Length);
+        _sr.sprite = _treeSprite[currentSprite];
         _animator.SetTrigger("PopPineTree_Trigger");
         tag = LevelManager.TREE_TAG;
+        isChopped = false;
     }
 
     void Update()

@@ -12,6 +12,9 @@ public class Torche : MonoBehaviour {
 
     [SerializeField] Slider _slider;
     [SerializeField] float _offset_y = 5;
+    [SerializeField] Sprite baseSprite;
+    [SerializeField] Sprite highlightSprite;
+    [SerializeField] SpriteRenderer _sr;
 
     private void Start()
     {
@@ -27,6 +30,7 @@ public class Torche : MonoBehaviour {
         if (!GameManager.manager.isPlaying) return;
         _slider.gameObject.SetActive(true);
         Cursor.SetCursor(LevelManager.manager.hooverCursor, Vector2.zero, CursorMode.Auto);
+        _sr.sprite = highlightSprite;
     }
 
     void OnMouseExit()
@@ -34,6 +38,7 @@ public class Torche : MonoBehaviour {
         if (!GameManager.manager.isPlaying) return;
         _slider.gameObject.SetActive(false);
         Cursor.SetCursor(LevelManager.manager.normalCursor, Vector2.zero, CursorMode.Auto);
+        _sr.sprite = baseSprite;
     }
 
     public void AddHeat(int value)

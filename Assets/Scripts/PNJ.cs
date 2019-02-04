@@ -17,13 +17,11 @@ public class PNJ : MonoBehaviour {
     [SerializeField] protected int _heatWarm = 20;
     #endregion
 
-    [SerializeField] protected float _speed = 2;
     [SerializeField] float _minSpeed = 1;
     [SerializeField] float INITIAL_SPEED = 4;
     [SerializeField] float SLOW_SPEED = 1;
     [SerializeField] int lumbCapacity = 3;
 
-    [SerializeField] Torche torch;
     [SerializeField] Transform tentPosition;
 
     Tree lastTree;
@@ -46,22 +44,21 @@ public class PNJ : MonoBehaviour {
 
     Vector3 _previousPosition;
 
-    // Use this for initialization
     void Start () {
         animator = GetComponent<Animator>();
         agent = GetComponent<PolyNavAgent>();
+        tentPosition.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         SetPNJ();
         EventManager.StartListening(EventManager.PLAY_EVENT, Play);
     }
 
     void SetPNJ()
     {
-        transform.position = tentPosition.position;
-        _speed = INITIAL_SPEED;
+        transform.position = new Vector3(tentPosition.position.x, tentPosition.position.y, tentPosition.position.z);
         _heat = INITIAL_HEAT;
         agent.maxSpeed = INITIAL_SPEED;
-        if (state == frozen) LevelManager.manager.nbVillagersAlive--;
         HeatCheck();
+        if (state == frozen) LevelManager.manager.nbVillagersAlive--;
     }
 
     public void Reset()
@@ -81,15 +78,10 @@ public class PNJ : MonoBehaviour {
     void Update () {
         if (!GameManager.manager.isPlaying) return;
 
-        if (_isMoving && _moveTarget != null)
-        {
-            MoveTo(_moveTarget);
-        }
-
         if (_heat < _heatHelp && _heat > 0)
         {
             _moveTarget = tentPosition.gameObject;
-            _isMoving = true;
+            Move();
         }
 
         if (agent.remainingDistance <= 0) StopMoving();
@@ -123,6 +115,7 @@ public class PNJ : MonoBehaviour {
                 {
                     lastTree.isBeingChopped = true;
                     CutTree(lastTree);
+                    animator.SetBool("isChopping", true);
                 }
             }
         }
@@ -153,6 +146,7 @@ public class PNJ : MonoBehaviour {
         {
             lastTree.isBeingChopped = false;
             lastTree = null;
+            animator.SetBool("isChopping", false);
         }
     }
 
@@ -167,7 +161,6 @@ public class PNJ : MonoBehaviour {
         AkSoundEngine.PostEvent("Play_PNJ_RefillFire", gameObject);
         if (_numberLumbs > 0) CentralFire.instance.UpdateFire(_numberLumbs);
         _numberLumbs = 0;
-        _speed = INITIAL_SPEED;
         agent.maxSpeed = INITIAL_SPEED;
     }
 
@@ -175,11 +168,9 @@ public class PNJ : MonoBehaviour {
     {
         AkSoundEngine.PostEvent("Play_PNJ_PickWood", gameObject);
         _numberLumbs++;
-        _speed -= SLOW_SPEED;
         agent.maxSpeed -= SLOW_SPEED;
-        if (_speed < _minSpeed)
+        if (agent.maxSpeed < _minSpeed)
         {
-            _speed = _minSpeed;
             agent.maxSpeed = _minSpeed;
         }
 
@@ -237,13 +228,13 @@ public class PNJ : MonoBehaviour {
     public void Cold()
     {
         state = cold;
-        // GERER CHANGEMENTS VISUELS
+        UpdateSprite();
     }
 
     public void Help()
     {
         state = help;
-        // GERER CHANGEMENTS VISUELS
+        UpdateSprite();
         Work();
     }
 
@@ -253,13 +244,12 @@ public class PNJ : MonoBehaviour {
         LevelManager.manager.nbVillagersAlive--;
         animator.SetInteger("PNJWalkState", -2);
         AkSoundEngine.PostEvent("Play_Ice", gameObject);
-        // GERER CHANGEMEMENTS VISUELS
     }
 
     public void Warm()
     {
         state = warm;
-        // GERER CHANGEMEMENTS VISUELS
+        UpdateSprite();
     }
 
     public void AddHeat(int heatModifier)
@@ -277,64 +267,70 @@ public class PNJ : MonoBehaviour {
 
     void Work()
     {
-        if(_numberLumbs<lumbCapacity)
+        if(GameManager.manager.isPlaying)
         {
-            GameObject[] lumbs = GameObject.FindGameObjectsWithTag("Lumb");
-            if (lumbs != null && lumbs.Length >0)
+            if (_numberLumbs < lumbCapacity)
             {
-                float distanceMin = GetDistance(lumbs[0]);
-                int id = 0;
-                for (int i = 0; i < lumbs.Length; i++)
+                GameObject[] lumbs = GameObject.FindGameObjectsWithTag("Lumb");
+                if (lumbs != null && lumbs.Length > 0)
                 {
-                    if (GetDistance(lumbs[i]) < distanceMin)
-                    {
-                        distanceMin = GetDistance(lumbs[i]);
-                        id = i;
-                    }
-                }
-                _moveTarget = lumbs[id];
-                _isMoving = true;
-            }
-            else if(_numberLumbs>0)
-            {
-                _moveTarget = CentralFire.instance.fire.gameObject;
-                _isMoving = true;
-            }
-            else
-            {
-                GameObject[] trees = GameObject.FindGameObjectsWithTag("Tree");
-                if (trees != null && trees.Length > 0)
-                {
-                    float distanceMin = GetDistance(trees[0]);
+                    float distanceMin = GetDistance(lumbs[0]);
                     int id = 0;
-                    for (int i = 0; i < trees.Length; i++)
+                    for (int i = 0; i < lumbs.Length; i++)
                     {
-                        if (GetDistance(trees[i]) < distanceMin)
+                        if (GetDistance(lumbs[i]) < distanceMin)
                         {
-                            distanceMin = GetDistance(trees[i]);
+                            distanceMin = GetDistance(lumbs[i]);
                             id = i;
                         }
                     }
-                    _moveTarget = trees[id];
-                    _isMoving = true;
+                    _moveTarget = lumbs[id];
+                    Move();
+                }
+                else if (_numberLumbs > 0)
+                {
+                    _moveTarget = CentralFire.instance.fire.gameObject;
+                    Move();
+                }
+                else
+                {
+                    GameObject[] trees = GameObject.FindGameObjectsWithTag("Tree");
+                    //print(trees.Length);
+                    if (trees != null && trees.Length > 0)
+                    {
+                        float distanceMin = GetDistance(trees[0]);
+                        int id = 0;
+                        for (int i = 0; i < trees.Length; i++)
+                        {
+                            if (GetDistance(trees[i]) < distanceMin)
+                            {
+                                distanceMin = GetDistance(trees[i]);
+                                id = i;
+                            }
+                        }
+                        _moveTarget = trees[id];
+                        Move();
+                    }
                 }
             }
-        }
-        else
-        {
-            _moveTarget = CentralFire.instance.fire.gameObject;
-            _isMoving = true;
+            else
+            {
+                _moveTarget = CentralFire.instance.fire.gameObject;
+                Move();
+            }
         }
     }
 
-    void MoveTo(GameObject obj)
+    void Move()
     {
         _previousPosition = transform.position;
 
-        if(_moveTarget!=null)agent.SetDestination(_moveTarget.transform.position);
-        UpdateSprite();
-
-
+        if (_moveTarget != null)
+        {
+            agent.SetDestination(_moveTarget.transform.position);
+            _isMoving = true;
+        }
+            UpdateSprite();
     }
 
     void StopMoving()

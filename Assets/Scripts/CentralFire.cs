@@ -27,7 +27,11 @@ public class CentralFire : MonoBehaviour
     [SerializeField] Animator _animator;
     [SerializeField] Slider _slider;
     [SerializeField] float _offset_y = 5;
-    
+
+    [SerializeField] SpriteRenderer _sr;
+    [SerializeField] Sprite baseSprite;
+    [SerializeField] Sprite highlightSprite;
+
 
     #region Singleton
     private static CentralFire _instance;
@@ -81,6 +85,7 @@ public class CentralFire : MonoBehaviour
         _slider.gameObject.SetActive(true);
 
         Cursor.SetCursor(LevelManager.manager.hooverCursor, Vector2.zero, CursorMode.Auto);
+        _sr.sprite = highlightSprite;
     }
 
     void OnMouseExit()
@@ -89,6 +94,7 @@ public class CentralFire : MonoBehaviour
         _slider.gameObject.SetActive(false);
 
         Cursor.SetCursor(LevelManager.manager.normalCursor, Vector2.zero, CursorMode.Auto);
+        _sr.sprite = baseSprite;
     }
 
     public bool UpdateFire(int pLumb, bool pIsUpgrade = true)

@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4432785149502364}
   - component: {fileID: 61429235014075920}
+  - component: {fileID: 114300851323113040}
   m_Layer: 0
   m_Name: Lumb
   m_TagString: Lumb
@@ -65,7 +66,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1127079618086288}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.771151, y: -3.217888, z: 0}
+  m_LocalPosition: {x: -3.354445, y: -5.5, z: 1.4901342}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4821252625366402}
@@ -124,6 +125,26 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &114300851323113040
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1127079618086288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b095c1a700301a84190d19db027d5a2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sr: {fileID: 212485512194218064}
+  _lumbSprite:
+  - {fileID: 21300000, guid: 74c5cc55b9ae348e3bcca66426e4d07b, type: 3}
+  - {fileID: 21300000, guid: 5e3be552ff3074ea1b667335f52c3c4f, type: 3}
+  - {fileID: 21300000, guid: 2e78d4e8606974ccab42483b60659f9b, type: 3}
+  _highlightSprite:
+  - {fileID: 21300000, guid: 7a05daa0f352d40989575526baec0345, type: 3}
+  - {fileID: 21300000, guid: be6890d526a644173b34047f1d376dd5, type: 3}
+  - {fileID: 21300000, guid: a708c9abd993b442e8f7fe9c0eb6df61, type: 3}
 --- !u!212 &212485512194218064
 SpriteRenderer:
   m_ObjectHideFlags: 1

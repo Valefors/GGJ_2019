@@ -7,7 +7,6 @@ using UnityEngine.AI;
 public class Player : MonoBehaviour {
 
     [SerializeField] public Camera cam;
-    [SerializeField] float _speed = 0;
 
     [SerializeField] float INITIAL_SPEED = 10f;
     [SerializeField] float SLOW_SPEED = 2f;
@@ -68,7 +67,6 @@ public class Player : MonoBehaviour {
         StopMoving();
         _targetPosition = transform.position;
         transform.position = transform.parent.position;
-        _speed = INITIAL_SPEED;
         agent.maxSpeed = INITIAL_SPEED;
         animator.SetBool("isHoldingFire", false);
         SetActionMove();
@@ -149,6 +147,7 @@ public class Player : MonoBehaviour {
                 {
                     lastTree.isBeingChopped = true;
                     CutTree(lastTree);
+                    animator.SetBool("isChopping", true);
                 }
             }
         }
@@ -197,12 +196,13 @@ public class Player : MonoBehaviour {
         {
             lastTree.isBeingChopped = false;
             lastTree = null;
+            animator.SetBool("isChopping", false);
         }
     }
 
     void StopMoving()
     {
-        print("stop");
+        //print("stop");
         _isMoving = false;
         animator.SetInteger("PNJWalkState", 0);
     }
@@ -234,9 +234,8 @@ public class Player : MonoBehaviour {
     {
         AkSoundEngine.PostEvent("Play_PickWood", gameObject);
         _numberLumbs++;
-        _speed -= SLOW_SPEED;
         agent.maxSpeed -= SLOW_SPEED;
-        if (_speed <= MIN_SPEED) _speed = MIN_SPEED;
+        if (agent.maxSpeed <= MIN_SPEED) agent.maxSpeed = MIN_SPEED;
 
         Destroy(pLumb);
     }
@@ -246,7 +245,6 @@ public class Player : MonoBehaviour {
         AkSoundEngine.PostEvent("Play_RefillFire", gameObject);
         if (_numberLumbs > 0) CentralFire.instance.UpdateFire(_numberLumbs);
         _numberLumbs = 0;
-        _speed = INITIAL_SPEED;
         agent.maxSpeed = INITIAL_SPEED;
 
     }

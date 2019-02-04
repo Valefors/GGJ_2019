@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour {
         if (_manager == null) _manager = this;
 
         else if (_manager != this) Destroy(gameObject);
+        isPlaying = false;
     }
 
     // Use this for initialization
@@ -27,7 +28,6 @@ public class GameManager : MonoBehaviour {
         AkSoundEngine.PostEvent("Stop_Amb", gameObject);
         AkSoundEngine.PostEvent("Stop_Fire", gameObject);
         AkSoundEngine.PostEvent("Play_Menu", gameObject);
-        isPlaying = false;
         Cursor.SetCursor(LevelManager.manager.normalCursor, Vector2.zero, CursorMode.Auto);
     }
 

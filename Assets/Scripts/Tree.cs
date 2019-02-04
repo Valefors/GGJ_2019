@@ -77,7 +77,7 @@ public class Tree : MonoBehaviour {
         for(int i=0;i<nbLogsDropped;i++)
         {
             float newX = transform.position.x + Random.Range(-aleaRange, aleaRange);
-            float newY = transform.position.y + Random.Range(-aleaRange, aleaRange);
+            float newY = transform.position.y + Random.Range(1f, aleaRange*4f);
             Vector3 position = new Vector3(newX, newY, 0);
             Instantiate(_lumb, position, Quaternion.identity, transform.parent);
         }

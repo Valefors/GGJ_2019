@@ -127,8 +127,8 @@ MonoBehaviour:
   accelerationRate: 40
   decelerationRate: 40
   lookAheadDistance: 0
-  avoidRadius: 4
-  avoidanceConsiderStuckedTime: 3
+  avoidRadius: 1
+  avoidanceConsiderStuckedTime: 2
   avoidanceConsiderReachedDistance: 1
   rotateTransform: 0
   rotateSpeed: 350

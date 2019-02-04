@@ -80,7 +80,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shapeType: 1
   extraOffset: 0
-  invertPolygon: 0
+  invertPolygon: 1
 --- !u!212 &212083996996309906
 SpriteRenderer:
   m_ObjectHideFlags: 1

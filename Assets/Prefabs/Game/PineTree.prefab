@@ -54,7 +54,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1209886610995378}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.2, y: -9.3, z: 0}
+  m_LocalPosition: {x: -10.76, y: 6.98, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4506700063429394}
@@ -80,7 +80,7 @@ BoxCollider2D:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1500388675714614}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -111,7 +111,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.09079915, y: 2.5794127}
+  m_Offset: {x: 0.03184271, y: 2.4908695}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
@@ -122,7 +122,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.1421598, y: 5.1588254}
+  m_Size: {x: 2.4368086, y: 5.3359118}
   m_EdgeRadius: 0
 --- !u!95 &95882064330539854
 Animator:
@@ -191,7 +191,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: a593a06a6aefea748ad94608e806a758, type: 3}
   _delayRepop: 25
   _animator: {fileID: 95882064330539854}
-  OFFSET_X: 0.5
   isBeingChopped: 0
   hasSomeoneNear: 0
   spriteBlinkingTotalDuration: 3

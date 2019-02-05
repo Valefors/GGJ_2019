@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour {
     public void ResetGame()
     {
         Start();
-        LevelManager.manager.SetLevel();
+        LevelManager.manager.ResetLevel();
     }
 
     public void SetIsPlaying(bool newPlay)

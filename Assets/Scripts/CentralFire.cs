@@ -83,6 +83,12 @@ public class CentralFire : MonoBehaviour
         LevelManager.manager.isTargetFire = false;
     }
 
+    private void OnMouseDown()
+    {
+        if (!GameManager.manager.isPlaying) return;
+        LevelManager.manager.player.targetName = gameObject.name;
+    }
+
     public bool UpdateFire(int pLumb, bool pIsUpgrade = true)
     {
         AkSoundEngine.SetRTPCValue("FireValue", _levelFire);

@@ -21,7 +21,7 @@ public class LevelManager : MonoBehaviour {
     [SerializeField] public float _timeFreeze = 10;
 
     [SerializeField] public CentralFire centralFire;
-    [SerializeField] Player player;
+    [SerializeField] public Player player;
     List<PNJ> listPNJ;
 
     [SerializeField] GameObject[] levels;
@@ -168,7 +168,7 @@ public class LevelManager : MonoBehaviour {
         AkSoundEngine.PostEvent("Stop_Music",gameObject);
         AkSoundEngine.PostEvent("Stop_SFX", gameObject);
         StopAllCoroutines();
-        GameManager.manager.GameOver(1);
+        GameManager.manager.GameOver(2);
     }
 
     public void LostFrozen()
@@ -176,7 +176,7 @@ public class LevelManager : MonoBehaviour {
         AkSoundEngine.PostEvent("Stop_Music", gameObject);
         AkSoundEngine.PostEvent("Stop_SFX", gameObject);
         StopAllCoroutines();
-        GameManager.manager.GameOver(2);
+        GameManager.manager.GameOver(1);
     }
 
     public void WonFire()
@@ -235,7 +235,6 @@ public class LevelManager : MonoBehaviour {
                 Blizzard(false);
             }
         }
-        // FIN DE LA NUIT
         if(GameManager.manager.isPlaying)WonNight();
     }
 
@@ -245,8 +244,6 @@ public class LevelManager : MonoBehaviour {
         while (GameManager.manager.isPlaying)
         {
             yield return new WaitForSecondsRealtime(0.1f);
-            //print("fog:" + fog.Density);
-            //print("goal:" + goal);
             flagRotation.transform.localEulerAngles = Vector3.Lerp(flagRotation.transform.localEulerAngles, new Vector3(flagRotation.transform.localEulerAngles.x, flagRotation.transform.localEulerAngles.y, rotation), 0.1f);
             if (firstValue<goal)
             {
@@ -285,7 +282,6 @@ public class LevelManager : MonoBehaviour {
                 AkSoundEngine.SetState("BlizzardState", "Low");
                 newRate.rateOverTime= valueParticleBlizzardStates[0];
                 newMain.simulationSpeed = 1;
-                //flagAnim.SetInteger("BlizzardState", 0);
                 flagAnim.speed = 1;
                 StartCoroutine(FogCoroutine(blizzardFog[0], blizzardFlag[0]));
                 currentBlizzardState = 0;
@@ -294,7 +290,6 @@ public class LevelManager : MonoBehaviour {
                 AkSoundEngine.SetState("BlizzardState", "Medium");
                 newMain.simulationSpeed = 2;
                 newRate.rateOverTime = valueParticleBlizzardStates[1];
-                //flagAnim.SetInteger("BlizzardState", 1);
                 flagAnim.speed = 1.5f;
                 StartCoroutine(FogCoroutine(blizzardFog[1], blizzardFlag[1]));
                 currentBlizzardState = 1;
@@ -304,7 +299,6 @@ public class LevelManager : MonoBehaviour {
                 newMain.simulationSpeed = 3;
                 flagAnim.speed = 2;
                 newRate.rateOverTime = valueParticleBlizzardStates[2];
-                //flagAnim.SetInteger("BlizzardState", 2);
                 StartCoroutine(FogCoroutine(blizzardFog[2], blizzardFlag[2]));
                 currentBlizzardState =2;
                 break;
@@ -313,7 +307,6 @@ public class LevelManager : MonoBehaviour {
                 newMain.simulationSpeed = 4;
                 flagAnim.speed = 3;
                 newRate.rateOverTime = valueParticleBlizzardStates[3];
-                //flagAnim.SetInteger("BlizzardState", 3);
                 StartCoroutine(FogCoroutine(blizzardFog[3], blizzardFlag[3]));
                 currentBlizzardState = 3;
                 break;

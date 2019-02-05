@@ -71,19 +71,4 @@ public class EventManager : MonoBehaviour
             thisEvent.Invoke();
         }
     }
-
-    /*void OnEnable()
-    {
-        EventManager.StartListening("test", someListener);
-    }
-
-    if (Input.GetKeyDown ("q"))
-        {
-            EventManager.TriggerEvent ("test");
-        }
-
-    void OnDisable()
-    {
-        EventManager.StopListening("test", someListener);
-    }*/
 }

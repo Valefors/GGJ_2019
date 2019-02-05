@@ -66,6 +66,12 @@ public class Tree : MonoBehaviour {
         _sr.sprite = _treeSprite[currentSprite];
     }
 
+    private void OnMouseDown()
+    {
+        if (!GameManager.manager.isPlaying) return;
+        LevelManager.manager.player.targetName = gameObject.name;
+    }
+
     void SetModeLumb()
     {
         // Vector3 lPos = new Vector3(transform.position.x + OFFSET_X, transform.position.y, transform.position.z);

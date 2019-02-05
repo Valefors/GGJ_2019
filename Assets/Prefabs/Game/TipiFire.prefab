@@ -53,8 +53,8 @@ GameObject:
   - component: {fileID: 4738830869511058}
   - component: {fileID: 212914427556445542}
   - component: {fileID: 95347144691851020}
-  - component: {fileID: 61987810358159838}
   - component: {fileID: 114574568385829096}
+  - component: {fileID: 61844338362728060}
   m_Layer: 0
   m_Name: Fire
   m_TagString: Untagged
@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 212213136724548100}
   - component: {fileID: 61038785950506914}
   - component: {fileID: 114681366520562010}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: TipiFire
   m_TagString: Torche
   m_Icon: {fileID: 0}
@@ -87,7 +87,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1607813743200770}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.04, y: 1.32, z: 0}
+  m_LocalPosition: {x: -4.8209996, y: -1.1099999, z: 0}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_Children:
   - {fileID: 4738830869511058}
@@ -146,8 +146,8 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_UsedByComposite: 1
+  m_Offset: {x: 0.0418936, y: -0.112820625}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -158,21 +158,21 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.83, y: 1.77}
+  m_Size: {x: 1.5138156, y: 1.5443587}
   m_EdgeRadius: 0
---- !u!61 &61987810358159838
+--- !u!61 &61844338362728060
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1376919138052426}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.25218284, y: -2.7601812}
+  m_Offset: {x: -0.25218284, y: -3.836116}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -183,7 +183,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.5825307, y: 4.7196374}
+  m_Size: {x: 3.5825307, y: 2.5677676}
   m_EdgeRadius: 0
 --- !u!95 &95347144691851020
 Animator:

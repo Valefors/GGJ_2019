@@ -41,10 +41,10 @@ public class PNJ : MonoBehaviour {
     {
         agent = GetComponent<PolyNavAgent>();
         animator = GetComponent<Animator>();
+        tentPosition.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
     }
 
     void Start () {
-        tentPosition.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         SetPNJ();
         EventManager.StartListening(EventManager.PLAY_EVENT, Play);
     }

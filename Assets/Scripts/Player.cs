@@ -24,6 +24,7 @@ public class Player : MonoBehaviour {
     const int LEFT_MOUSE_BUTTON = 0;
 
     Tree lastTree;
+    Torche lastTorch;
 
     delegate void DelAction();
     DelAction playerAction;
@@ -31,6 +32,8 @@ public class Player : MonoBehaviour {
     [SerializeField] Animator animator;
 
     PolyNavAgent agent;
+
+    public string targetName;
 
     #region Singleton
     private static Player _instance;
@@ -88,6 +91,7 @@ public class Player : MonoBehaviour {
         {
             if (Input.GetMouseButtonDown(LEFT_MOUSE_BUTTON))
             {
+                
                 MovePlayer();
             }
             if (_isMoving)
@@ -100,7 +104,7 @@ public class Player : MonoBehaviour {
     void SetTargetPosition()
     {
         _targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (LevelManager.manager.isTargetFire) _targetPosition = LevelManager.manager.centralFire.fire.transform.position;
+        // if (LevelManager.manager.isTargetFire) _targetPosition = LevelManager.manager.centralFire.fire.transform.position;
         _isMoving = true;
     }
 
@@ -131,24 +135,22 @@ public class Player : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D pCol)
     {
+        string cName = pCol.gameObject.name;
         if (!GameManager.manager.isPlaying) return;
 
         if (pCol.gameObject.tag == LevelManager.LUMB_TAG)
         {
-            if(_numberLumbs < _lumbCapacity && !_hasFire) TakeLumb(pCol.gameObject);
+            if (_numberLumbs < _lumbCapacity && !_hasFire) TakeLumb(pCol.gameObject);
         }
 
         if (pCol.gameObject.tag == LevelManager.TREE_TAG)
         {
-            //_isMoving = false;
             if (_numberLumbs <= 0 && !_hasFire)
             {
                 lastTree = pCol.GetComponent<Tree>();
                 if (!lastTree.isBeingChopped)
                 {
-                    lastTree.isBeingChopped = true;
-                    CutTree(lastTree);
-                    animator.SetBool("isChopping", true);
+                    if(targetName.Equals(cName)) CutTree();
                 }
             }
         }
@@ -158,19 +160,29 @@ public class Player : MonoBehaviour {
             if (_numberLumbs > 0) UpdateFire();
             else
             {
-                if(!_hasFire) TakeFire();
+                if (!_hasFire && targetName.Equals(cName)) TakeFire();
             }
         }
 
         if (pCol.gameObject.tag == LevelManager.TORCHE_TAG)
         {
-            if (_hasFire) UpdateTorche(pCol.gameObject.GetComponent<Torche>());
+            if (_hasFire && targetName.Equals(cName))
+            {
+                lastTorch =pCol.gameObject.GetComponent<Torche>();
+                UpdateTorche();
+            }
         }
 
-        if (pCol.gameObject.tag == LevelManager.DOGGO_TAG)
+        if (pCol.gameObject.tag == LevelManager.DOGGO_TAG && targetName.Equals(cName))
         {
-            animator.SetBool("Patpat_Bool", true);
+            PetDoggo();
         }
+    }
+
+    public void PetDoggo()
+    {
+        animator.SetBool("Patpat_Bool", true);
+        targetName = null;
     }
 
     private void OnTriggerStay2D(Collider2D pCol)
@@ -182,9 +194,7 @@ public class Player : MonoBehaviour {
                 lastTree = pCol.GetComponent<Tree>();
                 if (!lastTree.isBeingChopped)
                 {
-                    lastTree.isBeingChopped = true;
-                    animator.SetBool("isChopping", true);
-                    CutTree(lastTree);
+                    if (targetName.Equals(pCol.gameObject.name)) CutTree();
                 }
             }
         }
@@ -194,6 +204,8 @@ public class Player : MonoBehaviour {
     {
         animator.SetBool("Patpat_Bool",false);
 
+        lastTorch = null;
+
         if (lastTree != null)
         {
             lastTree.isBeingChopped = false;
@@ -202,34 +214,45 @@ public class Player : MonoBehaviour {
         }
     }
 
-    void StopMoving()
+    public void StopMoving()
     {
-        //print("stop");
+        agent.Stop();
         _isMoving = false;
         animator.SetInteger("PNJWalkState", 0);
     }
 
-    void CutTree(Tree pTree)
+    public void CutTree()
     {
-        AkSoundEngine.PostEvent("Play_Wood", pTree.gameObject);
-        pTree.Cut();
+        if (lastTree == null) return;
+        agent.Stop();
+        _isMoving = false;
+        lastTree.isBeingChopped = true;
+        AkSoundEngine.PostEvent("Play_Wood", lastTree.gameObject);
+        lastTree.Cut();
+        animator.SetBool("isChopping", true);
+        targetName = null;
     }
 
-    void TakeFire()
+    public void TakeFire()
     {
         if(LevelManager.manager.centralFire.UpdateFire(0, false))
         {
+            StopMoving();
             AkSoundEngine.PostEvent("Play_PickTorch", gameObject);
             _hasFire = true;
             animator.SetBool("isHoldingFire", true);
+            targetName = null;
         }
     }
 
-    void UpdateTorche(Torche pTorche)
+    public void UpdateTorche()
     {
-        pTorche.AddHeat(LevelManager.manager.centralFire._valueFireTaken);
+        if (lastTorch == null) return;
+        StopMoving();
+        lastTorch.AddHeat(LevelManager.manager.centralFire._valueFireTaken);
         _hasFire = false;
         animator.SetBool("isHoldingFire", false);
+        targetName = null;
     }
 
     void TakeLumb(GameObject pLumb)
@@ -248,6 +271,7 @@ public class Player : MonoBehaviour {
         if (_numberLumbs > 0) LevelManager.manager.centralFire.UpdateFire(_numberLumbs);
         _numberLumbs = 0;
         agent.maxSpeed = INITIAL_SPEED;
-
+        UpdateSprite();
+        targetName = null;
     }
 }

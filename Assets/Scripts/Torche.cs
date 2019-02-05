@@ -41,6 +41,12 @@ public class Torche : MonoBehaviour {
         _sr.sprite = baseSprite;
     }
 
+    private void OnMouseDown()
+    {
+        if (!GameManager.manager.isPlaying) return;
+        LevelManager.manager.player.targetName = gameObject.name; 
+    }
+
     public void AddHeat(int value)
     {
         PNJ.AddHeat(value);

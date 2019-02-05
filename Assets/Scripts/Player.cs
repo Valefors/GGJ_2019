@@ -136,7 +136,7 @@ public class Player : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D pCol)
     {
         string cName = pCol.gameObject.name;
-        if (!GameManager.manager.isPlaying) return;
+        if (!GameManager.manager.isPlaying && targetName !=null) return;
 
         if (pCol.gameObject.tag == LevelManager.LUMB_TAG)
         {
@@ -273,5 +273,6 @@ public class Player : MonoBehaviour {
         agent.maxSpeed = INITIAL_SPEED;
         UpdateSprite();
         targetName = null;
+        StopMoving();
     }
 }

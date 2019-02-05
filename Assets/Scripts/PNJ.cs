@@ -290,7 +290,7 @@ public class PNJ : MonoBehaviour {
                 }
                 else if (_numberLumbs > 0 && !hasObjective)
                 {
-                    _moveTarget = LevelManager.manager.centralFire.fire.gameObject;
+                    _moveTarget = LevelManager.manager.centralFire.gameObject;
                     Move();
                 }
                 else
@@ -316,7 +316,7 @@ public class PNJ : MonoBehaviour {
             }
             else
             {
-                _moveTarget = LevelManager.manager.centralFire.fire.gameObject;
+                _moveTarget = LevelManager.manager.centralFire.gameObject;
                 Move();
             }
         }

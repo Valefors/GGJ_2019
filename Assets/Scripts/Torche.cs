@@ -44,7 +44,8 @@ public class Torche : MonoBehaviour {
     private void OnMouseDown()
     {
         if (!GameManager.manager.isPlaying) return;
-        LevelManager.manager.player.targetName = gameObject.name; 
+        LevelManager.manager.player.targetName = gameObject.name;
+        LevelManager.manager.player.animator.SetBool("Patpat_Bool", false);
     }
 
     public void AddHeat(int value)

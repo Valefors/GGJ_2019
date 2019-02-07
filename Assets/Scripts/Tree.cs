@@ -70,6 +70,7 @@ public class Tree : MonoBehaviour {
     {
         if (!GameManager.manager.isPlaying) return;
         LevelManager.manager.player.targetName = gameObject.name;
+        LevelManager.manager.player.animator.SetBool("Patpat_Bool", false);
     }
 
     void SetModeLumb()

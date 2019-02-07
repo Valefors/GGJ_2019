@@ -29,7 +29,7 @@ public class Player : MonoBehaviour {
     delegate void DelAction();
     DelAction playerAction;
 
-    [SerializeField] Animator animator;
+    [SerializeField] public Animator animator;
 
     PolyNavAgent agent;
 

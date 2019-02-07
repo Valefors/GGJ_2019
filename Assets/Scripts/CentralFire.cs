@@ -85,6 +85,7 @@ public class CentralFire : MonoBehaviour
     {
         if (!GameManager.manager.isPlaying) return;
         LevelManager.manager.player.targetName = gameObject.name;
+        LevelManager.manager.player.animator.SetBool("Patpat_Bool", false);
     }
 
     public bool UpdateFire(int pLumb, bool pIsUpgrade = true)

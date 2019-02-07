@@ -57,8 +57,6 @@ public class LevelManager : MonoBehaviour {
     public Texture2D hooverCursor;
     public Texture2D normalCursor;
 
-    public bool isTargetFire = false;
-
     D2FogsPE fog;
 
     GameObject[] trees;

@@ -66,6 +66,7 @@ public class Player : MonoBehaviour {
 
     void SetPlayer()
     {
+        _numberLumbs = 0;
         _hasFire = false;
         StopMoving();
         _targetPosition = transform.position;
@@ -96,7 +97,11 @@ public class Player : MonoBehaviour {
             }
             if (_isMoving)
             {
-                if (agent.remainingDistance <= 0) StopMoving();
+                if (agent.remainingDistance <= 0)
+                {
+                    StopMoving();
+                    if (targetName == "Doggo") targetName = null;
+                }
             }
         }
     }
@@ -104,7 +109,7 @@ public class Player : MonoBehaviour {
     void SetTargetPosition()
     {
         _targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        // if (LevelManager.manager.isTargetFire) _targetPosition = LevelManager.manager.centralFire.fire.transform.position;
+        if (targetName=="Doggo") _targetPosition = GameObject.FindGameObjectWithTag(LevelManager.DOGGO_TAG).transform.position;
         _isMoving = true;
     }
 
@@ -148,12 +153,12 @@ public class Player : MonoBehaviour {
 
         if (pCol.gameObject.tag == LevelManager.TREE_TAG)
         {
-            if (_numberLumbs <= 0 && !_hasFire)
+            if (_numberLumbs <= 0 && !_hasFire && targetName.Equals(cName))
             {
                 lastTree = pCol.GetComponent<Tree>();
                 if (!lastTree.isBeingChopped)
                 {
-                    if(targetName.Equals(cName)) CutTree();
+                    CutTree();
                 }
             }
         }
@@ -176,7 +181,7 @@ public class Player : MonoBehaviour {
             }
         }
 
-        if (pCol.gameObject.tag == LevelManager.DOGGO_TAG && targetName.Equals(cName))
+        if (pCol.gameObject.tag == LevelManager.DOGGO_TAG && targetName.Equals("Doggo"))
         {
             PetDoggo();
         }
@@ -191,14 +196,15 @@ public class Player : MonoBehaviour {
     private void OnTriggerStay2D(Collider2D pCol)
     {
         if (targetName == null) return;
+        string cName = pCol.gameObject.name;
         if (pCol.gameObject.tag == LevelManager.TREE_TAG)
         {
-            if (_numberLumbs <= 0 && !_hasFire)
+            if (_numberLumbs <= 0 && !_hasFire && targetName.Equals(cName))
             {
                 lastTree = pCol.GetComponent<Tree>();
                 if (!lastTree.isBeingChopped)
                 {
-                    if (targetName.Equals(pCol.gameObject.name)) CutTree();
+                    CutTree();
                 }
             }
         }
@@ -206,16 +212,20 @@ public class Player : MonoBehaviour {
 
     private void OnTriggerExit2D(Collider2D pCol)
     {
-        animator.SetBool("Patpat_Bool",false);
-
-        lastTorch = null;
-        print("exit");
-        if (lastTree != null)
+        if(pCol.tag==LevelManager.DOGGO_TAG)
         {
-            lastTree.isBeingChopped = false;
-            lastTree = null;
-            animator.SetBool("isChopping", false);
-            StopMoving();
+            animator.SetBool("Patpat_Bool", false);
+        }
+       else
+        {      
+            lastTorch = null;
+            if (lastTree != null)
+            {
+                lastTree.isBeingChopped = false;
+                lastTree = null;
+                animator.SetBool("isChopping", false);
+                StopMoving();
+            }
         }
     }
 

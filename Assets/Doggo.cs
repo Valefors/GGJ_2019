@@ -8,5 +8,6 @@ public class Doggo : MonoBehaviour {
     {
         if (!GameManager.manager.isPlaying) return;
         LevelManager.manager.player.targetName = gameObject.name;
+        //print("clicked doggo");
     }
 }

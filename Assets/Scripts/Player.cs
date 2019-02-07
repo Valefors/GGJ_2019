@@ -139,17 +139,15 @@ public class Player : MonoBehaviour {
         else animator.SetBool("isHoldingWood", false);
     }
 
-    private void OnTriggerEnter2D(Collider2D pCol)
+    private void OnTriggerStay2D(Collider2D pCol)
     {
-        string cName = pCol.gameObject.name;
         if (!GameManager.manager.isPlaying) return;
-
         if (pCol.gameObject.tag == LevelManager.LUMB_TAG)
         {
             if (_numberLumbs < _lumbCapacity && !_hasFire) TakeLumb(pCol.gameObject);
         }
-
         if (targetName == null) return;
+        string cName = pCol.gameObject.name;
 
         if (pCol.gameObject.tag == LevelManager.TREE_TAG)
         {
@@ -191,23 +189,6 @@ public class Player : MonoBehaviour {
     {
         animator.SetBool("Patpat_Bool", true);
         targetName = null;
-    }
-
-    private void OnTriggerStay2D(Collider2D pCol)
-    {
-        if (targetName == null) return;
-        string cName = pCol.gameObject.name;
-        if (pCol.gameObject.tag == LevelManager.TREE_TAG)
-        {
-            if (_numberLumbs <= 0 && !_hasFire && targetName.Equals(cName))
-            {
-                lastTree = pCol.GetComponent<Tree>();
-                if (!lastTree.isBeingChopped)
-                {
-                    CutTree();
-                }
-            }
-        }
     }
 
     private void OnTriggerExit2D(Collider2D pCol)

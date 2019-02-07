@@ -110,6 +110,7 @@ public class Player : MonoBehaviour {
 
     void MovePlayer()
     {
+        animator.SetBool("isMoving", true);
         _previousPosition = transform.position;
         SetTargetPosition();
         agent.SetDestination(_targetPosition);
@@ -136,12 +137,14 @@ public class Player : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D pCol)
     {
         string cName = pCol.gameObject.name;
-        if (!GameManager.manager.isPlaying && targetName !=null) return;
+        if (!GameManager.manager.isPlaying) return;
 
         if (pCol.gameObject.tag == LevelManager.LUMB_TAG)
         {
             if (_numberLumbs < _lumbCapacity && !_hasFire) TakeLumb(pCol.gameObject);
         }
+
+        if (targetName == null) return;
 
         if (pCol.gameObject.tag == LevelManager.TREE_TAG)
         {
@@ -187,6 +190,7 @@ public class Player : MonoBehaviour {
 
     private void OnTriggerStay2D(Collider2D pCol)
     {
+        if (targetName == null) return;
         if (pCol.gameObject.tag == LevelManager.TREE_TAG)
         {
             if (_numberLumbs <= 0 && !_hasFire)
@@ -205,12 +209,13 @@ public class Player : MonoBehaviour {
         animator.SetBool("Patpat_Bool",false);
 
         lastTorch = null;
-
+        print("exit");
         if (lastTree != null)
         {
             lastTree.isBeingChopped = false;
             lastTree = null;
             animator.SetBool("isChopping", false);
+            StopMoving();
         }
     }
 
@@ -226,6 +231,7 @@ public class Player : MonoBehaviour {
         if (lastTree == null) return;
         agent.Stop();
         _isMoving = false;
+        animator.SetBool("isMoving", false);
         lastTree.isBeingChopped = true;
         AkSoundEngine.PostEvent("Play_Wood", lastTree.gameObject);
         lastTree.Cut();

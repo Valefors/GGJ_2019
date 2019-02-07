@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4654193967865268}
   - component: {fileID: 212728659632793984}
   - component: {fileID: 114256187684925428}
-  - component: {fileID: 60879928879000732}
+  - component: {fileID: 61095772895102350}
   m_Layer: 0
   m_Name: Rocksnow_02
   m_TagString: Untagged
@@ -42,78 +42,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!60 &60879928879000732
-PolygonCollider2D:
+--- !u!61 &61095772895102350
+BoxCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1896420384119390}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.6076754}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.5, y: 0}
     oldSize: {x: 2.09, y: 2.68}
     newSize: {x: 2.09, y: 2.68}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0.325, y: -1.31}
-      - {x: 0.53499997, y: -1.25}
-      - {x: 0.655, y: -1.18}
-      - {x: 0.775, y: -1.1}
-      - {x: 0.935, y: -0.95}
-      - {x: 1.015, y: -0.84}
-      - {x: 1.015, y: -0.77}
-      - {x: 0.92499995, y: -0.25}
-      - {x: 0.895, y: -0.04}
-      - {x: 0.865, y: 0.12}
-      - {x: 0.865, y: 0.22999999}
-      - {x: 0.91499996, y: 0.52}
-      - {x: 0.73499995, y: 0.74}
-      - {x: 0.60499996, y: 0.89}
-      - {x: 0.60499996, y: 0.94}
-      - {x: 0.59499997, y: 0.96999997}
-      - {x: 0.565, y: 1.04}
-      - {x: 0.53499997, y: 1.0799999}
-      - {x: 0.45499998, y: 1.15}
-      - {x: 0.345, y: 1.1999999}
-      - {x: 0.225, y: 1.1999999}
-      - {x: 0.155, y: 1.25}
-      - {x: 0.055, y: 1.26}
-      - {x: -0.095, y: 1.26}
-      - {x: -0.235, y: 1.1899999}
-      - {x: -0.325, y: 1.18}
-      - {x: -0.39499998, y: 1.13}
-      - {x: -0.545, y: 0.95}
-      - {x: -0.645, y: 0.78999996}
-      - {x: -0.645, y: 0.68}
-      - {x: -0.73499995, y: 0.37}
-      - {x: -0.805, y: 0.13}
-      - {x: -0.805, y: -0.01}
-      - {x: -0.835, y: -0.07}
-      - {x: -0.965, y: -0.39999998}
-      - {x: -1.035, y: -0.55}
-      - {x: -1.045, y: -0.58}
-      - {x: -1.045, y: -0.71}
-      - {x: -1.005, y: -0.95}
-      - {x: -0.98499995, y: -1.03}
-      - {x: -0.905, y: -1.22}
-      - {x: -0.825, y: -1.29}
-      - {x: -0.655, y: -1.3199999}
-      - {x: -0.565, y: -1.3399999}
-      - {x: -0.345, y: -1.3399999}
-      - {x: -0.345, y: -1.3199999}
-      - {x: -0.095, y: -1.3299999}
-      - {x: -0.015, y: -1.3299999}
+  serializedVersion: 2
+  m_Size: {x: 2.09, y: 1.2153507}
+  m_EdgeRadius: 0
 --- !u!114 &114256187684925428
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -125,9 +78,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc4f7f33d8fc7c0419b2308165807ce0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shapeType: 0
+  shapeType: 1
   extraOffset: 0
-  invertPolygon: 1
+  invertPolygon: 0
 --- !u!212 &212728659632793984
 SpriteRenderer:
   m_ObjectHideFlags: 1

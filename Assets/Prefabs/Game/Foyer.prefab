@@ -247,7 +247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shapeType: 1
-  extraOffset: -0.1
+  extraOffset: 0
   invertPolygon: 0
 --- !u!114 &114604914386340624
 MonoBehaviour:

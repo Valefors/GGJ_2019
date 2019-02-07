@@ -154,6 +154,7 @@ public class PNJ : MonoBehaviour {
     {
         AkSoundEngine.PostEvent("Play_PNJ_Wood", pTree.gameObject);
         pTree.Cut();
+        animator.SetBool("isMoving", false);
     }
 
     void UpdateFire()
@@ -330,6 +331,7 @@ public class PNJ : MonoBehaviour {
         {
             agent.SetDestination(_moveTarget.transform.position);
             _isMoving = true;
+            animator.SetBool("isMoving", true);
         }
             UpdateSprite();
     }
